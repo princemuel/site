@@ -1,3 +1,4 @@
+import database from "@astrojs/db";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import iconify from "astro-icon";
@@ -31,4 +32,5 @@ export const integrations = [
   iconify(opts_icon),
   mdx(opts_mdx),
   sitemap(opts_sitemap),
+  database(),
 ] satisfies Config;
