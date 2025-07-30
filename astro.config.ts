@@ -2,7 +2,15 @@ import netlify from "@astrojs/netlify";
 
 import { defineConfig } from "astro/config";
 
-import { envSchema, flags, images, integrations, markdown, pluginsVite } from "./config";
+import {
+  adapter,
+  envSchema,
+  flags,
+  images,
+  integrations,
+  markdown,
+  pluginsVite,
+} from "./config";
 
 // https://astro.build/config
 export default defineConfig({
@@ -15,7 +23,7 @@ export default defineConfig({
   prefetch: { prefetchAll: true, defaultStrategy: "viewport" },
   markdown: markdown,
   image: images,
-  adapter: netlify({ experimentalStaticHeaders: true, cacheOnDemandPages: true }),
-  //@ts-expect-error ignore this error
+  adapter: netlify(adapter),
+  ////@ts-expect-error ignore this error
   vite: pluginsVite,
 });
