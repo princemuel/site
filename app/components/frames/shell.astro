@@ -1,0 +1,24 @@
+---
+import "@/global.css";
+import { Font } from "astro:assets";
+---
+
+<!doctype html>
+<html lang="en" class:list={["scheme-light-dark", "motion-safe:scroll-smooth"]}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>Astro</title>
+    <Font cssVariable="--font-family-sans" preload />
+  </head>
+  <body
+    class:list={[
+      "relative flex min-h-screen flex-col supports-[min-height:1svh]:min-h-svh",
+      "bg-white font-sans text-base font-normal antialiased",
+    ]}
+  >
+    <slot />
+  </body>
+</html>
