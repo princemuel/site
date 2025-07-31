@@ -25,7 +25,7 @@ export const GET: APIRoute = async () => {
       "Content-Type": "application/pdf",
       "Content-Disposition": "inline; filename=princemuel-resume",
       "Cache-Control": "public, max-age=604800, immutable",
-      "Content-Length": response.headers.get("Content-Length") || "",
+      "Content-Length": response.headers.get("Content-Length") ?? "0",
     },
   });
 };

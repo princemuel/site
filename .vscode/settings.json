@@ -95,7 +95,7 @@
     "journal": "dump",
     "crates": "tools",
     "films": "video",
-    "shows": "television",
+    "series": "television",
     "games": "shader"
   },
   "[shellscript]": {
