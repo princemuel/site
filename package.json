@@ -20,36 +20,40 @@
     "promote:beta": "git checkout beta && git merge nightly && git push origin beta",
     "promote:stable": "git checkout main && git merge beta && git push origin main",
     "branch:feature": "git checkout -b",
-    "branch:hotfix": "git checkout main && git checkout -b"
+    "branch:hotfix": "git checkout main && git checkout -b",
+    "seed:all": "tsx --tsconfig ./tsconfig.scripts.json ./app/scripts/seed.ts"
   },
   "dependencies": {
+    "@astrojs/db": "^0.15.1",
     "@js-temporal/polyfill": "^0.5.1",
-    "astro": "^5.11.1",
+    "astro": "^5.12.6",
     "http-errors-enhanced": "^3.0.2",
-    "isbot": "^5.1.28",
+    "isbot": "^5.1.29",
     "outvariant": "^1.4.3",
-    "tailwind-variants": "^1.0.0"
+    "tailwind-variants": "^2.0.1"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
-    "@astrojs/mdx": "^4.3.0",
-    "@astrojs/netlify": "^6.5.0",
+    "@astrojs/mdx": "^4.3.1",
+    "@astrojs/netlify": "^6.5.3",
     "@astrojs/rss": "^4.0.12",
-    "@astrojs/sitemap": "^3.4.1",
+    "@astrojs/sitemap": "^3.4.2",
     "@expressive-code/plugin-collapsible-sections": "^0.41.3",
     "@expressive-code/plugin-line-numbers": "^0.41.3",
+    "@faker-js/faker": "^9.9.0",
     "@iconify-json/ion": "^1.2.4",
-    "@iconify-json/lucide": "^1.2.57",
+    "@iconify-json/lucide": "^1.2.59",
     "@iconify-json/ri": "^1.2.5",
-    "@iconify-json/simple-icons": "^1.2.43",
-    "@iconify-json/tabler": "^1.2.19",
+    "@iconify-json/simple-icons": "^1.2.45",
+    "@iconify-json/tabler": "^1.2.20",
+    "@tailwindcss/typography": "^0.5.16",
     "@tailwindcss/vite": "^4.1.11",
     "@total-typescript/ts-reset": "^0.6.1",
     "astro-icon": "^1.1.5",
-    "netlify-cli": "^22.2.2",
+    "netlify-cli": "^23.0.0",
     "prettier": "^3.6.2",
     "prettier-plugin-astro": "^0.14.1",
-    "prettier-plugin-organize-imports": "^4.1.0",
+    "prettier-plugin-organize-imports": "^4.2.0",
     "prettier-plugin-tailwindcss": "^0.6.14",
     "reading-time": "^1.5.0",
     "rehype-autolink-headings": "^7.1.0",
@@ -59,7 +63,7 @@
     "remark-toc": "^9.0.0",
     "tailwindcss": "^4.1.11",
     "typescript": "^5.8.3",
-    "vite": "^7.0.4"
+    "vite": "^6.3.5"
   },
   "packageManager": "pnpm@10.13.1+sha512.37ebf1a5c7a30d5fabe0c5df44ee8da4c965ca0c5af3dbab28c3a1681b70a256218d05c81c9c0dcf767ef6b8551eb5b960042b9ed4300c59242336377e01cfad"
 }

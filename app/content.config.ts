@@ -1,1 +1,1 @@
-export const collections = {};
+export * as collections from "@/content";

@@ -6,7 +6,8 @@ type Config = NonNullable<NonNullable<AstroUserConfig["experimental"]>["fonts"]>
 
 export const fonts = [
   {
-    name: "Sen",
+    // name: "Sen",
+    name: "Cantarell",
     provider: fontProviders.google(),
     cssVariable: "--font-family-sans",
     subsets: ["latin"],

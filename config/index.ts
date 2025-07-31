@@ -1,3 +1,4 @@
+export { adapter } from "./adapter";
 export { envSchema } from "./dotenv";
 export { experimental as flags } from "./experimental";
 export { images } from "./images";

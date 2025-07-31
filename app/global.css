@@ -1,13 +1,12 @@
 @import "tailwindcss" source(none);
 
-@source "./pages";
-@source "../content";
-@source "./layouts";
-@source "./components";
+/* @source "../app/pages"; */
+@source "../app/components/";
+/* @source "../content"; */
 /* @source not "/components/meta"; */
 
 @plugin "@tailwindcss/typography";
-@plugin "@tailwindcss/forms";
+/* @plugin "@tailwindcss/forms"; */
 
 @theme {
   --text-2xs: 0.625rem;
@@ -47,7 +46,10 @@
     auto;
 }
 
-@custom-variant dark (&:where([data-scheme=dark], [data-scheme=dark] *));
+@utility content-auto {
+  content-visibility: auto;
+}
+@custom-variant dark (&:where([data-color-scheme="dark"], [data-color-scheme="dark"] *));
 
 @media (hover: hover) and (pointer: fine) {
   body {
