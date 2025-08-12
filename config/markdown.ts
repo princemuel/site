@@ -1,6 +1,5 @@
 import { rehypeHeadingIds } from "@astrojs/markdown-remark";
-import mdastUtilToString from "mdast-util-to-string";
-import getReadingTime from "reading-time";
+// import getReadingTime from "reading-time";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeExternalLinks from "rehype-external-links";
 import remarkCollapse from "remark-collapse";
@@ -13,23 +12,23 @@ import type { AstroUserConfig } from "astro";
 type Config = NonNullable<NonNullable<AstroUserConfig["markdown"]>>;
 type RemarkPlugin = NonNullable<Config["remarkPlugins"]>[number];
 
-const { toString: parseToString } = mdastUtilToString;
+// const { toString: parseToString } = mdastUtilToString;
 
-const remarkReadingTime: RemarkPlugin = () => {
-  return (tree, file) => {
-    if (file.data.astro?.frontmatter) {
-      const textOnPage = parseToString(tree);
-      const readingTime = getReadingTime(textOnPage);
-      file.data.astro.frontmatter.words = readingTime.words;
-      file.data.astro.frontmatter.duration = readingTime.text;
-    }
-  };
-};
+// const remarkReadingTime: RemarkPlugin = () => {
+//   return (tree, file) => {
+//     if (file.data.astro?.frontmatter) {
+//       const textOnPage = parseToString(tree);
+//       const readingTime = getReadingTime(textOnPage);
+//       file.data.astro.frontmatter.words = readingTime.words;
+//       file.data.astro.frontmatter.duration = readingTime.text;
+//     }
+//   };
+// };
 
 const remarkDeruntify: RemarkPlugin = () => (tree) => {
   visit(tree, "text", (node) => {
     const wordCount = node.value.split(" ").length;
-    if (4 <= wordCount) node.value = node.value.replace(/ ([^ ]*)$/, "\u00A0$1");
+    if (wordCount <= 4) node.value = node.value.replace(/ ([^ ]*)$/, "\u00A0$1");
   });
 };
 
@@ -47,7 +46,7 @@ export const markdown = {
     remarkToc,
     [remarkCollapse, { test: "Table of contents" }],
     remarkDeruntify,
-    remarkReadingTime,
+    // remarkReadingTime,
     remarkModifiedTime,
     [remarkEmoji, { accessible: true, padSpaceAfter: true, emoticon: true }],
   ],

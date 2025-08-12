@@ -22,5 +22,6 @@
     "logo-youtube"
   ],
   "tabler": ["alert-circle"],
-  "simple-icons": ["astro"]
+  "simple-icons": ["astro"],
+  "uil": ["file-edit-alt", "flask", "presentation-check"]
 }
