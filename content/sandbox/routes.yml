@@ -16,7 +16,7 @@
 - id: posts
   text: posts
   href: /posts
-  icon: ri:quill-pen-fill
+  icon: uil:file-edit-alt
 
 - id: wiki
   text: wiki
