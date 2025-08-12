@@ -6,11 +6,27 @@ type Config = NonNullable<NonNullable<AstroUserConfig["experimental"]>["fonts"]>
 
 export const fonts = [
   {
-    // name: "Sen",
-    name: "Cantarell",
-    provider: fontProviders.google(),
+    provider: "local",
+    name: "FontFamilySans",
     cssVariable: "--font-family-sans",
-    subsets: ["latin"],
+    variants: [
+      {
+        weight: 400,
+        style: "normal",
+        src: ["./fonts/custom-400.woff2"],
+      },
+      {
+        weight: 500,
+        style: "normal",
+        src: ["./fonts/custom-500.woff2"],
+      },
+
+      {
+        weight: 600,
+        style: "normal",
+        src: ["./fonts/custom-600.woff2"],
+      },
+    ],
     fallbacks: [
       "ui-sans-serif",
       "system-ui",
@@ -34,8 +50,8 @@ export const fonts = [
       "Menlo",
       "Monaco",
       "Consolas",
-      "'Liberation Mono'",
-      "'Courier New'",
+      "Liberation Mono",
+      "Courier New",
       "monospace",
     ],
   },
