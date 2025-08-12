@@ -24,6 +24,6 @@ export default defineConfig({
   markdown: markdown,
   image: images,
   adapter: netlify(adapter),
-  ////@ts-expect-error ignore this error
+  //@ts-expect-error ignore this error
   vite: pluginsVite,
 });

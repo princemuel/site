@@ -8,7 +8,7 @@ import type { AstroUserConfig } from "astro";
 type Config = NonNullable<AstroUserConfig["vite"]>;
 
 export const pluginsVite = {
-  //@ts-expect-error just ignore this
+  //@ts-expect-error
   plugins: [tailwindcss()],
   define: {
     define: {

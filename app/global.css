@@ -1,12 +1,10 @@
 @import "tailwindcss" source(none);
 
-/* @source "../app/pages"; */
-@source "../app/components/";
+@source "./pages";
+@source "./components";
 /* @source "../content"; */
-/* @source not "/components/meta"; */
 
 @plugin "@tailwindcss/typography";
-/* @plugin "@tailwindcss/forms"; */
 
 @theme {
   --text-2xs: 0.625rem;
