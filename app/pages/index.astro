@@ -1,7 +1,38 @@
 ---
+import { getCollection } from "astro:content";
+
+import { Content } from "@/content/markdown/home.md";
+
+import { hasValues } from "@/utils/guards";
+
+import { avatar } from "@/assets";
 import Shell from "@/components/frames/shell.astro";
+import Link from "@/components/shared/link.astro";
+import { Icon } from "astro-icon/components";
+import { Image } from "astro:assets";
+
+// const excluded = ["wiki", "posts",];
+const excluded = new Set(["home", "posts", "wiki"]);
+const routes = await getCollection("routes", (data) => !excluded.has(data.id));
 ---
 
 <Shell>
-  <h1 class="text-2xl">Home</h1>
+  <section class="flex flex-col gap-6 px-4 py-8">
+    <figure class="max-h-80 max-w-80 self-center overflow-clip rounded-full">
+      <Image src={avatar} alt="Me just staring into space" />
+    </figure>
+    <Content />
+    {
+      hasValues(routes) ? (
+        <ul class="flex flex-col gap-3">
+          {routes.map((r) => (
+            <li class="flex items-center gap-2 text-blue-500">
+              <Icon name={r.data.icon} />
+              <Link href={r.data.href}>{r.data.text}</Link>
+            </li>
+          ))}
+        </ul>
+      ) : null
+    }
+  </section>
 </Shell>
