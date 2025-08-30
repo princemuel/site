@@ -1,0 +1,29 @@
+---
+import { getCollection } from "astro:content";
+
+import Navlink from "@/components/shared/navlink.astro";
+import { Icon } from "astro-icon/components";
+
+import type { HTMLAttributes } from "astro/types";
+
+type Props = HTMLAttributes<"nav">;
+
+// const excluded = ["wiki", "posts",];
+const excluded = new Set(["wiki", "posts"]);
+const routes = await getCollection("routes", (data) => !excluded.has(data.id));
+
+const { class: classnames, ...attrs } = Astro.props as Props;
+---
+
+<nav aria-label="Main" {...attrs}>
+  {
+    routes.map((r) => (
+      <Fragment>
+        <Navlink href={r.data.href}>
+          <Icon name={r.data.icon} class="text-lg sm:hidden" />
+          <span class="sr-only sm:not-sr-only">{r.data.text}</span>
+        </Navlink>
+      </Fragment>
+    ))
+  }
+</nav>
