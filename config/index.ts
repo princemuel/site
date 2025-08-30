@@ -1,5 +1,5 @@
 export { adapter } from "./adapter";
-export { envSchema } from "./dotenv";
+export { envSchema, envVars } from "./dotenv";
 export { experimental as flags } from "./experimental";
 export { images } from "./images";
 export { integrations } from "./integrations";
