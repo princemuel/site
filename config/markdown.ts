@@ -1,5 +1,7 @@
 import { rehypeHeadingIds } from "@astrojs/markdown-remark";
 // import getReadingTime from "reading-time";
+import { toString as hastUtilToString } from "hast-util-to-string";
+import { h } from "hastscript";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import rehypeExternalLinks from "rehype-external-links";
 import remarkCollapse from "remark-collapse";
@@ -53,6 +55,17 @@ export const markdown = {
   rehypePlugins: [
     [rehypeHeadingIds, { experimentalHeadingIdCompat: true }],
     [rehypeExternalLinks, { rel: ["noopener", "noreferrer", "external"], target: "_blank" }],
-    [rehypeAutolinkHeadings, { behavior: "after" }],
+    [
+      rehypeAutolinkHeadings,
+      {
+        behavior: "after",
+        content: (node: any) => [
+          h("span", { ariaHidden: "true" }, "#"),
+          h("span.anchor-hidden", "Section titled “", hastUtilToString(node), "”"),
+        ],
+        group: () => h(".anchor"),
+      },
+    ],
+    // [rehypeAutolinkHeadings, { behavior: "after", content: (node) => h("#") }],
   ],
 } satisfies Config;

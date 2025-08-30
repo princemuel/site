@@ -1,10 +1,11 @@
-import netlify from "@astrojs/netlify";
+// import netlify from "@astrojs/netlify";
 
 import { defineConfig } from "astro/config";
 
 import {
-  adapter,
+  // adapter,
   envSchema,
+  envVars,
   flags,
   images,
   integrations,
@@ -15,7 +16,7 @@ import {
 // https://astro.build/config
 export default defineConfig({
   srcDir: "./app",
-  site: "https://example.com",
+  site: envVars.PUBLIC_SITE_URL,
   env: { validateSecrets: true, schema: envSchema },
   experimental: flags,
   integrations: integrations,
@@ -23,7 +24,7 @@ export default defineConfig({
   prefetch: { prefetchAll: true, defaultStrategy: "viewport" },
   markdown: markdown,
   image: images,
-  adapter: netlify(adapter),
+  // adapter: netlify(adapter),
   //@ts-expect-error ignore this error
   vite: pluginsVite,
 });

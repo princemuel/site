@@ -13,4 +13,6 @@ export const experimental = {
   headingIdCompat: true,
   preserveScriptOrder: true,
   fonts: fonts,
+  staticImportMetaEnv: true,
+  chromeDevtoolsWorkspace: true,
 } satisfies Config;

@@ -5,5 +5,5 @@ type Config = NetlifyIntegrationConfig;
 export const adapter = {
   cacheOnDemandPages: true,
   experimentalStaticHeaders: true,
-  devFeatures: { images: true, environmentVariables: false },
+  devFeatures: false,
 } satisfies Config;
