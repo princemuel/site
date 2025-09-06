@@ -15,6 +15,7 @@ import ThemePicker from "@/components/widgets/theme-picker.astro";
 
 // const excluded = ["wiki", "posts",];
 const excluded = new Set(["home", "posts", "wiki"]);
+
 const routes = await getCollection("routes", (data) => !excluded.has(data.id));
 ---
 
@@ -29,7 +30,7 @@ const routes = await getCollection("routes", (data) => !excluded.has(data.id));
         hasValues(routes) ? (
           <ul class="not-prose flex flex-col gap-3">
             {routes.map((r) => (
-              <li class="flex items-center gap-2 text-blue-500">
+              <li class="flex items-center gap-2">
                 <Icon name={r.data.icon} />
                 <Link href={r.data.href}>{r.data.text}</Link>
               </li>

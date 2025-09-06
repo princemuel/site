@@ -1,0 +1,14 @@
+<OpenSearchDescription
+  xmlns="http://a9.com/-/spec/opensearch/1.1/"
+  xmlns:moz="http://www.mozilla.org/2006/browser/search/">
+  <ShortName>Prince Muel</ShortName>
+  <Description>[Search engine full name and summary]</Description>
+  <InputEncoding>UTF-8</InputEncoding>
+  <Image width="16" height="16" type="image/x-icon">{{URL}}favicon.ico</Image>
+  <Url type="text/html" template="[searchURL]" />
+  <Url type="application/x-suggestions+json" template="[suggestionURL]" />
+  <Url
+    type="application/opensearchdescription+xml"
+    rel="self"
+    template="{{URL}}mysearchdescription.xml" />
+</OpenSearchDescription>

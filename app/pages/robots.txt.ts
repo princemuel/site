@@ -1,16 +1,11 @@
+import resource from "@/assets/include/robots.txt?raw";
+
 import type { APIRoute } from "astro";
 
 export const GET: APIRoute = async (ctx) => {
-  const body = `
-# I, for one, welcome our new robotic overlords
-
-User-Agent: *
-Allow: /
-Disallow: /api/*
-
-Sitemap: ${new URL("sitemap-index.xml", ctx.site)}
-  `.trim();
-
+  const body = resource
+    .replaceAll("{{URL}}", new URL("sitemap-index.xml", ctx.site).toString())
+    .trim();
   return new Response(body, {
     status: 200,
     headers: {
