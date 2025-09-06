@@ -17,7 +17,6 @@ import cloudflare from "@astrojs/cloudflare";
 
 // https://astro.build/config
 export default defineConfig({
-  srcDir: "./app",
   site: envVars.PUBLIC_SITE_URL,
   env: { validateSecrets: true, schema: envSchema },
   experimental: flags,
