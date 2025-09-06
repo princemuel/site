@@ -3,7 +3,7 @@
 import { defineConfig } from "astro/config";
 
 import {
-  // adapter,
+  adapter,
   envSchema,
   envVars,
   flags,
@@ -12,6 +12,8 @@ import {
   markdown,
   pluginsVite,
 } from "./config";
+
+import cloudflare from "@astrojs/cloudflare";
 
 // https://astro.build/config
 export default defineConfig({
@@ -25,6 +27,7 @@ export default defineConfig({
   markdown: markdown,
   image: images,
   // adapter: netlify(adapter),
+  adapter: cloudflare(adapter),
   //@ts-expect-error ignore this error
   vite: pluginsVite,
 });

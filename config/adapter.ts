@@ -1,9 +1,16 @@
-import { type NetlifyIntegrationConfig } from "@astrojs/netlify";
+import { type Options } from "@astrojs/cloudflare";
 
-type Config = NetlifyIntegrationConfig;
+type Config = Options;
 
 export const adapter = {
-  cacheOnDemandPages: true,
-  experimentalStaticHeaders: true,
-  devFeatures: false,
+  imageService: "cloudflare",
+  platformProxy: { enabled: true },
 } satisfies Config;
+
+// type Config = NetlifyIntegrationConfig;
+
+// export const adapter = {
+//   cacheOnDemandPages: true,
+//   experimentalStaticHeaders: true,
+//   devFeatures: false,
+// } satisfies Config;
