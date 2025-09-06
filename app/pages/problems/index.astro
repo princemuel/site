@@ -28,23 +28,25 @@ entries.sort((a, b) => a.data.status - b.data.status);
 
     <section class="problem-types">
       <h2>Available Problem Types</h2>
-      <div class="problems-grid">
+
+      <div class="problem-grid">
         {
           entries.map((entry) => (
-            <div class="problem-card">
-              <div class="problem-header">
+            <article class="problem-card">
+              <header class="problem-header">
                 <h3>
                   <Link href={`/problems/${entry.id}/`}>{entry.data.title}</Link>
                 </h3>
+
                 <span class="status-badge status-{Math.floor(entry.data.status / 100)}xx">
                   {entry.data.status}
                 </span>
-              </div>
+              </header>
               <p class="problem-description">{entry.data.description}</p>
               <div class="problem-meta">
                 <code class="type-uri">{entry.data.type}</code>
               </div>
-            </div>
+            </article>
           ))
         }
       </div>
@@ -106,7 +108,7 @@ entries.sort((a, b) => a.data.status - b.data.status);
     margin: 0;
   }
 
-  .problems-grid {
+  .problem-grid {
     display: grid;
     gap: 1.5rem;
     margin-bottom: 3rem;

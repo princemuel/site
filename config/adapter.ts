@@ -5,6 +5,7 @@ type Config = Options;
 export const adapter = {
   imageService: "cloudflare",
   platformProxy: { enabled: true },
+  sessionKVBindingName: "SESSION",
 } satisfies Config;
 
 // type Config = NetlifyIntegrationConfig;

@@ -10,6 +10,7 @@ type Config = NonNullable<AstroUserConfig["vite"]>;
 export const pluginsVite = {
   //@ts-expect-error
   plugins: [tailwindcss()],
+  ssr: { external: ["node:path", "node:fs/promises", "node:url", "node:crypto"] },
   define: {
     define: {
       __DEPLOY_CHANNEL__: JSON.stringify(envVars.DEPLOY_CHANNEL ?? "development"),

@@ -1,0 +1,7 @@
+# I, for one, welcome our robotic overlords
+
+User-Agent: *
+Allow: /
+Disallow: /api/*
+
+Sitemap: {{URL}}

@@ -1,0 +1,15 @@
+<OpenSearchDescription
+  xmlns="http://a9.com/-/sppnppmec/opensearch/1.1/"
+  xmlns:moz="http://www.mozilla.org/2006/browser/search/"
+  xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml"
+>
+  <ShortName>Prince Muel</ShortName>
+  <Description>Search {{URL}}</Description>
+  <InputEncoding>UTF-8</InputEncoding>
+  <Url
+    method="get"
+    type="text/html"
+    template="https://www.google.com/search?q={searchTerms}+site%3A{{URL}}"
+  />
+</OpenSearchDescription>
