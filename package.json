@@ -25,7 +25,7 @@
     "promote:stable": "git checkout main && git merge beta && git push origin main",
     "branch:feature": "git checkout -b",
     "branch:hotfix": "git checkout main && git checkout -b",
-    "seed:all": "tsx --tsconfig ./tsconfig.scripts.json ./app/scripts/seed.ts"
+    "seed:all": "tsx --tsconfig ./tsconfig.scripts.json ./src/scripts/seed.ts"
   },
   "dependencies": {
     "@astrojs/cloudflare": "^12.6.7",
