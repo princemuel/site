@@ -5,3 +5,4 @@ onlyBuiltDependencies:
   - netlify-cli
   - sharp
   - unix-dgram
+  - workerd

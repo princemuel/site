@@ -12,7 +12,6 @@
   "editor.wordWrap": "bounded",
   "editor.wordWrapColumn": 96,
   "editor.inlineSuggest.enabled": true,
-  "editor.fontFamily": "'Cascadia Code', 'CaskaydiaMono Nerd Font','JetBrainsMono Nerd Font', 'Droid Sans Mono', 'monospace', monospace",
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.codeActionsOnSave": {
@@ -96,7 +95,8 @@
     "crates": "tools",
     "films": "video",
     "series": "television",
-    "games": "shader"
+    "games": "shader",
+    "problems": "error"
   },
   "[shellscript]": {
     "editor.defaultFormatter": "mads-hartmann.bash-ide-vscode"
