@@ -1,4 +1,3 @@
-import { Temporal } from "@js-temporal/polyfill";
 import { execSync, spawnSync } from "node:child_process";
 import { statSync } from "node:fs";
 

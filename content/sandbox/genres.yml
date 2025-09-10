@@ -1,6 +1,6 @@
 - id: game
   text: Game
-  icon: lucide:home
+  icon: lucide:gamepad-2
 
 - id: website
   text: Website
@@ -8,7 +8,7 @@
 
 - id: app
   text: Web App
-  icon: lucide:home
+  icon: ri:app-store-fill
 
 - id: template
   text: Template

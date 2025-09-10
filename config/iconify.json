@@ -2,26 +2,31 @@
   "lucide": [
     "briefcase-business",
     "command",
+    "files",
+    "file-text",
+    "flask-conical",
     "home",
     "library",
     "mail-plus",
     "monitor-cog",
+    "monitor-play",
     "notebook-pen",
     "palette",
     "pen-line",
     "rss",
-    "square-user"
+    "settings",
+    "user-round-pen"
   ],
-  "ri": ["quill-pen-fill"],
+  "ri": ["app-store-fill", "quill-pen-fill"],
   "ion": [
     "earth",
+    "alert-circle",
     "logo-github",
     "logo-twitter",
     "logo-linkedin",
     "logo-instagram",
     "logo-youtube"
   ],
-  "tabler": ["alert-circle"],
   "simple-icons": ["astro"],
-  "uil": ["file-edit-alt", "flask", "presentation-check"]
+  "uil": ["moon", "sun"]
 }
