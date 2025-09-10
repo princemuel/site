@@ -1,5 +1,3 @@
-// import netlify from "@astrojs/netlify";
-
 import { defineConfig } from "astro/config";
 
 import {
@@ -13,6 +11,7 @@ import {
   pluginsVite,
 } from "./config";
 
+// import netlify from "@astrojs/netlify";s
 import cloudflare from "@astrojs/cloudflare";
 
 // https://astro.build/config
