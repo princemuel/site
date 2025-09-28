@@ -1,14 +1,11 @@
-@import "tailwindcss" source(none);
-
-@source "./pages";
-@source "./components";
-/* @source "../content"; */
-
+@import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
 @theme {
   --text-2xs: 0.625rem;
   --text-2xs--line-height: 0.875rem;
+
+  --color-neutral-950: oklch(from #03000c, l c h);
 
   --font-sans: var(--font-family-sans);
   --font-mono: var(--font-family-mono);
@@ -22,7 +19,8 @@
   --breakpoint-xl: 80em; /*  (min-width: 1280px) */
   --breakpoint-2xl: 96em; /*  (min-width: 1536px) */
   --breakpoint-3xl: 120em; /*  (min-width: 1920px) */
-  --breakpoint-4xl: calc(16 * 12 * 13 * 1em);
+  --breakpoint-4xl: 144em; /*  (min-width: 2304px) */
+  --breakpoint-5xl: 168em; /*  (min-width: 2668px) */
 
   --f-cursor-default:
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='26' fill='none' viewBox='0 0 24 26'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M1.69 2.69a2.357 2.357 0 0 1 2.495-.54L21.47 8.632a2.357 2.357 0 0 1-.255 4.494l-7.271 1.818-1.818 7.27a2.357 2.357 0 0 1-4.494.256L1.15 5.185a2.357 2.357 0 0 1 .54-2.495Z' fill='%23fff'/%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M3.633 3.622A.786.786 0 0 0 2.62 4.633L9.103 21.92a.786.786 0 0 0 1.498-.086l2.047-8.185 8.185-2.046a.785.785 0 0 0 .086-1.498L3.633 3.622Z' fill='%23010101'/%3E%3C/svg%3E"),

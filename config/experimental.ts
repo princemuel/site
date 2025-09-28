@@ -6,12 +6,13 @@ type Config = NonNullable<NonNullable<AstroUserConfig["experimental"]>>;
 
 export const experimental = {
   clientPrerender: true,
-  liveContentCollections: true,
-  // csp: envVars.NODE_ENV !== "development",
+  failOnPrerenderConflict: true,
   contentIntellisense: true,
-  headingIdCompat: true,
-  preserveScriptOrder: true,
   fonts: fonts,
+  headingIdCompat: true,
+  // csp: envVars.NODE_ENV !== "development",
+  preserveScriptOrder: true,
+  liveContentCollections: true,
   staticImportMetaEnv: true,
   chromeDevtoolsWorkspace: true,
 } satisfies Config;

@@ -1,6 +1,7 @@
 // import database from "@astrojs/db";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
+import svelte from "@astrojs/svelte";
 import sentry from "@sentry/astro";
 import spotlightjs from "@spotlightjs/astro";
 import pwa from "@vite-pwa/astro";
@@ -77,6 +78,7 @@ export const integrations = [
   code(),
   mdx(opts_mdx),
   sitemap(opts_sitemap),
-  // database(),
+  // database({ mode: 'web' }),
+  svelte(),
   pwa(opts_pwa),
 ] satisfies Config;

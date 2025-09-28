@@ -6,31 +6,22 @@ type Config = NonNullable<NonNullable<AstroUserConfig["experimental"]>["fonts"]>
 
 export const fonts = [
   {
-    provider: "local",
-    name: "FontFamilySans",
+    name: "Sen",
+    provider: fontProviders.fontsource(),
     cssVariable: "--font-family-sans",
-    variants: [
-      {
-        weight: 400,
-        style: "normal",
-        src: ["./fonts/custom-400.woff2"],
-      },
-      {
-        weight: 500,
-        style: "normal",
-        src: ["./fonts/custom-500.woff2"],
-      },
-
-      {
-        weight: 600,
-        style: "normal",
-        src: ["./fonts/custom-600.woff2"],
-      },
-    ],
+    subsets: ["latin"],
     fallbacks: [
       "ui-sans-serif",
       "system-ui",
-      "apple-system",
+      "-apple-system",
+      "BlinkMacSystemFont",
+      "Segoe UI",
+      "Roboto",
+      "Oxygen",
+      "Ubuntu",
+      "Cantarell",
+      "Open Sans",
+      "Helvetica Neue",
       "sans-serif",
       "Apple Color Emoji",
       "Segoe UI Emoji",
@@ -41,7 +32,7 @@ export const fonts = [
   {
     name: "JetBrains Mono",
     // name: "Source Code Pro",
-    provider: fontProviders.google(),
+    provider: fontProviders.fontsource(),
     cssVariable: "--font-family-mono",
     subsets: ["latin"],
     fallbacks: [
