@@ -5,7 +5,7 @@
   "exclude": ["dist", ".netlify", "**/local/*", "**/ignored/*"],
   "compilerOptions": {
     "noErrorTruncation": true,
-    "erasableSyntaxOnly": true,
+    // "erasableSyntaxOnly": true,
     "exactOptionalPropertyTypes": false,
     "baseUrl": ".",
     "paths": { "@/*": ["./src/*"] }

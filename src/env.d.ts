@@ -1,11 +1,12 @@
+/// <reference types="vite-plugin-pwa/vanillajs" />
+/// <reference types="vite-plugin-pwa/info" />
+/// <reference types="vite-plugin-pwa/pwa-assets" />
 /// <reference types="../.astro/icon.d.ts" />
 
 type Runtime = import("@astrojs/cloudflare").Runtime<Env>;
 
 declare namespace App {
   interface Locals extends Runtime {
-    otherLocals: {
-      test: string;
-    };
+    otherLocals: { test: string };
   }
 }
