@@ -5,7 +5,13 @@
   --text-2xs: 0.625rem;
   --text-2xs--line-height: 0.875rem;
 
-  --color-neutral-950: oklch(from #03000c, l c h);
+  --color-brand-100: oklch(from #f4f3ef l c h);
+  --color-brand-200: oklch(from #edece5 l c h);
+  --color-brand-400: oklch(from #b0afa9 l c h);
+  --color-brand-500: oklch(from #858480 l c h);
+  --color-brand-800: oklch(from #242022 l c h);
+  --color-brand-900: oklch(from #181617 l c h);
+  --color-brand-950: oklch(from #010101 l c h);
 
   --font-sans: var(--font-family-sans);
   --font-mono: var(--font-family-mono);
