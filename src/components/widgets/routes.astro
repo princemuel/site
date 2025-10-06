@@ -1,29 +1,37 @@
 ---
 import { getCollection } from "astro:content";
 
-import Navlink from "@/components/shared/navlink.astro";
 import { Icon } from "astro-icon/components";
+
+import Navlink from "@/components/shared/navlink.astro";
 
 import type { HTMLAttributes } from "astro/types";
 
 type Props = HTMLAttributes<"nav">;
 
-// const excluded = ["wiki", "posts",];
-const excluded = new Set(["wiki", "posts"]);
+const excluded = new Set(["wiki", "posts", "resources", "articles", "dashboard"]);
 const routes = await getCollection("routes", (data) => !excluded.has(data.id));
-
-const { class: classnames, ...attrs } = Astro.props as Props;
 ---
 
-<nav aria-label="Main" {...attrs}>
+<nav class:list={["flex items-center justify-evenly capitalize", Astro.props.class]}>
   {
     routes.map((r) => (
-      <Fragment>
-        <Navlink href={r.data.href}>
-          <Icon name={r.data.icon} class="text-lg sm:hidden" />
-          <span class="sr-only sm:not-sr-only">{r.data.text}</span>
-        </Navlink>
-      </Fragment>
+      <Navlink
+        href={r.data.href}
+        class:list={[
+          "p-3 text-base",
+          "text-brand-900 dark:text-brand-200",
+          "hover:text-brand-200 dark:hover:text-brand-900",
+          "hover:bg-brand-900 dark:hover:bg-brand-200",
+          "focus:text-brand-200 dark:focus:text-brand-900",
+          "focus:bg-brand-900 dark:focus:bg-brand-200",
+          "aria-[current=page]:text-brand-200 dark:aria-[current=page]:text-brand-900",
+          "aria-[current=page]:bg-brand-900 dark:aria-[current=page]:bg-brand-200",
+        ]}
+      >
+        <Icon name={r.data.icon} class="text-2xl md:hidden" />
+        <span class="sr-only md:not-sr-only">{r.data.text}</span>
+      </Navlink>
     ))
   }
 </nav>

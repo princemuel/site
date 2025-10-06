@@ -1,29 +1,45 @@
 ---
 import { Icon } from "astro-icon/components";
+
+import type { HTMLAttributes } from "astro/types";
+
+type Props = HTMLAttributes<"button">;
 ---
 
 <theme-picker class="contents">
-  <button type="button" title="Toggle Theme" class="text-2xl text-inherit">
+  <button
+    type="button"
+    title="Toggle Theme"
+    class:list={[
+      "group relative flex items-center p-3 text-2xl",
+      "text-brand-900 dark:text-brand-200",
+      "hover:text-brand-200 dark:hover:text-brand-900",
+      "hover:bg-brand-900 dark:hover:bg-brand-200",
+      "focus:text-brand-200 dark:focus:text-brand-900",
+      "focus:bg-brand-900 dark:focus:bg-brand-200",
+      Astro.props.class,
+    ]}
+  >
     <span class="sr-only">Toggle theme</span>
     <Icon
       data-id="x-light"
-      name="sun"
+      name="uil:moon"
       role="presentation"
-      class="transition-colors data-[hidden=true]:hidden"
+      class="text-inherit data-[hidden=true]:hidden"
       data-hidden="false"
     />
     <Icon
       data-id="x-dark"
-      name="moon"
+      name="uil:sun"
       role="presentation"
-      class="transition-colors data-[hidden=true]:hidden"
+      class="text-inherit data-[hidden=true]:hidden"
       data-hidden="false"
     />
     <Icon
       data-id="x-system"
-      name="system"
+      name="lucide:monitor-cog"
       role="presentation"
-      class="transition-colors data-[hidden=true]:hidden"
+      class="text-inherit data-[hidden=true]:hidden"
       data-hidden="false"
     />
   </button>
@@ -36,6 +52,7 @@ import { Icon } from "astro-icon/components";
 
 <script>
   import { $, createElement } from "@/helpers/dom";
+  import { println$ } from "@/helpers/println";
 
   type Theme = (typeof themes)[number];
 
@@ -77,6 +94,8 @@ import { Icon } from "astro-icon/components";
     $.dataset.codeTheme =
       theme === "system" ? `github-${systemTheme}-default` : `github-${theme}-default`;
 
+    println$(theme);
+
     storeTheme(theme);
   };
 
@@ -92,6 +111,7 @@ import { Icon } from "astro-icon/components";
       onClick: (e: PointerEvent) => void;
       constructor() {
         super();
+        //@ts-expect-error
         this.btn = $("button", HTMLButtonElement, this);
         this.onClick = this.#handleThemeChange.bind(this);
       }

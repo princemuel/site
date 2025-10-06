@@ -5,13 +5,15 @@ import "@/assets/styles/prose.css";
 import "@/assets/styles/transitions.css";
 import "@/global.css";
 
-import ThemeProvider from "@/components/widgets/theme-provider.astro";
+import Footer from "@/components/layout/footer.astro";
+import Header from "@/components/layout/header.astro";
+import ThemeProvider from "../widgets/theme-provider.astro";
 ---
 
 <!doctype html>
 <html
   lang="en"
-  class:list={["scheme-light dark:scheme-dark", "motion-safe:scroll-smooth"]}
+  class:list={["scheme-light motion-safe:scroll-smooth dark:scheme-dark"]}
   data-color-scheme="light"
 >
   <head>
@@ -25,16 +27,22 @@ import ThemeProvider from "@/components/widgets/theme-provider.astro";
     <title>Astro</title>
     <Font cssVariable="--font-family-sans" preload />
     <ThemeProvider />
+    <script src="@/assets/scripts/temporal.client.ts"></script>
   </head>
   <body
     class:list={[
       "relative flex min-h-svh flex-col",
       "font-sans text-lg font-normal antialiased",
-      "bg-white text-black dark:bg-black dark:text-white",
+      // "bg-white text-black dark:bg-neutral-950 dark:text-white",
+      "bg-brand-200 text-brand-900 dark:bg-brand-900 dark:text-brand-200",
     ]}
   >
-    <main aria-labelledby="aria-headline">
+    <Header />
+
+    <main aria-labelledby="a11ty-headline" class="py-12">
       <slot />
     </main>
+
+    <Footer />
   </body>
 </html>
