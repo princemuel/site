@@ -35,9 +35,10 @@ entry.data.updatedAt ??= new Date(frontmatter.updatedAt);
     </header>
 
     <div class="problem-meta">
-      <span class="status-badge status-{Math.floor(entry.data.status / 100)}xx">
+      <span class:list={["status-badge", `status-${Math.floor(entry.data.status / 100)}xx`]}>
         HTTP {entry.data.status}
       </span>
+
       <code class="type-uri">{entry.data.type}</code>
     </div>
 

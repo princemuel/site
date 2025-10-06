@@ -1,47 +1,49 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection, getEntry, render } from "astro:content";
 
 import { Icon } from "astro-icon/components";
-import { Image } from "astro:assets";
 
 import { hasValues } from "@/utils/guards";
 
-import { avatar } from "@/assets";
-import { Content } from "@/content/markdown/home.md";
-
 import Shell from "@/components/frames/shell.astro";
+import Fence from "@/components/layout/fence.astro";
 import Link from "@/components/shared/link.astro";
-import ThemePicker from "@/components/widgets/theme-picker.astro";
-
 // const excluded = ["wiki", "posts",];
 const excluded = new Set(["home", "posts", "wiki"]);
 
-const routes = await getCollection("routes", (data) => !excluded.has(data.id));
+const entry = await getEntry("pages", "home");
+if (!entry) throw new Response(null, { status: 404 });
+
+const [{ Content }, routes] = await Promise.all([
+  render(entry),
+  getCollection("routes", (data) => !excluded.has(data.id)),
+]);
 ---
 
 <Shell>
-  <main class="prose">
-    <section class="">
-      <figure class="max-h-80 max-w-80 self-center overflow-clip rounded-full">
-        <Image src={avatar} alt="Me just staring into space" />
-      </figure>
-      <Content />
-      {
-        hasValues(routes) ? (
-          <ul class="not-prose flex flex-col gap-3">
-            {routes.map((r) => (
-              <li class="flex items-center gap-2">
-                <Icon name={r.data.icon} />
-                <Link href={r.data.href}>{r.data.text}</Link>
-              </li>
-            ))}
-          </ul>
-        ) : null
-      }
+  <Fence>
+    <section class="flex flex-col gap-6">
+      <!-- <Time datetime={new Date().toISOString()} /> -->
 
-      <ThemePicker />
+      <h1 id="a11ty-headline" class="text-3xl font-light md:text-5xl">
+        I'm Sam — a Software Engineer crafting intuitive digital experiences.
+      </h1>
 
-      <button type="button">Hello</button>
+      <article class="prose prose-lg max-w-none prose-neutral dark:prose-invert">
+        <Content frontmatter={entry.data} />
+        {
+          hasValues(routes) ? (
+            <ul class="not-prose flex flex-col gap-3">
+              {routes.map((r) => (
+                <li class="flex items-center gap-2">
+                  <Icon name={r.data.icon} />
+                  <Link href={r.data.href}>{r.data.text}</Link>
+                </li>
+              ))}
+            </ul>
+          ) : null
+        }
+      </article>
     </section>
-  </main>
+  </Fence>
 </Shell>

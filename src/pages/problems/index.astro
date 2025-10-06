@@ -17,7 +17,7 @@ entries.sort((a, b) => a.data.status - b.data.status);
 >
   <div class="problem-index">
     <header class="header">
-      <h1>Problem Types</h1>
+      <h1 id="a11ty-headline" style="font-weight: 300;">Problem Types</h1>
       <p class="subtitle">
         The API routes on
         <Link href="/">princemuel.com</Link> use the
@@ -38,7 +38,12 @@ entries.sort((a, b) => a.data.status - b.data.status);
                   <Link href={`/problems/${entry.id}/`}>{entry.data.title}</Link>
                 </h3>
 
-                <span class="status-badge status-{Math.floor(entry.data.status / 100)}xx">
+                <span
+                  class:list={[
+                    "status-badge",
+                    `status-${Math.floor(entry.data.status / 100)}xx`,
+                  ]}
+                >
                   {entry.data.status}
                 </span>
               </header>
