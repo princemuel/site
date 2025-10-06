@@ -6,8 +6,8 @@ type: "https://princemuel.com/problems/rate-limited"
 extensions:
   limit: "The rate limit ceiling for this endpoint"
   remaining: "Number of requests remaining in current window"
-  resetTime: "ISO 8601 timestamp when the rate limit resets"
-  retryAfter: "Number of seconds to wait before retrying"
+  reset_time: "ISO 8601 timestamp when the rate limit resets"
+  retry_after: "Number of seconds to wait before retrying"
 ---
 
 Too many requests have been made in a given time period.
@@ -30,11 +30,11 @@ The rate limit ceiling for this endpoint (requests per time window).
 
 Number of requests remaining in the current time window.
 
-### `resetTime`
+### `reset_time`
 
 ISO 8601 timestamp when the rate limit window resets.
 
-### `retryAfter`
+### `retry_after`
 
 Number of seconds to wait before making another request.
 
@@ -51,8 +51,8 @@ Number of seconds to wait before making another request.
   "instance": "/api/search",
   "limit": 100,
   "remaining": 0,
-  "resetTime": "2024-01-01T15:00:00Z",
-  "retryAfter": 3600
+  "reset_time": "2024-01-01T15:00:00Z",
+  "retry_after": 3600
 }
 ```
 
@@ -67,9 +67,9 @@ Number of seconds to wait before making another request.
   "instance": "/api/users/123",
   "limit": 1000,
   "remaining": 0,
-  "resetTime": "2024-01-02T00:00:00Z",
-  "retryAfter": 43200,
-  "rateLimitType": "daily",
+  "reset_time": "2024-01-02T00:00:00Z",
+  "retry_after": 43200,
+  "rate_limit_type": "daily",
   "userId": "user_123"
 }
 ```
@@ -83,8 +83,8 @@ Number of seconds to wait before making another request.
 
 ## How to Fix
 
-1. Wait for the time specified in `retryAfter`
-2. Check the `resetTime` to know when limits reset
+1. Wait for the time specified in `retry_after`
+2. Check the `reset_time` to know when limits reset
 3. Implement exponential backoff in your client
 4. Cache responses to reduce API calls
 5. Consider upgrading to higher rate limit tier
@@ -101,4 +101,6 @@ Rate limit responses should include these HTTP headers:
 
 ---
 
-_This problem type conforms to [RFC 9457 - Problem Details for HTTP APIs](https://www.rfc-editor.org/rfc/rfc9457.html)_
+_This problem type conforms to [RFC 9457 - Problem Details for HTTP APIs][rfc-9457]_
+
+[rfc-9457]: https://www.rfc-editor.org/rfc/rfc9457.html

@@ -1,4 +1,11 @@
-# Hi there
+---
+title: About Me
+headline: "The home page url"
+description: I am a Software enngineer with over 4 years of experience with...
+draft: true
+publishedAt: "2025-10-05T23:21:50.990Z"
+permalink: /about
+---
 
 My name is Samuel Chukwuzube. I go by @princemuel on most social networks
 and no, I'm not a prince.

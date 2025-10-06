@@ -5,7 +5,7 @@ description: "The request contains invalid or missing data that prevents process
 type: "https://princemuel.com/problems/validation-error"
 extensions:
   errors: "Array of validation error objects with field and message properties"
-  invalidParams: "Array of parameter names that failed validation"
+  invalid_params: "Array of parameter names that failed validation"
 ---
 
 The request contains invalid or missing data that prevents processing.
@@ -27,7 +27,7 @@ Array of validation error objects. Each error contains:
 - `field` (string): The field name that failed validation
 - `message` (string): Human-readable description of the validation failure
 
-### `invalidParams`
+### `invalid_params`
 
 Array of parameter names that failed validation. Useful for query parameter validation.
 
@@ -82,7 +82,7 @@ Array of parameter names that failed validation. Useful for query parameter vali
   "status": 400,
   "detail": "Invalid query parameters provided",
   "instance": "/api/search?limit=abc&offset=-1",
-  "invalidParams": ["limit", "offset"],
+  "invalid_params": ["limit", "offset"],
   "errors": [
     {
       "field": "limit",
@@ -115,4 +115,6 @@ Array of parameter names that failed validation. Useful for query parameter vali
 
 ---
 
-_This problem type conforms to [RFC 9457 - Problem Details for HTTP APIs](https://www.rfc-editor.org/rfc/rfc9457.html)_
+_This problem type conforms to [RFC 9457 - Problem Details for HTTP APIs][rfc-9457]_
+
+[rfc-9457]: https://www.rfc-editor.org/rfc/rfc9457.html

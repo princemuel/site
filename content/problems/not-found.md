@@ -4,8 +4,8 @@ status: 404
 description: "The requested resource could not be found on this server."
 type: "https://princemuel.com/problems/not-found"
 extensions:
-  resourceType: "The type of resource that was not found"
-  resourceId: "The identifier of the resource that was not found"
+  resource_type: "The type of resource that was not found"
+  resource_id: "The identifier of the resource that was not found"
 ---
 
 The requested resource could not be found on this server.
@@ -20,11 +20,11 @@ The requested resource could not be found on this server.
 
 ## Extension Fields
 
-### `resourceType`
+### `resource_type`
 
 The type of resource that was not found (e.g., "user", "post", "image").
 
-### `resourceId`
+### `resource_id`
 
 The identifier of the resource that was not found.
 
@@ -39,8 +39,8 @@ The identifier of the resource that was not found.
   "status": 404,
   "detail": "No user exists with ID 999",
   "instance": "/api/users/999",
-  "resourceType": "user",
-  "resourceId": "999"
+  "resource_type": "user",
+  "resource_id": "999"
 }
 ```
 
@@ -53,12 +53,9 @@ The identifier of the resource that was not found.
   "status": 404,
   "detail": "Post 123 does not have a comment with ID 456",
   "instance": "/api/posts/123/comments/456",
-  "resourceType": "comment",
-  "resourceId": "456",
-  "parentResource": {
-    "type": "post",
-    "id": "123"
-  }
+  "resource_type": "comment",
+  "resource_id": "456",
+  "parent": { "type": "post", "id": "123" }
 }
 ```
 
@@ -80,4 +77,6 @@ The identifier of the resource that was not found.
 
 ---
 
-_This problem type conforms to [RFC 9457 - Problem Details for HTTP APIs](https://www.rfc-editor.org/rfc/rfc9457.html)_
+_This problem type conforms to [RFC 9457 - Problem Details for HTTP APIs][rfc-9457]_
+
+[rfc-9457]: https://www.rfc-editor.org/rfc/rfc9457.html
