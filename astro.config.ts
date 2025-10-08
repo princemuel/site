@@ -11,12 +11,12 @@ import {
   pluginsVite,
 } from "./config";
 
-// import netlify from "@astrojs/netlify";s
-import cloudflare from "@astrojs/cloudflare";
+import node from "@astrojs/node";
 
 // https://astro.build/config
 export default defineConfig({
   site: envVars.PUBLIC_SITE_URL,
+  srcDir: "src",
   env: { validateSecrets: true, schema: envSchema },
   experimental: flags,
   integrations: integrations,
@@ -24,8 +24,7 @@ export default defineConfig({
   prefetch: { prefetchAll: true, defaultStrategy: "viewport" },
   markdown: markdown,
   image: images,
-  // adapter: netlify(adapter),
-  adapter: cloudflare(adapter),
+  adapter: node(adapter),
   //@ts-expect-error ignore this error
   vite: pluginsVite,
 });

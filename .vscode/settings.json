@@ -33,9 +33,10 @@
   //   "typescriptreact": "html"
   // },
   "oxc.enable": true,
-  "eslint.enable": false,
-  "eslint.useFlatConfig": true,
-  "eslint.validate": ["astro", "javascript", "markdown", "typescript", "typescriptreact"],
+  "oxc.fmt.experimental": true,
+  "[javascript]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
   "json.validate.enable": true,
   "css.validate": false,
   "less.validate": false,
@@ -53,6 +54,9 @@
   "auto-close-tag.activationOnLanguage": ["*"],
   "[astro]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[svelte]": {
+    "editor.defaultFormatter": "svelte.svelte-vscode"
   },
   "tailwindCSS.emmetCompletions": true,
   "tailwindCSS.classAttributes": ["class", "class:list", "tw"],

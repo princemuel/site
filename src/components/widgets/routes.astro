@@ -20,13 +20,13 @@ const routes = await getCollection("routes", (data) => !excluded.has(data.id));
         href={r.data.href}
         class:list={[
           "p-3 text-base",
-          "text-brand-900 dark:text-brand-200",
-          "hover:text-brand-200 dark:hover:text-brand-900",
-          "hover:bg-brand-900 dark:hover:bg-brand-200",
-          "focus:text-brand-200 dark:focus:text-brand-900",
-          "focus:bg-brand-900 dark:focus:bg-brand-200",
-          "aria-[current=page]:text-brand-200 dark:aria-[current=page]:text-brand-900",
-          "aria-[current=page]:bg-brand-900 dark:aria-[current=page]:bg-brand-200",
+          "text-gray-900 dark:text-gray-200",
+          "hover:text-gray-200 dark:hover:text-gray-900",
+          "hover:bg-gray-900 dark:hover:bg-gray-200",
+          "focus:text-gray-200 dark:focus:text-gray-900",
+          "focus:bg-gray-900 dark:focus:bg-gray-200",
+          "aria-[current=page]:text-gray-200 dark:aria-[current=page]:text-gray-900",
+          "aria-[current=page]:bg-gray-900 dark:aria-[current=page]:bg-gray-200",
         ]}
       >
         <Icon name={r.data.icon} class="text-2xl md:hidden" />

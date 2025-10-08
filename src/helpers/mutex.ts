@@ -3,16 +3,16 @@ import { createDeferred } from "./deferred";
 type AcquiredMutex<T> = T & { release: () => void };
 
 export class Mutex<T extends object> {
-  #waitlist: Deferred<AcquiredMutex<T>>[] = [];
-  #isLocked = false; // Renamed for clarity
+  #locked = false;
   #guard: MutexGuard<T> | null = null;
+  #waitlist: Deferred<AcquiredMutex<T>>[] = [];
 
   constructor(private readonly resource: T) {}
 
   public async acquire(): Promise<AcquiredMutex<T>> {
-    if (!this.#isLocked) {
-      this.#isLocked = true;
-      return this.createGuardedResource();
+    if (!this.#locked) {
+      this.#locked = true;
+      return this.#createGuardedResource();
     }
 
     const deferred = createDeferred<AcquiredMutex<T>>();
@@ -20,13 +20,13 @@ export class Mutex<T extends object> {
     return deferred.promise;
   }
 
-  private createGuardedResource(): AcquiredMutex<T> {
+  #createGuardedResource(): AcquiredMutex<T> {
     this.#guard = new MutexGuard(this);
     return new Proxy(this.resource, this.#guard) as AcquiredMutex<T>;
   }
 
   public release(): void {
-    if (!this.#isLocked) {
+    if (!this.#locked) {
       throw new Error("Cannot release an already released mutex");
     }
 
@@ -36,19 +36,18 @@ export class Mutex<T extends object> {
     }
 
     // Process next waiter or unlock
-    const nextWaiter = this.#waitlist.shift();
-    if (nextWaiter) {
+    const waiter = this.#waitlist.shift();
+    if (waiter) {
       // Keep locked, pass to next waiter
-      const guardedResource = this.createGuardedResource();
-      nextWaiter.resolve(guardedResource);
+      waiter.resolve(this.#createGuardedResource());
     } else {
       // No more waiters, unlock
-      this.#isLocked = false;
+      this.#locked = false;
     }
   }
 
   public get isAcquired(): boolean {
-    return this.#isLocked;
+    return this.#locked;
   }
 
   public get length(): number {
@@ -59,8 +58,8 @@ export class Mutex<T extends object> {
   public destroy(): void {
     // Reject all pending waiters
     while (this.#waitlist.length > 0) {
-      const waiter = this.#waitlist.shift()!;
-      waiter.reject(new Error("Mutex was destroyed"));
+      const waiter = this.#waitlist.shift();
+      waiter?.reject(new Error("Mutex was destroyed"));
     }
 
     // Invalidate current guard
@@ -69,7 +68,7 @@ export class Mutex<T extends object> {
       this.#guard = null;
     }
 
-    this.#isLocked = false;
+    this.#locked = false;
   }
 }
 
@@ -108,9 +107,7 @@ export class MutexGuard<T extends object> implements ProxyHandler<T> {
     if (!this.#isValid) throw new Error("Cannot check properties on invalidated mutex guard");
 
     // Always report that 'release' exists
-    if (property === "release") return true;
-
-    return Reflect.has(target, property);
+    return property === "release" || Reflect.has(target, property);
   }
 
   public ownKeys(target: T): ArrayLike<string | symbol> {

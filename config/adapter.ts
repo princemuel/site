@@ -1,12 +1,16 @@
-import { type Options } from "@astrojs/cloudflare";
+import type { UserOptions } from "node_modules/@astrojs/node/dist/types";
 
-type Config = Options;
+type Config = UserOptions;
 
 export const adapter = {
-  imageService: "cloudflare",
-  platformProxy: { enabled: true },
-  sessionKVBindingName: "SESSION",
+  mode: "standalone",
+  experimentalStaticHeaders: true,
 } satisfies Config;
+// export const adapter = {
+//   imageService: "cloudflare",
+//   platformProxy: { enabled: true },
+//   sessionKVBindingName: "SESSION",
+// } satisfies Config;
 
 // type Config = NetlifyIntegrationConfig;
 
