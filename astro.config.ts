@@ -16,7 +16,7 @@ import node from "@astrojs/node";
 // https://astro.build/config
 export default defineConfig({
   site: envVars.PUBLIC_SITE_URL,
-  srcDir: "src",
+  srcDir: "app",
   env: { validateSecrets: true, schema: envSchema },
   experimental: flags,
   integrations: integrations,
