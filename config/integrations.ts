@@ -35,7 +35,7 @@ const opts_mdx = {
 
 export const opts_icon = {
   include: icons,
-  iconDir: "src/assets/icons",
+  iconDir: "app/assets/icons",
   svgoOptions: { multipass: true },
 } satisfies IconifyOptions;
 

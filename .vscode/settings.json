@@ -60,7 +60,7 @@
   },
   "tailwindCSS.emmetCompletions": true,
   "tailwindCSS.classAttributes": ["class", "class:list", "tw"],
-  "tailwindCSS.experimental.configFile": "src/global.css",
+  "tailwindCSS.experimental.configFile": "app/global.css",
   "tailwindCSS.includeLanguages": {
     "xslt": "html"
   },

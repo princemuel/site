@@ -14,10 +14,10 @@
     "start": "node ./dist/server/entry.mjs",
     "astro": "astro",
     "deploy": "wrangler deploy",
-    "seed:all": "tsx --tsconfig ./tsconfig.scripts.json ./src/scripts/seed.ts"
+    "seed:all": "tsx --tsconfig ./tsconfig.scripts.json ./app/scripts/seed.ts"
   },
   "dependencies": {
-    "astro": "^5",
+    "astro": "^5.14.4",
     "http-errors-enhanced": "^3.0.2",
     "isbot": "^5.1.31",
     "outvariant": "^1.4.3",
@@ -28,10 +28,10 @@
     "temporal-polyfill": "^0.3.0"
   },
   "devDependencies": {
-    "@astrojs/db": "^0.18.0",
     "@astrojs/check": "^0.9.4",
-    "@astrojs/mdx": "^4.3.6",
-    "@astrojs/node": "^9.4.4",
+    "@astrojs/db": "^0.18.0",
+    "@astrojs/mdx": "^4.3.7",
+    "@astrojs/node": "^9.4.6",
     "@astrojs/rss": "^4.0.12",
     "@astrojs/sitemap": "^3.6.0",
     "@astrojs/svelte": "^7.2.0",
@@ -40,11 +40,11 @@
     "@fujocoded/expressive-code-output": "^0.1.0",
     "@iconify-json/ion": "^1.2.6",
     "@iconify-json/lucide": "^1.2.69",
-    "@iconify-json/ri": "^1.2.5",
+    "@iconify-json/ri": "^1.2.6",
     "@iconify-json/simple-icons": "^1.2.54",
     "@iconify-json/uil": "^1.2.3",
     "@resvg/resvg-js": "^2.6.2",
-    "@sentry/astro": "^10.18.0",
+    "@sentry/astro": "^10.19.0",
     "@spotlightjs/astro": "^3.2.6",
     "@tailwindcss/typography": "^0.5.19",
     "@tailwindcss/vite": "^4.1.14",
@@ -59,6 +59,7 @@
     "oxlint-tsgolint": "^0.2.0",
     "prettier": "^3.6.2",
     "prettier-plugin-astro": "^0.14.1",
+    "prettier-plugin-organize-attributes": "^1.0.0",
     "prettier-plugin-organize-imports": "^4.3.0",
     "prettier-plugin-tailwindcss": "^0.6.14",
     "reading-time": "^1.5.0",
@@ -71,5 +72,5 @@
     "typescript": "^5",
     "vite": "^7.1.9"
   },
-  "packageManager": "pnpm@10.18.1"
+  "packageManager": "pnpm@10.18.2"
 }

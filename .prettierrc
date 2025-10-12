@@ -6,11 +6,13 @@
   "trailingComma": "all",
   "tailwindFunctions": ["tw", "tv"],
   "tailwindAttributes": ["tw"],
-  "tailwindStylesheet": "./src/global.css",
+  "tailwindStylesheet": "./app/global.css",
+  "attributeGroups": ["^class$", "^(id|name)$", "$DEFAULT", "^aria-"],
   "plugins": [
     "prettier-plugin-astro",
-    "prettier-plugin-tailwindcss",
+    "prettier-plugin-organize-attributes",
     "prettier-plugin-organize-imports"
+    "prettier-plugin-tailwindcss"
   ],
   "overrides": [
     {

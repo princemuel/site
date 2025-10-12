@@ -1,4 +1,4 @@
-await import("../src/assets/scripts/temporal.server").then((m) => m.default());
+await import("../app/assets/scripts/temporal.server").then((m) => m.default());
 
 export { adapter } from "./adapter";
 export { envSchema, envVars } from "./dotenv";

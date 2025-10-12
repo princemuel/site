@@ -13,7 +13,7 @@ import type { APIRoute } from "astro";
 // </div>`;
 
 // https://github.com/vercel/satori#css
-// https://github.com/vercel/satori/blob/main/src/handler/presets.ts
+// https://github.com/vercel/satori/blob/main/app/handler/presets.ts
 // https://vercel.com/docs/og-image-generation/examples?framework=other#dynamic-title
 
 export const GET: APIRoute = async (context) => {
