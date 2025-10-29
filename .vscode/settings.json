@@ -106,6 +106,6 @@
     "editor.defaultFormatter": "mads-hartmann.bash-ide-vscode"
   },
   "yaml.schemas": {
-    "https://json.schemastore.org/github-issue-config.json": "file:///home/nyx/Lab/Projects/Repos/medotdev/.github/ISSUE_TEMPLATE/config.yml"
+    "https://json.schemastore.org/github-issue-config.json": "file:///home/nyx/Lab/Projects/Repos/site/.github/ISSUE_TEMPLATE/config.yml"
   }
 }
