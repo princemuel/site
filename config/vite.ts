@@ -8,7 +8,7 @@ import type { AstroUserConfig } from "astro";
 type Config = NonNullable<AstroUserConfig["vite"]>;
 
 export const pluginsVite = {
-  //@ts-expect-error
+  //@ts-ignore
   plugins: [tailwindcss()],
   ssr: { external: ["node:path", "node:fs/promises", "node:url", "node:crypto"] },
   define: {
@@ -18,4 +18,5 @@ export const pluginsVite = {
       __GIT_COMMIT__: JSON.stringify(getGitCommit(envVars.COMMIT_REF)),
     },
   },
+  //@ts-ignore
 } satisfies Config;

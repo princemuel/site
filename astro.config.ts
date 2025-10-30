@@ -21,10 +21,10 @@ export default defineConfig({
   experimental: flags,
   integrations: integrations,
   server: { host: true },
-  prefetch: { prefetchAll: true, defaultStrategy: "viewport" },
+  prefetch: { prefetchAll: true, defaultStrategy: "load" },
   markdown: markdown,
   image: images,
   adapter: node(adapter),
-  //@ts-expect-error ignore this error
+  //@ts-ignore
   vite: pluginsVite,
 });

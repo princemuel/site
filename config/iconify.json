@@ -1,4 +1,14 @@
 {
+  "ion": [
+    "earth",
+    "alert-circle",
+    "logo-github",
+    "logo-twitter",
+    "logo-linkedin",
+    "logo-instagram",
+    "logo-youtube",
+    "logo-mastodon"
+  ],
   "lucide": [
     "briefcase-business",
     "command",
@@ -18,15 +28,6 @@
     "user-round-pen"
   ],
   "ri": ["app-store-fill", "quill-pen-fill"],
-  "ion": [
-    "earth",
-    "alert-circle",
-    "logo-github",
-    "logo-twitter",
-    "logo-linkedin",
-    "logo-instagram",
-    "logo-youtube"
-  ],
   "simple-icons": ["astro"],
   "uil": ["moon", "sun"]
 }
