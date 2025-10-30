@@ -44,5 +44,6 @@ export const socials = defineCollection({
     href: z.string().min(2),
     text: z.string().min(2),
     icon: z.custom<Icon>((val) => typeof val === "string"),
+    color: z.string().min(2).optional(),
   }),
 });

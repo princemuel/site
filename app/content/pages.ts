@@ -11,6 +11,7 @@ export const pages = defineCollection({
     draft: z.boolean().default(false),
     publishedAt: z.string().datetime(),
     updatedAt: z.string().datetime().optional(),
+    tags: z.array(z.string()).optional(),
     permalink: z.string().optional(),
   }),
 });

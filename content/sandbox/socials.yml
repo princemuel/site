@@ -1,44 +1,66 @@
 - id: discord
   href: https://discord.gg/vW7dnUVGP9
   text: Join our Discord server
-  icon: discord
+  icon: ion:logo-twitter
+  color: text-purple-500
+  # icon: discord
 
 - id: twitter
   href: https://x.com/intent/follow?screen_name=iamprincemuel
   text: Follow Me on Twitter/X
   icon: ion:logo-twitter
+  color: text-blue-500
 
 - id: instagram
   href: https://instagram.gg/vW7dnUVGP9
   text: Follow me on Instagram
   icon: ion:logo-instagram
+  color: text-pink-500
 
 - id: youtube
   href: https://youtube.com/@iamprincemuel
   text: Subscribe to my YouTube Channel
   icon: ion:logo-youtube
+  color: text-red-600
 
 - id: linkedin
   href: https://www.linkedin.com/in/princemuel
   text: Connect with me on LinkedIn
   icon: ion:logo-linkedin
+  color: text-blue-700
 
 - id: website
-  href: https://princemuel.dev/about
+  href: https://princemuel.com/about
   text: Connect with me on LinkedIn
   icon: ion:earth
+  color: text-green-500
 
 - id: github
   href: https://github.com/princemuel
   text: Check out my projects on GitHub
   icon: ion:logo-github
+  color: text-gray-800 dark:text-gray-200
 
 - id: email
   href: mail:to:vansomecsam@gmail.com
-  text: Send me an email message
+  text: Send me a message
   icon: lucide:mail-plus
+  color: text-red-500
 
 - id: rss
   href: /rss.xml
   text: Subscribe to my rss feed
   icon: lucide:rss
+  color: text-orange-500
+
+- id: mastodon
+  href: https://mastodon.social/@princemuel
+  text: Follow me on Mastodon
+  icon: ion:logo-mastodon
+  color: text-indigo-600
+
+- id: keyoxide
+  href: https://keyoxide.org/u/princemuel
+  text: Verify my identity on Keyoxide
+  icon: keyoxide
+  color: text-indigo-400

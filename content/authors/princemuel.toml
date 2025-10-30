@@ -7,7 +7,7 @@ thumbnail = "https://github.com/princemuel.png"
 image = "https://github.com/princemuel.png"
 location = "ISS, Space"
 [links]
-    site = "https://princemuel.dev/about"
+    site = "https://princemuel.com/about"
     repo = "https://github.com/princemuel"
     twitter = "https://twitter.com/iamprincemuel"
     mastodon = "https://mastodon.social/@princemuel"
