@@ -26,15 +26,17 @@ import ThemeProvider from "@/components/widgets/theme-provider.astro";
     <meta name="fediverse:creator" content="@princemuel@mastodon.social" />
     <title>Astro</title>
     <Font cssVariable="--font-family-sans" preload />
+    <Font cssVariable="--font-family-mono" />
     <ThemeProvider />
     <script src="@/assets/scripts/temporal.client.ts"></script>
   </head>
   <body
     class:list={[
-      "relative flex min-h-svh flex-col",
-      "font-sans text-lg font-normal antialiased",
+      "relative grid min-h-svh grid-rows-[auto_1fr_auto]",
+      "font-mono text-xs font-normal antialiased",
       // "bg-white text-black dark:bg-neutral-950 dark:text-white",
-      "bg-white text-gray-900 dark:bg-gray-900 dark:text-white",
+      "bg-white text-gray-900 dark:bg-gray-950 dark:text-white",
+      "",
     ]}
   >
     <Header />

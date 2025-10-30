@@ -55,10 +55,16 @@ type Props = HTMLAttributes<"button">;
   import { println$ } from "@/helpers/println";
 
   type Theme = (typeof themes)[number];
+  type ColorScheme = Exclude<Theme, "system">;
 
-  const storageKey = "x-theme";
+  const STORAGE_KEY = "x-theme";
+  const CHANNEL_NAME = "x-theme";
 
+  // ============================================================================
+  // State Management
+  // ============================================================================
   const mql = matchMedia("(prefers-color-scheme: light)");
+  const channel = new BroadcastChannel(CHANNEL_NAME);
 
   const themes = ["system", "light", "dark"] as const;
   /** Yields the next theme value, looping back to the first after reaching the end. */
@@ -70,66 +76,99 @@ type Props = HTMLAttributes<"button">;
     }
   })();
 
-  const getPreferredColorScheme = (): Theme => (mql.matches ? "light" : "dark");
-  const parseTheme = (theme: unknown): Theme =>
-    theme === "light" || theme === "dark" ? theme : "system";
+  const getSystemScheme = (): ColorScheme => (mql.matches ? "light" : "dark");
 
-  const loadTheme = (): Theme =>
-    parseTheme(typeof localStorage !== "undefined" && localStorage.getItem(storageKey));
+  const parseTheme = (value: unknown): Theme =>
+    value === "light" || value === "dark" ? value : "system";
+
+  const loadTheme = (): Theme => parseTheme(localStorage?.getItem(STORAGE_KEY));
 
   const storeTheme = (theme: Theme) => {
-    if (typeof localStorage !== "undefined") {
-      localStorage.setItem(storageKey, theme === "light" || theme === "dark" ? theme : "");
-    }
+    localStorage?.setItem(STORAGE_KEY, theme === "light" || theme === "dark" ? theme : "");
   };
 
+  const resolveScheme = (theme: Theme): ColorScheme =>
+    theme === "system" ? getSystemScheme() : theme;
+
+  // ============================================================================
+  // Theme Application
+  // ============================================================================
+
   /** Update theme widget, document theme, and local storage state. */
-  const onThemeChange = (theme: Theme) => {
+
+  const setTheme = (theme: Theme) => {
     globalThis.Theme.selectThemeIcon(theme);
 
     const $ = document.documentElement;
-    const systemTheme = getPreferredColorScheme();
+    const scheme = resolveScheme(theme);
 
-    $.dataset.colorScheme = theme === "system" ? systemTheme : theme;
-    $.dataset.codeTheme =
-      theme === "system" ? `github-${systemTheme}-default` : `github-${theme}-default`;
-
+    $.dataset.colorScheme = scheme;
+    $.dataset.codeTheme = `github-${scheme}-default`;
     println$(theme);
 
     storeTheme(theme);
   };
+
+  const onThemeChange = (theme: Theme) => {
+    setTheme(theme);
+    channel.postMessage({ theme, timestamp: Date.now() });
+  };
+
+  // ============================================================================
+  // Cross-tab Synchronization
+  // ============================================================================
+
+  let lastBroadcast = 0;
+
+  type ChannelEvent = MessageEvent<{ theme: Theme; timestamp: number }>;
+
+  channel.addEventListener("message", (event: ChannelEvent) => {
+    const { theme, timestamp } = event.data;
+
+    // Prevent echo/loop and out-of-order messages
+    if (timestamp <= lastBroadcast) return;
+
+    lastBroadcast = timestamp;
+    onThemeChange(parseTheme(theme));
+  });
 
   // React to changes in system color scheme.
   mql.addEventListener("change", () => {
     if (loadTheme() === "system") onThemeChange("system");
   });
 
+  // Fallback for browsers without BroadcastChannel (rare but defensive)
+  if (!("BroadcastChannel" in globalThis)) {
+    window.addEventListener("storage", (e) => {
+      if (e.key === STORAGE_KEY && e.newValue !== null) {
+        onThemeChange(parseTheme(e.newValue));
+      }
+    });
+  }
+
   createElement(
     "theme-picker",
     class ThemePicker extends HTMLElement {
-      btn: HTMLButtonElement;
-      onClick: (e: PointerEvent) => void;
+      #btn: HTMLButtonElement;
       constructor() {
         super();
-        //@ts-expect-error
-        this.btn = $("button", HTMLButtonElement, this);
-        this.onClick = this.#handleThemeChange.bind(this);
+        this.#btn = $("button", HTMLButtonElement, this);
       }
 
       connectedCallback() {
         onThemeChange(loadTheme());
-        this.btn.addEventListener("click", this.onClick);
-      }
-
-      #handleThemeChange(e: PointerEvent) {
-        if (e.currentTarget instanceof HTMLButtonElement) {
-          onThemeChange(parseTheme(themeGenerator.next().value));
-        }
+        this.#btn.addEventListener("click", this.#handleClick);
       }
 
       disconnectedCallback() {
-        this.btn.removeEventListener("click", this.onClick);
+        this.#btn.removeEventListener("click", this.#handleClick);
       }
+
+      #handleClick = (e: PointerEvent) => {
+        if (e.currentTarget instanceof HTMLButtonElement) {
+          onThemeChange(parseTheme(themeGenerator.next().value));
+        }
+      };
     },
   );
 </script>

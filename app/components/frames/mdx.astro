@@ -1,0 +1,25 @@
+---
+import Shell from "@/components/frames/shell.astro";
+import Fence from "@/components/layout/fence.astro";
+
+import type { MarkdownLayoutProps } from "astro";
+
+type PageProps = { title: string; description: string };
+
+type Props = MarkdownLayoutProps<PageProps>;
+
+const { frontmatter } = Astro.props;
+
+// const { title, description } = frontmatter;
+---
+
+<Shell>
+  <Fence>
+    <article class="prose prose-lg max-w-none prose-gray dark:prose-invert">
+      <h1 id="a11ty-headline">
+        {frontmatter.title}
+      </h1>
+      <slot />
+    </article>
+  </Fence>
+</Shell>

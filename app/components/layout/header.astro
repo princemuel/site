@@ -1,22 +1,26 @@
 ---
+import { Icon } from "astro-icon/components";
+
 import Fence from "@/components/layout/fence.astro";
 import Link from "@/components/shared/link.astro";
 import Routes from "@/components/widgets/routes.astro";
 import ThemePicker from "@/components/widgets/theme-picker.astro";
-import { Icon } from "astro-icon/components";
 ---
 
-<header class="sticky top-0 z-50 bg-inherit">
+{/*<header class="sticky top-0 z-50 bg-inherit"> */}
+<header class="bg-inherit">
   <Fence>
-    <section class="flex items-center justify-center py-10 md:py-16">
+    <section class="flex items-center justify-between py-10 md:py-16">
       <Link href="/" class="self-center text-4xl">princemuel</Link>
     </section>
-    <section class="flex items-center gap-4 border-y border-gray-900 dark:border-gray-100">
+
+    <section class="flex items-center gap-4 border-y border-gray-200 dark:border-gray-700">
       <Routes class="mr-auto" />
-      <section class="flex items-center divide-x divide-gray-900 dark:divide-gray-100">
+
+      <section class="flex items-center">
         <ThemePicker />
         <Link
-          href="/rss"
+          href="/rss.xml"
           class:list={[
             "p-3 text-2xl",
             "text-gray-900 dark:text-gray-200",
