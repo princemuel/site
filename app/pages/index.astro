@@ -5,31 +5,41 @@ import { Icon } from "astro-icon/components";
 
 import { hasValues } from "@/utils/guards";
 
+import { excluded } from "@/assets/include";
+
 import Shell from "@/components/frames/shell.astro";
 import Fence from "@/components/layout/fence.astro";
 import Link from "@/components/shared/link.astro";
-// const excluded = ["wiki", "posts",];
-const excluded = new Set(["home", "posts", "wiki"]);
 
 const entry = await getEntry("pages", "home");
 if (!entry) throw new Response(null, { status: 404 });
 
+const excludedRoutes = new Set(excluded);
+
 const [{ Content }, routes] = await Promise.all([
   render(entry),
-  getCollection("routes", (data) => !excluded.has(data.id)),
+  getCollection("routes", (data) => !excludedRoutes.has(data.id)),
 ]);
 ---
 
 <Shell>
   <Fence>
     <section class="flex flex-col gap-6">
-      <!-- <Time datetime={new Date().toISOString()} /> -->
+      <header class="my-6 flex flex-col gap-6 border border-gray-200 p-5 dark:border-gray-700">
+        <h1 id="a11ty-headline" class="text-2xl">
+          <span lang="he" dir="rtl">אַהְלָן! 👋🏼</span>
+        </h1>
 
-      <h1 id="a11ty-headline" class="text-3xl font-light md:text-5xl">
-        I'm Sam — a Software Engineer crafting intuitive digital experiences.
-      </h1>
+        <p class="text-base">
+          I’m a software engineer with a passion for safe programming languages, distributed
+          systems, computer graphics, and cryptography. I build open source software and love to
+          draw.
+          <Link href="/about">Learn about me</Link>
+          or <Link href="https://github.com/princemuel">check out my GitHub</Link>.
+        </p>
+      </header>
 
-      <article class="prose prose-lg max-w-none prose-gray dark:prose-invert">
+      <article class="prose prose-base max-w-none prose-gray dark:prose-invert">
         <Content frontmatter={entry.data} />
         {
           hasValues(routes) ? (
