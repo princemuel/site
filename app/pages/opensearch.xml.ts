@@ -1,9 +1,9 @@
-import resource from "@/assets/include/opensearch.xml?raw";
+import { opensearch as data } from "@/assets/include";
 
 import type { APIRoute } from "astro";
 
 export const GET: APIRoute = async (ctx) => {
-  const body = resource.replaceAll("{{URL}}", new URL("/", ctx.site).toString()).trim();
+  const body = data.replaceAll("{{URL}}", new URL("/", ctx.site).toString()).trim();
   return new Response(body, {
     status: 200,
     headers: {

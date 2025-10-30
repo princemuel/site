@@ -22,7 +22,7 @@ export const GET: APIRoute = async (context) => {
   const fontSrc = data[0]?.src?.find((src) => /^(ttf|woff)$/i.test(src?.format ?? ""));
   if (!fontSrc) return new Response(null, { status: 404 });
 
-  const markup = html`<div tw="flex h-full w-full flex-col bg-white p-16 font-sans">
+  const node = html`<div tw="flex h-full w-full flex-col bg-white p-16 font-sans">
     <div tw="flex items-start justify-between">
       <span tw="text-sm tracking-widest text-blue-500 uppercase">
         ${context.url.hostname}
@@ -46,7 +46,7 @@ export const GET: APIRoute = async (context) => {
     </div>
   </div>`;
 
-  const svg = await satori(markup, {
+  const svg = await satori(node, {
     width: 1200,
     height: 630,
     fonts: [

@@ -1,10 +1,14 @@
-import { robots as data } from "@/assets/include";
+import { humans as data } from "@/assets/include";
 
 import type { APIRoute } from "astro";
 
 export const GET: APIRoute = async (ctx) => {
   const body = data
-    .replaceAll("{{URL}}", new URL("sitemap-index.xml", ctx.site).toString())
+    .replaceAll("{{URL}}", new URL("hello", ctx.site).toString())
+    .replaceAll(
+      "{{DATETIME}}",
+      new Intl.DateTimeFormat("en-CA").format(new Date()).replaceAll("-", "/"),
+    )
     .trim();
   return new Response(body, {
     status: 200,
