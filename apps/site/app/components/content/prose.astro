@@ -1,0 +1,15 @@
+---
+import type { HTMLTag, Polymorphic } from "astro/types";
+
+type Props<Tag extends HTMLTag> = Polymorphic<{ as: Tag }>;
+
+const { as: Tag, class: classes, ...attrs } = Astro.props;
+---
+
+{/* marker:content-['_⦿_'] */}
+<Tag
+  {...attrs}
+  class:list={["prose prose-base max-w-none prose-gray dark:prose-invert", classes]}
+>
+  <slot />
+</Tag>

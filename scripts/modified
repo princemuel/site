@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+ignore_list=(
+  "67f6075f51de7c62327fba114e9310774f94fb95"
+)
+
+# Determine job count (cross-platform)
+if command -v nproc >/dev/null 2>&1; then
+  JOBS=$(nproc)
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+  JOBS=$(sysctl -n hw.ncpu)
+else
+  JOBS=4
+fi
+
+ignore_pattern=$(IFS='|'; echo "${ignore_list[*]}")
+export ignore_pattern
+
+process_file() {
+  local fname="$1"
+  local line
+  line=$(git log --follow --no-patch --date=iso --pretty="format:%cs|%H;" -- "$fname" \
+    | grep -Ev "$ignore_pattern" \
+    | head -n 1)
+  # No newline here
+  printf '%s|%s' "$fname" "$line"
+}
+
+export -f process_file
+
+# # Collect outputs in parallel but without newlines
+find content -type f \( -name "*.md" -o -name "*.mdx" \) -print0 |
+  xargs -0 -P "$JOBS" -I{} bash -c 'process_file "$@"' _ {}

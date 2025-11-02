@@ -1,0 +1,21 @@
+---
+import { getEntry, render } from "astro:content";
+
+import Prose from "@/components/content/prose.astro";
+import Shell from "@/components/frames/shell.astro";
+import Fence from "@/components/layout/fence.astro";
+
+const entry = await getEntry("pages", "about");
+if (!entry) throw new Response(null, { status: 404 });
+
+const { Content } = await render(entry);
+---
+
+<Shell>
+  <Fence>
+    <h1 id="a11ty-headline" class="sr-only">This page is about me...</h1>
+    <Prose as="article" aria-labelledby="a11ty-headline">
+      <Content frontmatter={entry.data} />
+    </Prose>
+  </Fence>
+</Shell>

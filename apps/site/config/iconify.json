@@ -1,0 +1,34 @@
+{
+  "ion": [
+    "earth",
+    "alert-circle",
+    "logo-github",
+    "logo-discord",
+    "logo-twitter",
+    "logo-linkedin",
+    "logo-instagram",
+    "logo-youtube",
+    "logo-mastodon"
+  ],
+  "lucide": [
+    "briefcase-business",
+    "command",
+    "files",
+    "file-text",
+    "flask-conical",
+    "home",
+    "library",
+    "mail-plus",
+    "monitor-cog",
+    "monitor-play",
+    "notebook-pen",
+    "palette",
+    "pen-line",
+    "rss",
+    "settings",
+    "user-round-pen"
+  ],
+  "ri": ["app-store-fill", "quill-pen-fill"],
+  "simple-icons": ["astro"],
+  "uil": ["moon", "sun"]
+}

@@ -1,5 +1,32 @@
+packages:
+  - pkgs/*
+  - apps/*
+
+catalog:
+  "@emnapi/core": "^1.6.0"
+  "@emnapi/runtime": "^1.6.0"
+  "@napi-rs/cli": "^3.4.1"
+  "@napi-rs/wasm-runtime": "^1.0.7"
+  "@total-typescript/ts-reset": "^0.6.1"
+  "@types/node": "^24.0.0"
+  "oxlint": "^1.25.0"
+  "oxlint-tsgolint": "^0.4.0"
+  "typescript": "^5.9.3"
+
+catalogMode: prefer
+
+minimumReleaseAge: 1440
+
 onlyBuiltDependencies:
-  - '@sentry/cli'
-  - '@tailwindcss/oxide'
-  - esbuild
-  - sharp
+  - "@prisma/client"
+  - "@prisma/engines"
+  - "@sentry/cli"
+  - "@tailwindcss/oxide"
+  - "esbuild"
+  - "prisma"
+  - "sharp"
+
+overrides:
+  "vite": "npm:rolldown-vite@latest"
+
+verifyDepsBeforeRun: install
