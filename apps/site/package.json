@@ -66,6 +66,5 @@
     "remark-toc": "^9.0.0",
     "tailwindcss": "^4.1.16",
     "typescript": "catalog:"
-  },
-  "packageManager": "pnpm@10.20.0"
+  }
 }

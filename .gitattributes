@@ -14,8 +14,8 @@
 # Generated code (don’t count in language stats)
 index.js linguist-detectable=false
 index.d.ts linguist-detectable=false
-cool.wasi-browser.js linguist-detectable=false
-cool.wasi.cjs linguist-detectable=false
+tts.wasi-browser.js linguist-detectable=false
+tts.wasi.cjs linguist-detectable=false
 wasi-worker-browser.mjs linguist-detectable=false
 wasi-worker.mjs linguist-detectable=false
 
