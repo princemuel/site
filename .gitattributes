@@ -12,25 +12,25 @@
 *.bat text eol=crlf
 
 # Generated code (don’t count in language stats)
-index.js linguist-detectable=false
-index.d.ts linguist-detectable=false
-tts.wasi-browser.js linguist-detectable=false
-tts.wasi.cjs linguist-detectable=false
+index.js                linguist-detectable=false
+index.d.ts              linguist-detectable=false
+*.wasi-browser.js       linguist-detectable=false
+*.wasi.cjs              linguist-detectable=false
 wasi-worker-browser.mjs linguist-detectable=false
-wasi-worker.mjs linguist-detectable=false
+wasi-worker.mjs         linguist-detectable=false
 
 # Jest snapshots
-*.shot linguist-language=Jest-Snapshot
-*.shot linguist-generated
+*.shot                  linguist-language=Jest-Snapshot
+*.shot                  linguist-generated
 
 # JSON with comments
-*.json linguist-language=JSON-with-Comments
+*.json                  linguist-language=JSON-with-Comments
 
 # Yarn / PnP internals
-/.yarn/**            linguist-vendored
-/.yarn/releases/*    binary
-/.yarn/plugins/**/*  binary
-/.pnp.*              binary linguist-generated
+/.yarn/**               linguist-vendored
+/.yarn/releases/*       binary
+/.yarn/plugins/**/*     binary
+/.pnp.*                 binary linguist-generated
 
 ## GRAPHICS
 *.ai   binary
