@@ -25,7 +25,9 @@ import ThemeProvider from "@/components/widgets/theme-provider.astro";
     <link rel="me" href="https://mastodon.social/@princemuel" />
     <link rel="expect" href="#the_unexpected" blocking="render" />
     <meta name="fediverse:creator" content="@princemuel@mastodon.social" />
-    <title>Astro</title>
+    <slot name="title">
+      <title>Astro</title>
+    </slot>
     <Font cssVariable="--font-family-sans" preload />
     <Font cssVariable="--font-family-mono" />
     <ThemeProvider />

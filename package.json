@@ -5,6 +5,7 @@
   "packageManager": "pnpm@10.20.0",
   "scripts": {
     "build": "pnpm --workspace-concurrency=1 --filter \"./pkgs/*\" --filter \"./apps/*\" build",
+    "dev": "pnpm --filter ./apps/site dev",
     "fmt": "oxfmt -c oxfmtrc.jsonc",
     "lint": "oxlint -c oxlintrc.json --deny-warnings --type-aware"
   },
