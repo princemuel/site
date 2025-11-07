@@ -26,7 +26,7 @@ That being said, I'm not perfect and I'm always learning and improving the websi
 I run automated testing for accessibility issues regularly, as well as
 testing on desktop and mobile browsers with different zoom levels.
 
-<!-- me@princemuel.com -->
+<!-- me@princemuel.dev -->
 
 Although this site's testing and evaluation is ongoing, if at any time you experience
 any issues using the site, or have specific questions or concerns about the

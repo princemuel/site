@@ -3,10 +3,6 @@ declare namespace globalThis {
 
   interface ThemeController {
     value: "system" | "light" | "dark";
-    next(): void;
-    apply(): void;
-    subscribe(callback: (theme: "system" | "light" | "dark") => void): () => void;
-
     selectThemeIcon(theme?: string): void;
   }
 
