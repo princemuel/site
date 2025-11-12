@@ -110,5 +110,13 @@
   },
   "yaml.schemas": {
     "https://json.schemastore.org/github-issue-config.json": "file:///home/nyx/Lab/Projects/Repos/site/.github/ISSUE_TEMPLATE/config.yml"
-  }
+  },
+  "[toml]": {
+    "editor.defaultFormatter": "tamasfe.even-better-toml"
+  },
+  "template-string-converter.enabled": true,
+  "template-string-converter.convertWithinTemplateString": true,
+  "template-string-converter.convertOutermostQuotes": true,
+  "template-string-converter.autoRemoveTemplateString": true,
+  "template-string-converter.addBracketsToProps": true
 }

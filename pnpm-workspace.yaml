@@ -3,30 +3,33 @@ packages:
   - apps/*
 
 catalog:
-  "@emnapi/core": "^1.6.0"
-  "@emnapi/runtime": "^1.6.0"
-  "@napi-rs/cli": "^3.4.1"
-  "@napi-rs/wasm-runtime": "^1.0.7"
-  "@total-typescript/ts-reset": "^0.6.1"
-  "@types/node": "^24.0.0"
-  "oxlint": "^1.25.0"
-  "oxlint-tsgolint": "^0.4.0"
-  "typescript": "^5.9.3"
+  '@emnapi/core': ^1.6.0
+  '@emnapi/runtime': ^1.6.0
+  '@napi-rs/cli': ^3.4.1
+  '@napi-rs/wasm-runtime': ^1.0.7
+  '@sentry/astro': ^10.24.0
+  '@total-typescript/ts-reset': ^0.6.1
+  '@types/node': ^24.0.0
+  astro: ^5.15.5
+  esbuild: ^0.25.11
+  oxlint: ^1.28.0
+  oxlint-tsgolint: ^0.5.1
+  typescript: ^5.9.3
 
 catalogMode: prefer
 
-minimumReleaseAge: 1440
+minimumReleaseAge: 120
 
 onlyBuiltDependencies:
-  - "@prisma/client"
-  - "@prisma/engines"
-  - "@sentry/cli"
-  - "@tailwindcss/oxide"
-  - "esbuild"
-  - "prisma"
-  - "sharp"
+  - '@prisma/client'
+  - '@prisma/engines'
+  - '@sentry/cli'
+  - '@tailwindcss/oxide'
+  - esbuild
+  - prisma
+  - sharp
 
 overrides:
-  "vite": "npm:rolldown-vite@latest"
+  vite: ^6.4.1
 
 verifyDepsBeforeRun: install

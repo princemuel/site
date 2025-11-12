@@ -25,6 +25,5 @@ export default defineConfig({
   markdown: markdown,
   image: images,
   adapter: node(adapter),
-  //@ts-ignore
   vite: pluginsVite,
 });

@@ -1,8 +1,9 @@
 #![deny(clippy::all)]
 
+// use napi::bindgen_prelude::*;
 use napi_derive::napi;
 
 #[napi]
-pub fn plus_100(input: u32) -> u32 {
-    input + 100
+pub fn sum(a: u32, b: u32) -> u32 {
+    a + b
 }
