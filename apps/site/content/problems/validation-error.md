@@ -2,7 +2,7 @@
 title: "Validation Error"
 status: 400
 description: "The request contains invalid or missing data that prevents processing."
-type: "https://princemuel.com/problems/validation-error"
+type: "https://princemuel.dev/problems/validation-error"
 extensions:
   errors: "Array of validation error objects with field and message properties"
   invalid_params: "Array of parameter names that failed validation"
@@ -12,7 +12,7 @@ The request contains invalid or missing data that prevents processing.
 
 ## Standard Fields
 
-- **type**: `https://princemuel.com/problems/validation-error`
+- **type**: `https://princemuel.dev/problems/validation-error`
 - **title**: `Validation Error`
 - **status**: `400`
 - **detail**: Human-readable explanation of the specific validation failure
@@ -37,7 +37,7 @@ Array of parameter names that failed validation. Useful for query parameter vali
 
 ```json
 {
-  "type": "https://princemuel.com/problems/validation-error",
+  "type": "https://princemuel.dev/problems/validation-error",
   "title": "Validation Error",
   "status": 400,
   "detail": "Required field 'email' is missing",
@@ -55,7 +55,7 @@ Array of parameter names that failed validation. Useful for query parameter vali
 
 ```json
 {
-  "type": "https://princemuel.com/problems/validation-error",
+  "type": "https://princemuel.dev/problems/validation-error",
   "title": "Validation Error",
   "status": 400,
   "detail": "Multiple validation errors occurred",
@@ -77,7 +77,7 @@ Array of parameter names that failed validation. Useful for query parameter vali
 
 ```json
 {
-  "type": "https://princemuel.com/problems/validation-error",
+  "type": "https://princemuel.dev/problems/validation-error",
   "title": "Validation Error",
   "status": 400,
   "detail": "Invalid query parameters provided",

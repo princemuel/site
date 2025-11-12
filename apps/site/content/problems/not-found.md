@@ -2,7 +2,7 @@
 title: "Resource Not Found"
 status: 404
 description: "The requested resource could not be found on this server."
-type: "https://princemuel.com/problems/not-found"
+type: "https://princemuel.dev/problems/not-found"
 extensions:
   resource_type: "The type of resource that was not found"
   resource_id: "The identifier of the resource that was not found"
@@ -12,7 +12,7 @@ The requested resource could not be found on this server.
 
 ## Standard Fields
 
-- **type**: `https://princemuel.com/problems/not-found`
+- **type**: `https://princemuel.dev/problems/not-found`
 - **title**: `Resource Not Found`
 - **status**: `404`
 - **detail**: Specific description of what resource was not found
@@ -34,7 +34,7 @@ The identifier of the resource that was not found.
 
 ```json
 {
-  "type": "https://princemuel.com/problems/not-found",
+  "type": "https://princemuel.dev/problems/not-found",
   "title": "Resource Not Found",
   "status": 404,
   "detail": "No user exists with ID 999",
@@ -48,7 +48,7 @@ The identifier of the resource that was not found.
 
 ```json
 {
-  "type": "https://princemuel.com/problems/not-found",
+  "type": "https://princemuel.dev/problems/not-found",
   "title": "Resource Not Found",
   "status": 404,
   "detail": "Post 123 does not have a comment with ID 456",
