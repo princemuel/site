@@ -1,5 +1,6 @@
 import { rehypeHeadingIds } from "@astrojs/markdown-remark";
-// import getReadingTime from "reading-time";
+import * as mdAstUtilToString from "mdast-util-to-string";
+import getReadingTime from "reading-time";
 // import { toString as hastUtilToString } from "hast-util-to-string";
 // import { h } from "hastscript";
 // import rehypeAutolinkHeadings from "rehype-autolink-headings";
@@ -14,18 +15,18 @@ import type { AstroUserConfig } from "astro";
 type Config = NonNullable<NonNullable<AstroUserConfig["markdown"]>>;
 type RemarkPlugin = NonNullable<Config["remarkPlugins"]>[number];
 
-// const { toString: parseToString } = mdastUtilToString;
+const { toString: parseToString } = mdAstUtilToString;
 
-// const remarkReadingTime: RemarkPlugin = () => {
-//   return (tree, file) => {
-//     if (file.data.astro?.frontmatter) {
-//       const textOnPage = parseToString(tree);
-//       const readingTime = getReadingTime(textOnPage);
-//       file.data.astro.frontmatter.words = readingTime.words;
-//       file.data.astro.frontmatter.duration = readingTime.text;
-//     }
-//   };
-// };
+const remarkReadingTime: RemarkPlugin = () => {
+  return (tree, file) => {
+    if (file.data.astro?.frontmatter) {
+      const textOnPage = parseToString(tree);
+      const readingTime = getReadingTime(textOnPage);
+      file.data.astro.frontmatter.words = readingTime.words;
+      file.data.astro.frontmatter.duration = readingTime.text;
+    }
+  };
+};
 
 const remarkDeruntify: RemarkPlugin = () => (tree) => {
   visit(tree, "text", (node) => {
@@ -48,7 +49,7 @@ export const markdown = {
     remarkToc,
     [remarkCollapse, { test: "Table of contents" }],
     remarkDeruntify,
-    // remarkReadingTime,
+    remarkReadingTime,
     remarkModifiedTime,
     [remarkEmoji, { accessible: true, padSpaceAfter: true, emoticon: true }],
   ],

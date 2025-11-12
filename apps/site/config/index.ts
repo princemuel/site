@@ -7,4 +7,3 @@ export { images } from "./images";
 export { integrations } from "./integrations";
 export { markdown } from "./markdown";
 export { pluginsVite } from "./vite";
-

@@ -4,7 +4,7 @@ import { z } from "astro:schema";
 
 import { img } from "@/content/helpers";
 
-export const authors = defineCollection({
+export default defineCollection({
   loader: glob({ base: "content/authors", pattern: "**/[^_]*.toml" }),
   schema: ({ image }) =>
     z.object({

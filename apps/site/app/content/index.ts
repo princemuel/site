@@ -1,6 +1,6 @@
-export { authors } from "./authors";
-// export { journal } from "./journal";
-export { pages } from "./pages";
-export { problems } from "./problems";
-export { projects } from "./projects";
+export { default as authors } from "./authors";
+// export { default as journal } from "./journal";
+export { default as pages } from "./pages";
+export { default as problems } from "./problems";
+export { default as projects } from "./projects";
 export { labels, routes, socials } from "./sandbox";

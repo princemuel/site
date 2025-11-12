@@ -5,18 +5,17 @@ import type { ImageFunction } from "astro:content";
 
 export const baseSchema = z.object({
   title: z.string().min(2),
-  summary: z.string().min(2).optional(),
   description: z.string().min(2),
-  featured: z.boolean().default(false),
-  tags: z.array(z.string()).default([]),
-  category: z.string().min(2),
+  headline: z.string().default(""),
+  summary: z.string().default(""),
   draft: z.boolean().default(true),
-  publishedAt: z.string().datetime(),
-  updatedAt: z.string().datetime().optional(),
+  tags: z.array(z.string()).default([]),
+  publishedAt: z.date(),
+  updatedAt: z.date().optional(),
   duration: z.string().default("1 min read"),
-  words: z.number().finite().int().nonnegative().lte(65_535).default(200),
+  words: z.number().finite().int().nonnegative().lte(65_535).default(0),
   language: z.enum(["en", "es", "fr"]).default("en"),
-  permalink: z.string().url().optional(),
+  permalink: z.string().default("/"),
 });
 
 export const img = (image: ImageFunction) =>

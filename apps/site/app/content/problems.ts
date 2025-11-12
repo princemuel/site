@@ -2,7 +2,7 @@ import { glob } from "astro/loaders";
 import { defineCollection } from "astro:content";
 import { z } from "astro:schema";
 
-export const problems = defineCollection({
+export default defineCollection({
   loader: glob({ base: "content/problems", pattern: "**/[^_]*.{md,mdx}" }),
   schema: z.object({
     title: z.string(),
