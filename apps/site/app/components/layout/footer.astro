@@ -1,12 +1,17 @@
 ---
-import Fence from "@/components/layout/fence.astro";
-import Link from "@/components/shared/link.astro";
-import { Icon } from "astro-icon/components";
 import { getCollection } from "astro:content";
 
-const excludedRoutes = new Set(["discord", "youtube", "website", "rss", "instagram"]);
+import Fence from "@/components/layout/fence.astro";
+import Link from "@/components/shared/link.astro";
+import Time from "@/components/shared/time.astro";
+import { Icon } from "astro-icon/components";
+
+// const excludedRoutes = new Set(["discord", "youtube", "website", "rss", "instagram"]);
+const excludedRoutes = new Set(["discord", "youtube", "website", "rss", ""]);
 
 const socials = await getCollection("socials", (entry) => !excludedRoutes.has(entry.id));
+
+const buildDate = Temporal.Now.zonedDateTimeISO();
 ---
 
 <footer class="py-10 text-sm">
@@ -27,8 +32,9 @@ const socials = await getCollection("socials", (entry) => !excludedRoutes.has(en
 
       <p class="flex flex-wrap items-center justify-center gap-2">
         <span>&copy;</span>
-        <time>{Temporal.Now.zonedDateTimeISO().year}</time>
+        <Time datetime={buildDate.toString()}>{buildDate.year}</Time>
         <span>Prince Muel</span>
+
         <span class="before:mx-1 before:content-['::'] max-sm:hidden">
           Powered by
           <Link href="https://docs.astro.build/en/getting-started/">
@@ -37,7 +43,7 @@ const socials = await getCollection("socials", (entry) => !excludedRoutes.has(en
         </span>
 
         <span class="before:mx-1 before:content-['::'] max-sm:hidden">
-          Theme by <Link href="https://princemuel.fly.dev">princemuel </Link>
+          <Link href={new URL("/sitemap-index.xml", Astro.site)}>Sitemap</Link>
         </span>
       </p>
     </section>

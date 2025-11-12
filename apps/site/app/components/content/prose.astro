@@ -3,7 +3,7 @@ import type { HTMLTag, Polymorphic } from "astro/types";
 
 type Props<Tag extends HTMLTag> = Polymorphic<{ as: Tag }>;
 
-const { as: Tag, class: classes, ...attrs } = Astro.props;
+const { as: Tag = "article", class: classes, ...attrs } = Astro.props;
 ---
 
 {/* marker:content-['_⦿_'] */}
