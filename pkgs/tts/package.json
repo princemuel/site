@@ -4,6 +4,7 @@
   "description": "Template project for writing node package with napi-rs",
   "type": "module",
   "main": "index.js",
+  "private": true,
   "browser": "browser.js",
   "files": [
     "index.d.ts",
