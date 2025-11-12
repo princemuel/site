@@ -1,0 +1,38 @@
+---
+import { getCollection, render } from "astro:content";
+
+import Prose from "@/components/content/prose.astro";
+import Shell from "@/components/frames/shell.astro";
+import Fence from "@/components/layout/fence.astro";
+
+export async function getStaticPaths() {
+  const entries = await getCollection(
+    "projects",
+    ({ data }) => !(import.meta.env.PROD && data.draft),
+  );
+
+  return entries.map((entry) => ({
+    props: { entry },
+    params: { slug: decodeURI(entry.id) },
+  }));
+}
+
+const { entry } = Astro.props;
+
+const markdown = await render(entry);
+
+const { Content, remarkPluginFrontmatter: frontmatter } = markdown;
+
+entry.data.updatedAt ??= new Date(frontmatter.updatedAt);
+entry.data.words ??= frontmatter.words;
+entry.data.duration ??= frontmatter.duration;
+---
+
+<Shell>
+  <Fence>
+    <Prose as="article" aria-labelledby="a11ty-headline">
+      <h1 id="a11ty-headline">{entry.data.title}</h1>
+      <Content frontmatter={entry.data} />
+    </Prose>
+  </Fence>
+</Shell>

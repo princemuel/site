@@ -13,14 +13,14 @@ entries.sort((a, b) => a.data.status - b.data.status);
 
 <Layout
   title="API Problem Types"
-  description="RFC 9457 compliant problem types used by the APIs on princemuel.com"
+  description="RFC 9457 compliant problem types used by the APIs on princemuel.dev"
 >
   <div class="problem-index">
     <header class="header">
-      <h1 id="a11ty-headline" style="font-weight: 300;">Problem Types</h1>
+      <h1 id="a11ty-headline" style="font-weight: 400;">Problem Types</h1>
       <p class="subtitle">
         The API routes on
-        <Link href="/">princemuel.com</Link> use the
+        <Link href="/">{Astro.site?.hostname}</Link> use the
         <Link href="https://www.rfc-editor.org/rfc/rfc9457.html">Internet RFC 9457</Link>
         for consistent error reporting.
       </p>

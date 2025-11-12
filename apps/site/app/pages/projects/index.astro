@@ -1,24 +1,18 @@
 ---
-import { getEntry, render } from "astro:content";
-import { randomUUID } from "node:crypto";
+import { getCollection, getEntry, render } from "astro:content";
 
 import Prose from "@/components/content/prose.astro";
 import Shell from "@/components/frames/shell.astro";
 import Fence from "@/components/layout/fence.astro";
 import Link from "@/components/shared/link.astro";
 
-const entry = await getEntry("pages", "projects");
+const [entry, entries] = await Promise.all([
+  getEntry("pages", "projects"),
+  getCollection("projects", ({ data }) => !(import.meta.env.PROD && data.draft)),
+]);
 if (!entry) throw new Response(null, { status: 404 });
 
 const { Content } = await render(entry);
-const entries = ["", "", ""];
-const route = {
-  tag: "https://eyalkalderon.com/categories/meta/",
-  readMore: "https://eyalkalderon.com/blog/monitor-wireguard-uptime-kuma/",
-  tags: ["cryptography", "keybase", "keyoxide", "openpgp", "indieweb"],
-};
-
-randomUUID().toString();
 ---
 
 <Shell>
@@ -28,14 +22,26 @@ randomUUID().toString();
         <Content frontmatter={entry.data} />
       </Prose>
 
-      <section role="feed" aria-busy="false" class="flex flex-col">
+      <section
+        aria-label="PROJECTS DONE OR ONGOING"
+        role="feed"
+        aria-busy="false"
+        class="flex flex-col"
+      >
         {
-          entries.map((_item, idx) => {
-            const uuid = randomUUID().slice(0, 8);
+          entries.map(async (entry, idx) => {
+            const { remarkPluginFrontmatter: frontmatter } = await render(entry);
+
+            entry.data.updatedAt ||= new Date(frontmatter.updatedAt);
+            entry.data.words ||= frontmatter.words;
+            entry.data.duration ||= frontmatter.duration;
+
+            const [uuid, item] = [entry.id, entry.data];
+
             return (
               <article
-                aria-posinset={idx + 1}
                 tabindex="0"
+                aria-posinset={idx + 1}
                 aria-labelledby={`${uuid}-headline`}
                 aria-describedby={`${uuid}-summary ${uuid}-metadata ${uuid}-keywords`}
                 aria-setsize={entries.length}
@@ -54,7 +60,7 @@ randomUUID().toString();
                       "border-b-3 border-dotted after:border-b-3 after:border-dotted",
                     ]}
                   >
-                    Moving from Keybase to Keyoxide
+                    {item.title}
                   </h2>
 
                   <ul
@@ -62,13 +68,13 @@ randomUUID().toString();
                     aria-label="this article's metadata"
                     class="flex flex-wrap items-center gap-3 text-gray-500 dark:text-gray-400"
                   >
-                    <li title="Published on 2025-07-05T03:08:11-04:00">
-                      <time datetime="2025-07-05T03:08:11-04:00">2025.07.05</time>
+                    <li title={`Started on ${item.publishedAt.toISOString()}`}>
+                      <time datetime={item.publishedAt.toISOString()}>2025.07.05</time>
                     </li>
                     <li role="separator" aria-hidden="true">
                       ::
                     </li>
-                    <li title="1379 words">
+                    <li title={`${item.words} word(s)`}>
                       <time datetime="PT7M">7 min</time> read
                     </li>
                   </ul>
@@ -77,29 +83,23 @@ randomUUID().toString();
                     id={`${uuid}-keywords`}
                     class="flex flex-wrap items-center gap-x-3 gap-y-1"
                   >
-                    <Link href={route.tag}>&lbrace;meta&rbrace;</Link>
+                    <Link href={`/categories/${item.category}`}>
+                      &lbrace;{item.category}&rbrace;
+                    </Link>
                     <span role="separator">::</span>
-                    {route.tags.map((tag) => (
-                      <Link
-                        href={new URL(`tags/${tag}`, "https://eyalkalderon.com")}
-                        class="underline"
-                      >
+                    {item.tags.map((tag) => (
+                      <Link href={`/tags/${tag}`} class="underline">
                         #{tag}
                       </Link>
                     ))}
                   </section>
                 </header>
 
-                <p id={`${uuid}-summary`}>
-                  Mourning the slow death of Keybase and introducing Keyoxide, an open source
-                  decentralized replacement.
-                </p>
+                <p id={`${uuid}-summary`}>{item.summary}</p>
 
                 <Link
-                  href={route.readMore}
-                  aria-label={
-                    "Read more about Monitoring Wireguard in Uptime Kuma (with OPNsense)"
-                  }
+                  href={item.permalink}
+                  aria-label={`Read more about ${item.title}`}
                   class="text-sky-700 dark:text-sky-400"
                 >
                   read more →
