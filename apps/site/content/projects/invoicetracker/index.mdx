@@ -1,0 +1,113 @@
+---
+title: Invoicetracker
+description: Greeting
+headline: Some headline
+summary: Some summary
+draft: true
+category: app
+tags:
+  - graphics
+  - interactive
+tools:
+  - Rust
+author: princemuel
+contributors:
+  - princemuel
+publishedAt: 2025-03-08T02:14:52.348Z
+language: en
+permalink: /projects/invoicetracker
+links:
+  - label: demo
+    url: https://invoicetracker.vercel.app
+  - label: repo
+    url: https://github.com/princemuel/invoicetracker
+  - label: docs
+    url: https://github.com/princemuel/invoicetracker/README.md
+---
+
+## Problem & Context
+
+Describe the real-world constraint, the users, and why this project mattered. Keep it crisp and contextual — the rest of the document is the evidence.
+
+## Research & Constraints
+
+Key user insights from interviews and testing.
+Technical constraints: platform, latency, budget, team size.
+Business goals & success criteria**.**
+
+## Design & Process
+
+Walk through wireframes, flows, and the reasoning behind major decisions. Use visuals sparingly and caption them to explain the choice.
+
+{/* Gallery Image Carousel */}
+{/* _* Wireframe — early sketch & notes *_ */}
+{/* Prototype screenshot */}
+{/* Design exploration and options considered */}
+
+Tip: use the gallery above to show process artifacts; they don't have to be pretty — they must be explanatory.
+
+## Implementation
+
+Give a succinct technical explanation: architecture diagram, major trade-offs, and notable code decisions.
+
+### Architecture (short)
+
+Serverless API for auth & ingestion, Rust worker for heavy lifting, Astro frontend for static pages.
+
+Representative code
+
+```ts
+// Example: small snippet showing an important decision
+async function fetchData(url) {
+  // cache-first approach for the dashboard
+  const cached = await caches.match(url);
+  if (cached) return cached.json();
+  const res = await fetch(url);
+  const data = await res.json();
+  // small heuristic: trim large payloads
+  return data.slice ? data.slice(0, 1000) : data;
+}
+```
+
+## Pain Points & Tradeoffs
+
+- Initial real-time approach increased costs; settled on a hybrid polling + event model.
+- Complexity in auth flows slowed shipping — future improvement: unify auth SDK.
+- Accessibility fixes required additional refactors for focus state consistency.
+
+## Outcome & Metrics
+
+{/* what's below: Box */}
+{/* Performance —35% load */}
+{/* Engagement +18% */}
+{/* TTM 3 weeks to MVP */}
+
+Short storytelling: what changed, and how you measured it. Be honest about measurement quality and confidence intervals.
+
+## Lessons & Next Steps
+
+Summarize what you'd change, experiments you'd run next, and how you measure continued success.
+
+## Extras
+
+{/* https://www.theodinproject.com/lessons/ruby-how-this-course-will-work#okay-enough-talk-lets-learn-ruby */}
+
+{/* Improve on github */}
+
+{/* Report issue(s) */}
+
+{/* See page changelog */}
+
+{/*  */}
+
+{/* Previous Project */}
+{/* Next Project */}
+
+## Related Projects?
+
+{/* A short list (2 items?) of related projects with short one-liner tagline each */}
+
+## Talk about this project / Contact Me
+
+If you'd like to discuss this project or hire me, send a short message below.
+{/* This section could instead be a cta leading to the contact page */}

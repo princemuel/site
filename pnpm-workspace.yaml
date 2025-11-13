@@ -1,8 +1,35 @@
+packages:
+  - pkgs/*
+  - apps/*
+
+catalog:
+  '@emnapi/core': ^1.6.0
+  '@emnapi/runtime': ^1.6.0
+  '@napi-rs/cli': ^3.4.1
+  '@napi-rs/wasm-runtime': ^1.0.7
+  '@sentry/astro': ^10.25.0
+  '@total-typescript/ts-reset': ^0.6.1
+  '@types/node': ^24.0.0
+  astro: ^5.15.6
+  esbuild: ^0.25.11
+  oxlint: ^1.28.0
+  oxlint-tsgolint: ^0.6.0
+  typescript: ^5.9.3
+
+catalogMode: prefer
+
+minimumReleaseAge: 120
+
 onlyBuiltDependencies:
-  - '@parcel/watcher'
+  - '@prisma/client'
+  - '@prisma/engines'
+  - '@sentry/cli'
   - '@tailwindcss/oxide'
   - esbuild
-  - netlify-cli
+  - prisma
   - sharp
-  - unix-dgram
-  - workerd
+
+overrides:
+  vite: ^6.4.1
+
+verifyDepsBeforeRun: install

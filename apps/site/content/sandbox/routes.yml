@@ -1,0 +1,34 @@
+- id: home
+  text: home
+  href: /
+  icon: lucide:home
+
+- id: about
+  text: about me
+  href: /about
+  icon: lucide:user-round-pen
+
+- id: projects
+  text: projects
+  href: /projects
+  icon: lucide:flask-conical
+
+- id: posts
+  text: posts
+  href: /posts
+  icon: lucide:file-text
+
+- id: wiki
+  text: wiki
+  href: /wiki
+  icon: lucide:library
+
+- id: journal
+  text: journal
+  href: /journal
+  icon: lucide:files
+
+- id: hello
+  text: contact me
+  href: /hello
+  icon: lucide:mail-plus

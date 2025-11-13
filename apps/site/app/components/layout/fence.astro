@@ -1,0 +1,9 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type Props = HTMLAttributes<"div">;
+---
+
+<div class="mx-auto max-w-(--breakpoint-lg) px-4 5xl:max-w-(--breakpoint-xl)">
+  <slot />
+</div>

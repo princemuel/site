@@ -33,9 +33,10 @@
   //   "typescriptreact": "html"
   // },
   "oxc.enable": true,
-  "eslint.enable": false,
-  "eslint.useFlatConfig": true,
-  "eslint.validate": ["astro", "javascript", "markdown", "typescript", "typescriptreact"],
+  "oxc.fmt.experimental": true,
+  "[javascript]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
+  },
   "json.validate.enable": true,
   "css.validate": false,
   "less.validate": false,
@@ -54,9 +55,12 @@
   "[astro]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "[svelte]": {
+    "editor.defaultFormatter": "svelte.svelte-vscode"
+  },
   "tailwindCSS.emmetCompletions": true,
   "tailwindCSS.classAttributes": ["class", "class:list", "tw"],
-  "tailwindCSS.experimental.configFile": "app/global.css",
+  "tailwindCSS.experimental.configFile": "apps/site/app/global.css",
   "tailwindCSS.includeLanguages": {
     "xslt": "html"
   },
@@ -65,7 +69,11 @@
   ],
   "workbench.tree.indent": 12,
   // Rust Analyzer settings
+  "rust-analyzer.assist.preferSelf": true,
+  "rust-analyzer.assist.emitMustUse": true,
+  // Cargo
   "rust-analyzer.cargo.features": "all",
+  "rust-analyzer.cargo.targetDir": true,
   "rust-analyzer.check.command": "clippy",
   "rust-analyzer.checkOnSave": true,
   // Auto import and organize imports
@@ -75,7 +83,7 @@
   "rust-analyzer.imports.granularity.group": "module",
   "rust-analyzer.imports.prefix": "crate",
   "rust-analyzer.imports.merge.glob": true,
-  "rust-analyzer.imports.prefixExternPrelude": true,
+  "rust-analyzer.imports.prefixExternPrelude": false,
   "rust-analyzer.imports.preferNoStd": true,
   "rust-analyzer.imports.preferPrelude": true,
   // Inlay Hints
@@ -88,7 +96,6 @@
     "editor.formatOnSave": true
   },
   "rust-analyzer.testExplorer": true,
-  "rust-analyzer.assist.emitMustUse": true,
   "rust-analyzer.semanticHighlighting.punctuation.enable": true,
   "material-icon-theme.folders.associations": {
     "journal": "dump",
@@ -102,6 +109,14 @@
     "editor.defaultFormatter": "mads-hartmann.bash-ide-vscode"
   },
   "yaml.schemas": {
-    "https://json.schemastore.org/github-issue-config.json": "file:///home/nyx/Lab/Projects/Repos/medotdev/.github/ISSUE_TEMPLATE/config.yml"
-  }
+    "https://json.schemastore.org/github-issue-config.json": "file:///home/nyx/Lab/Projects/Repos/site/.github/ISSUE_TEMPLATE/config.yml"
+  },
+  "[toml]": {
+    "editor.defaultFormatter": "tamasfe.even-better-toml"
+  },
+  "template-string-converter.enabled": true,
+  "template-string-converter.convertWithinTemplateString": true,
+  "template-string-converter.convertOutermostQuotes": true,
+  "template-string-converter.autoRemoveTemplateString": true,
+  "template-string-converter.addBracketsToProps": true
 }

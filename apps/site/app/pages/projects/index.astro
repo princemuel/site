@@ -1,0 +1,114 @@
+---
+import { getCollection, getEntry, render } from "astro:content";
+
+import Prose from "@/components/content/prose.astro";
+import Shell from "@/components/frames/shell.astro";
+import Fence from "@/components/layout/fence.astro";
+import Link from "@/components/shared/link.astro";
+
+const [entry, entries] = await Promise.all([
+  getEntry("pages", "projects"),
+  getCollection("projects", ({ data }) => !(import.meta.env.PROD && data.draft)),
+]);
+if (!entry) throw new Response(null, { status: 404 });
+
+const { Content } = await render(entry);
+---
+
+<Shell>
+  <Fence>
+    <div class="flex flex-col gap-12">
+      <Prose as="section">
+        <Content frontmatter={entry.data} />
+      </Prose>
+
+      <section
+        aria-label="PROJECTS DONE OR ONGOING"
+        role="feed"
+        aria-busy="false"
+        class="flex flex-col"
+      >
+        {
+          entries.map(async (entry, idx) => {
+            const { remarkPluginFrontmatter: frontmatter } = await render(entry);
+
+            entry.data.updatedAt ||= new Date(frontmatter.updatedAt);
+            entry.data.words ||= frontmatter.words;
+            entry.data.duration ||= frontmatter.duration;
+
+            const [uuid, item] = [entry.id, entry.data];
+
+            return (
+              <article
+                tabindex="0"
+                aria-posinset={idx + 1}
+                aria-labelledby={`${uuid}-headline`}
+                aria-describedby={`${uuid}-summary ${uuid}-metadata ${uuid}-keywords`}
+                aria-setsize={entries.length}
+                class:list={[
+                  "group flex flex-col gap-6 py-8 text-sm sm:text-base",
+                  "border-gray-200 not-last-of-type:border-b dark:border-gray-700",
+                ]}
+              >
+                <header class="flex flex-col gap-4 text-sky-700 dark:text-sky-400">
+                  <h2
+                    id={`${uuid}-headline`}
+                    class:list={[
+                      "relative pb-3 text-xl font-bold",
+                      "after:absolute after:block after:w-full after:content-['']",
+                      "after:bottom-0.5",
+                      "border-b-3 border-dotted after:border-b-3 after:border-dotted",
+                    ]}
+                  >
+                    {item.title}
+                  </h2>
+
+                  <ul
+                    id={`${uuid}-metadata`}
+                    aria-label="this article's metadata"
+                    class="flex flex-wrap items-center gap-3 text-gray-500 dark:text-gray-400"
+                  >
+                    <li title={`Started on ${item.publishedAt.toISOString()}`}>
+                      <time datetime={item.publishedAt.toISOString()}>2025.07.05</time>
+                    </li>
+                    <li role="separator" aria-hidden="true">
+                      ::
+                    </li>
+                    <li title={`${item.words} word(s)`}>
+                      <time datetime="PT7M">7 min</time> read
+                    </li>
+                  </ul>
+
+                  <section
+                    id={`${uuid}-keywords`}
+                    class="flex flex-wrap items-center gap-x-3 gap-y-1"
+                  >
+                    <Link href={`/categories/${item.category}`}>
+                      &lbrace;{item.category}&rbrace;
+                    </Link>
+                    <span role="separator">::</span>
+                    {item.tags.map((tag) => (
+                      <Link href={`/tags/${tag}`} class="underline">
+                        #{tag}
+                      </Link>
+                    ))}
+                  </section>
+                </header>
+
+                <p id={`${uuid}-summary`}>{item.summary}</p>
+
+                <Link
+                  href={item.permalink}
+                  aria-label={`Read more about ${item.title}`}
+                  class="text-sky-700 dark:text-sky-400"
+                >
+                  read more →
+                </Link>
+              </article>
+            );
+          })
+        }
+      </section>
+    </div>
+  </Fence>
+</Shell>

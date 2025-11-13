@@ -1,0 +1,210 @@
+---
+import { getCollection, render } from "astro:content";
+
+import Link from "@/components/shared/link.astro";
+import Layout from "@/components/templates/problem.astro";
+
+export async function getStaticPaths() {
+  const entries = await getCollection(
+    "problems",
+    ({ data }) => !(import.meta.env.PROD && data.draft),
+  );
+
+  return entries.map((entry) => ({
+    props: { entry },
+    params: { slug: decodeURI(entry.id) },
+  }));
+}
+
+const { entry } = Astro.props;
+
+const markdown = await render(entry);
+
+const { Content, remarkPluginFrontmatter: frontmatter } = markdown;
+
+// @ts-expect-error
+entry.data.updatedAt ??= new Date(frontmatter.updatedAt);
+---
+
+<Layout title={entry.data.title} description={entry.data.description}>
+  <div class="problem-doc">
+    <header class="doc-header">
+      <div class="breadcrumb">
+        <Link href="/problems">Problems</Link> / {entry.data.title}
+      </div>
+    </header>
+
+    <div class="problem-meta">
+      <span class:list={["status-badge", `status-${Math.floor(entry.data.status / 100)}xx`]}>
+        HTTP {entry.data.status}
+      </span>
+
+      <code class="type-uri">{entry.data.type}</code>
+    </div>
+
+    <article class="content">
+      <Content />
+    </article>
+
+    <footer class="doc-footer">
+      <p>
+        <Link href="/problems">← Back to all problem types</Link>
+      </p>
+    </footer>
+  </div>
+</Layout>
+
+<style>
+  .problem-doc {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: var(--font-sans);
+    line-height: 1.6;
+    color: #24292f;
+  }
+
+  .doc-header {
+    border-bottom: 1px solid #d1d9e0;
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .breadcrumb {
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+  }
+
+  .problem-meta {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .status-badge {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+
+  .status-4xx {
+    background: #fff8e1;
+    color: #8a4800;
+    border: 1px solid #f5d500;
+  }
+
+  .status-5xx {
+    background: #ffebee;
+    color: #c62828;
+    border: 1px solid #f44336;
+  }
+
+  .type-uri {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    background: #f6f8fa;
+    padding: 0.125rem 0.25rem;
+    border-radius: 3px;
+    color: #24292f;
+  }
+
+  .content {
+    margin-bottom: 3rem;
+  }
+
+  .doc-footer {
+    border-top: 1px solid #d1d9e0;
+    padding-top: 1.5rem;
+    font-size: 0.875rem;
+  }
+
+  .doc-footer a {
+    color: #0969da;
+    text-decoration: none;
+  }
+
+  .doc-footer a:hover {
+    text-decoration: underline;
+  }
+
+  /* GitHub-style markdown rendering */
+  :global(.content h1) {
+    font-size: 2rem;
+    font-weight: 600;
+    border-bottom: 1px solid #d1d9e0;
+    padding-bottom: 0.3rem;
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
+
+  :global(.content h2) {
+    font-size: 1.5rem;
+    font-weight: 600;
+    border-bottom: 1px solid #d1d9e0;
+    padding-bottom: 0.3rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  :global(.content h3) {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  :global(.content pre) {
+    background: #f6f8fa;
+    border-radius: 6px;
+    padding: 1rem;
+    overflow-x: auto;
+    font-size: 0.875rem;
+    line-height: 1.45;
+  }
+
+  :global(.content code) {
+    background: #f6f8fa;
+    padding: 0.125rem 0.25rem;
+    border-radius: 3px;
+  }
+
+  :global(.content pre code) {
+    background: transparent;
+    padding: 0;
+  }
+
+  :global(.content ul) {
+    padding-left: 1.5rem;
+  }
+
+  :global(.content li) {
+    margin-bottom: 0.25rem;
+  }
+
+  :global(.content blockquote) {
+    border-left: 4px solid #d1d9e0;
+    padding-left: 1rem;
+    color: #656d76;
+    margin: 1rem 0;
+  }
+
+  :global(.content table) {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1rem 0;
+  }
+
+  :global(.content th),
+  :global(.content td) {
+    border: 1px solid #d1d9e0;
+    padding: 0.5rem;
+    text-align: left;
+  }
+
+  :global(.content th) {
+    background: #f6f8fa;
+    font-weight: 600;
+  }
+</style>

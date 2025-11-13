@@ -1,0 +1,52 @@
+---
+import Footer from "@/components/layout/footer.astro";
+import Header from "@/components/layout/header.astro";
+import ThemeProvider from "@/components/widgets/theme-provider.astro";
+import { Font } from "astro:assets";
+
+import "@/assets/styles/prose.css";
+import "@/assets/styles/transitions.css";
+import "@/global.css";
+---
+
+<!doctype html>
+<html
+  lang="en"
+  class:list={["scheme-light motion-safe:scroll-smooth dark:scheme-dark"]}
+  data-color-scheme="light"
+>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="me" href="https://mastodon.social/@princemuel" />
+    <link rel="expect" href="#the_unexpected" blocking="render" />
+    <meta name="fediverse:creator" content="@princemuel@mastodon.social" />
+    <slot name="title">
+      <title>Astro</title>
+    </slot>
+    <Font cssVariable="--font-family-sans" preload />
+    <Font cssVariable="--font-family-mono" />
+    <ThemeProvider />
+    <script src="@/assets/scripts/temporal.client.ts"></script>
+  </head>
+  <body
+    class:list={[
+      "relative grid min-h-svh grid-rows-[auto_1fr_auto]",
+      "font-mono text-xs font-normal antialiased",
+      // "bg-white text-black dark:bg-neutral-950 dark:text-white",
+      "bg-white text-gray-900 dark:bg-gray-950 dark:text-white",
+      "",
+    ]}
+  >
+    <Header />
+
+    <main aria-labelledby="a11ty-headline" class="py-12">
+      <slot />
+    </main>
+
+    <Footer />
+  </body>
+</html>

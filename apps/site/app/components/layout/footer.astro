@@ -1,0 +1,51 @@
+---
+import { getCollection } from "astro:content";
+
+import Fence from "@/components/layout/fence.astro";
+import Link from "@/components/shared/link.astro";
+import Time from "@/components/shared/time.astro";
+import { Icon } from "astro-icon/components";
+
+// const excludedRoutes = new Set(["discord", "youtube", "website", "rss", "instagram"]);
+const excludedRoutes = new Set(["discord", "youtube", "website", "rss", ""]);
+
+const socials = await getCollection("socials", (entry) => !excludedRoutes.has(entry.id));
+
+const buildDate = Temporal.Now.zonedDateTimeISO();
+---
+
+<footer class="py-10 text-sm">
+  <Fence>
+    <section class="flex flex-col items-center gap-12">
+      <address class="flex items-center justify-center gap-4 text-3xl">
+        {
+          socials.map((r) => (
+            <Link
+              href={r.data.href}
+              class:list={["transition", r.data.color ?? "text-current"]}
+            >
+              <Icon name={r.data.icon} title={r.data.text} class="text-current" />
+            </Link>
+          ))
+        }
+      </address>
+
+      <p class="flex flex-wrap items-center justify-center gap-2">
+        <span>&copy;</span>
+        <Time datetime={buildDate.toString()}>{buildDate.year}</Time>
+        <span>Prince Muel</span>
+
+        <span class="before:mx-1 before:content-['::'] max-sm:hidden">
+          Powered by
+          <Link href="https://docs.astro.build/en/getting-started/">
+            {Astro.generator}
+          </Link>
+        </span>
+
+        <span class="before:mx-1 before:content-['::'] max-sm:hidden">
+          <Link href={new URL("/sitemap-index.xml", Astro.site)}>Sitemap</Link>
+        </span>
+      </p>
+    </section>
+  </Fence>
+</footer>

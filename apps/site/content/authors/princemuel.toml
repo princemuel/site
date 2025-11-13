@@ -1,0 +1,13 @@
+bio       = """Short biography text that gives a brief introduction"""
+email     = "vansomecsam@gmail.com"
+handle    = "princemuel"
+image     = "https://github.com/princemuel.png"
+location  = "ISS, Space"
+name      = "Samuel Chukwuzube"
+role      = "Frontend Engineer"
+thumbnail = "https://github.com/princemuel.png"
+[links]
+    mastodon = "https://mastodon.social/@princemuel"
+    repo     = "https://github.com/princemuel"
+    site     = "https://princemuel.dev/about"
+    twitter  = "https://twitter.com/iamprincemuel"

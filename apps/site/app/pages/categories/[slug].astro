@@ -1,0 +1,28 @@
+---
+import { getCollection } from "astro:content";
+
+import Shell from "@/components/frames/shell.astro";
+import Fence from "@/components/layout/fence.astro";
+
+export async function getStaticPaths() {
+  const collections = await Promise.all([getCollection("projects"), getCollection("projects")]);
+  const entries = Array.from(new Set(collections.flat().map((item) => item.data.category)));
+
+  return entries.map((entry) => ({
+    props: { entry },
+    params: { slug: decodeURI(entry) },
+  }));
+}
+
+const { entry } = Astro.props;
+---
+
+<Shell>
+  <Fence>
+    <section class="flex flex-col gap-4">
+      <h1 id="a11ty-headline" class="">Articles for: {entry}</h1>
+
+      <section class="flex flex-col"></section>
+    </section>
+  </Fence>
+</Shell>

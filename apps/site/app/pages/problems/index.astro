@@ -1,0 +1,217 @@
+---
+import { getCollection } from "astro:content";
+
+import Link from "@/components/shared/link.astro";
+import Layout from "@/components/templates/problem.astro";
+
+const entries = await getCollection("problems", ({ data }) => {
+  return !(import.meta.env.PROD && data.draft);
+});
+
+entries.sort((a, b) => a.data.status - b.data.status);
+---
+
+<Layout
+  title="API Problem Types"
+  description="RFC 9457 compliant problem types used by the APIs on princemuel.dev"
+>
+  <div class="problem-index">
+    <header class="header">
+      <h1 id="a11ty-headline" style="font-weight: 400;">Problem Types</h1>
+      <p class="subtitle">
+        The API routes on
+        <Link href="/">{Astro.site?.hostname}</Link> use the
+        <Link href="https://www.rfc-editor.org/rfc/rfc9457.html">Internet RFC 9457</Link>
+        for consistent error reporting.
+      </p>
+    </header>
+
+    <section class="problem-types">
+      <h2>Available Problem Types</h2>
+
+      <div class="problem-grid">
+        {
+          entries.map((entry) => (
+            <article class="problem-card">
+              <header class="problem-header">
+                <h3>
+                  <Link href={`/problems/${entry.id}/`}>{entry.data.title}</Link>
+                </h3>
+
+                <span
+                  class:list={[
+                    "status-badge",
+                    `status-${Math.floor(entry.data.status / 100)}xx`,
+                  ]}
+                >
+                  {entry.data.status}
+                </span>
+              </header>
+              <p class="problem-description">{entry.data.description}</p>
+              <div class="problem-meta">
+                <code class="type-uri">{entry.data.type}</code>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="rfc-info">
+      <h2>About RFC 9457</h2>
+      <p>
+        RFC 9457 defines a standard format for problem details in HTTP APIs. Each problem type
+        has a unique URI that serves human-readable documentation (like these pages) and defines
+        the structure of error responses.
+      </p>
+
+      <h3>Standard Fields</h3>
+      <dl class="field-definitions">
+        <dt><code>type</code></dt>
+        <dd>URI identifying the problem type</dd>
+
+        <dt><code>title</code></dt>
+        <dd>Short, human-readable summary</dd>
+
+        <dt><code>status</code></dt>
+        <dd>HTTP status code</dd>
+
+        <dt><code>detail</code></dt>
+        <dd>Human-readable explanation specific to this occurrence</dd>
+
+        <dt><code>instance</code></dt>
+        <dd>URI identifying this specific occurrence</dd>
+      </dl>
+    </section>
+  </div>
+</Layout>
+
+<style>
+  .problem-index {
+    max-width: 50rem;
+    margin: 0 auto;
+    padding: 2rem;
+    line-height: 1.6;
+    color: #24292f;
+  }
+
+  .header {
+    border-bottom: 1px solid #d1d9e0;
+    padding-bottom: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .header h1 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+  }
+
+  .subtitle {
+    font-size: 1.1rem;
+    color: #656d76;
+    margin: 0;
+  }
+
+  .problem-grid {
+    display: grid;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .problem-card {
+    border: 1px solid #d1d9e0;
+    border-radius: 6px;
+    padding: 1.5rem;
+    background: #ffffff;
+  }
+
+  .problem-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.75rem;
+  }
+
+  .problem-header h3 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  .problem-header a {
+    color: #0969da;
+    text-decoration: none;
+  }
+
+  .problem-header a:hover {
+    text-decoration: underline;
+  }
+
+  .status-badge {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-weight: 600;
+  }
+
+  .status-4xx {
+    background: #fff8e1;
+    color: #8a4800;
+    border: 1px solid #f5d500;
+  }
+
+  .status-5xx {
+    background: #ffebee;
+    color: #c62828;
+    border: 1px solid #f44336;
+  }
+
+  .problem-description {
+    color: #656d76;
+    margin: 0 0 1rem 0;
+  }
+
+  .type-uri {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    background: #f6f8fa;
+    padding: 0.125rem 0.25rem;
+    border-radius: 3px;
+    color: #24292f;
+  }
+
+  .rfc-info {
+    border-top: 1px solid #d1d9e0;
+    padding-top: 2rem;
+  }
+
+  .rfc-info h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0 0 1rem 0;
+  }
+
+  .rfc-info h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 1.5rem 0 0.75rem 0;
+  }
+
+  .field-definitions {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .field-definitions dt {
+    font-family: var(--font-mono);
+    font-weight: 600;
+    color: #0969da;
+  }
+
+  .field-definitions dd {
+    margin: 0 0 0 1rem;
+    color: #656d76;
+  }
+</style>

@@ -1,0 +1,29 @@
+---
+import { getCollection } from "astro:content";
+
+import Shell from "@/components/frames/shell.astro";
+import Fence from "@/components/layout/fence.astro";
+import Link from "@/components/shared/link.astro";
+
+const collections = await Promise.all([getCollection("projects"), getCollection("pages")]);
+
+const entries = Array.from(new Set(collections.flat().flatMap((item) => item.data.tags)));
+---
+
+<Shell>
+  <Fence>
+    <section class="flex flex-col gap-4">
+      <h1 id="a11ty-headline" class="">Tags</h1>
+
+      <section class="flex flex-col">
+        {
+          entries.map((entry) => (
+            <Link href={`/tags/${entry}`} class="underline">
+              {entry}
+            </Link>
+          ))
+        }
+      </section>
+    </section>
+  </Fence>
+</Shell>
