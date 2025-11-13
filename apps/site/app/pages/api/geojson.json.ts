@@ -8,7 +8,7 @@ const filePath = join(process.cwd(), "app", "assets", "include", fileName);
 const buffer = await readFile(filePath);
 
 export const GET: APIRoute = async () => {
-  return new Response(buffer, {
+  return new Response(new Uint8Array(buffer), {
     status: 200,
     headers: {
       "Content-Type": "application/geo+json",

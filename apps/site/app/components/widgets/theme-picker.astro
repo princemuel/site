@@ -47,7 +47,7 @@ type Props = HTMLAttributes<"button">;
 
 {/* Inlined to avoid FOUC. Uses global scope from `theme-provider.astro` */}
 <script is:inline>
-  globalThis.Theme.selectThemeIcon();
+  Theme.selectThemeIcon();
 </script>
 
 <script>
@@ -97,7 +97,7 @@ type Props = HTMLAttributes<"button">;
   /** Update theme widget, document theme, and local storage state. */
 
   const setTheme = (theme: Theme) => {
-    globalThis.Theme.selectThemeIcon(theme);
+    Theme.selectThemeIcon(theme);
 
     const $ = document.documentElement;
     const scheme = resolveScheme(theme);

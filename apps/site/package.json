@@ -55,6 +55,7 @@
     "expressive-code-fullscreen": "^1.0.0",
     "hast-util-to-string": "^3.0.1",
     "hastscript": "^9.0.1",
+    "mdast-util-to-string": "^4.0.0",
     "oxlint": "catalog:",
     "oxlint-tsgolint": "catalog:",
     "prisma": "^6.19.0",
@@ -66,6 +67,6 @@
     "remark-toc": "^9.0.0",
     "tailwindcss": "^4.1.17",
     "typescript": "catalog:",
-    "vite": "catalog:"
+    "vite": "^6.4.1"
   }
 }

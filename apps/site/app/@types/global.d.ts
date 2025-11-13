@@ -1,15 +1,19 @@
-declare namespace globalThis {
-  var __singletons__: Map<string, unknown> | undefined;
+// declare namespace globalThis {
 
-  interface ThemeController {
-    value: "system" | "light" | "dark";
-    selectThemeIcon(theme?: string): void;
-  }
+//   interface ThemeController {
+//     value: "system" | "light" | "dark";
+//     selectThemeIcon(theme?: string): void;
+//   }
 
-  // Actual instances on the global object
-  var Theme: ThemeController;
+//   // Actual instances on the global object
+//   var Theme: ThemeController;
 
-  interface Window {
-    [Symbol.for("app.theme")]: ThemeController;
-  }
+//   interface Window {
+//     [Symbol.for("app.theme")]: ThemeController;
+//   }
+// }
+
+interface ThemeController {
+  value?: "system" | "light" | "dark";
+  selectThemeIcon(theme?: string): void;
 }
