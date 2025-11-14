@@ -2,33 +2,36 @@
 
 import * as fs from "node:fs";
 import * as path from "node:path";
-import { argv, cwd, exit } from "node:process";
 import * as zlib from "node:zlib";
 
 const usage = () => {
   console.error(`Usage: node compress <input.json> [--out <outputBasePath>]
   - Compresses JSON using Gzip, Brotli, and Deflate.
   - Outputs: <outputBasePath>.gz, .br, .deflate`);
-  process.exitCode = 1;
+  process.exit(1);
 };
 
 const getArgs = () => {
-  const args = argv.slice(2);
+  const args = process.argv.slice(2);
   if (args.length === 0) usage();
 
-  const inputPath = path.resolve(cwd(), args[0]);
+  const inputPath = path.resolve(process.cwd(), args[0]);
   const outFlagIndex = args.indexOf("--out");
   const outputPath =
     outFlagIndex !== -1 && args[outFlagIndex + 1]
-      ? path.resolve(cwd(), args[outFlagIndex + 1])
+      ? path.resolve(process.cwd(), args[outFlagIndex + 1])
       : inputPath;
 
   return { inputPath, outputPath };
 };
 
-const formatSize = (bytes) => `${(bytes / 1024).toFixed(2)} KiB`;
+const formatSize = (/** @type {number} */ bytes) => `${(bytes / 1024).toFixed(2)} KiB`;
 
-
+/**
+ *
+ * @param {unknown} jsonData
+ * @param {string} basePath
+ */
 const compressJson = async (jsonData, basePath) => {
   const minified = JSON.stringify(jsonData);
   const buffer = Buffer.from(minified, "utf8");
@@ -62,7 +65,7 @@ const main = async () => {
 
   if (!fs.existsSync(inputPath)) {
     console.error(`❌ Input file not found: ${inputPath}`);
-    exit(1);
+    process.exit(1);
   }
 
   try {
@@ -70,8 +73,9 @@ const main = async () => {
     const json = JSON.parse(content);
     await compressJson(json, outputPath);
   } catch (error) {
+    // @ts-expect-error
     console.error(`❌ Error: ${error.message}`);
-    exit(1);
+    process.exit(1);
   }
 };
 

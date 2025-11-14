@@ -55,7 +55,10 @@ export const markdown = {
   ],
   rehypePlugins: [
     [rehypeHeadingIds, { experimentalHeadingIdCompat: true }],
-    [rehypeExternalLinks, { rel: ["noopener", "noreferrer", "external"], target: "_blank" }],
+    [
+      rehypeExternalLinks,
+      { rel: ["nofollow", "noopener", "noreferrer", "external"], target: "_blank" },
+    ],
     // [
     //   rehypeAutolinkHeadings,
     //   {

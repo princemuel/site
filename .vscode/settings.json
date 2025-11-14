@@ -35,7 +35,7 @@
   "oxc.enable": true,
   "oxc.fmt.experimental": true,
   "[javascript]": {
-    "editor.defaultFormatter": "oxc.oxc-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "json.validate.enable": true,
   "css.validate": false,
