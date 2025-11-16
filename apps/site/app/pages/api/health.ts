@@ -1,5 +1,4 @@
-import type { APIRoute } from "astro";
-
 export const prerender = false;
 
-export const GET: APIRoute = async (ctx) => ctx.rewrite(new URL("/api/health.txt", ctx.site));
+export const GET = async () =>
+  new Response("Hi there! I'm healthy...Thanks for checking up on me!");

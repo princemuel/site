@@ -12,7 +12,7 @@ export const GET: APIRoute = async () => {
     url.searchParams.set("mimeType", mimeType);
     url.searchParams.set("key", GOOGLE_DRIVE_TOKEN);
 
-    const response = await fetch(url, { signal: AbortSignal.timeout(10_000) });
+    const response = await fetch(url, { signal: AbortSignal.timeout(20_000) });
     if (!response.ok || !response.body) throw new NotFoundError("Failed to fetch resource");
 
     return new Response(response.body, {
