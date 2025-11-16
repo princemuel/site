@@ -51,8 +51,6 @@ tmp-*
 .next
 .nuxt
 /.svelte-kit
-/.astro/*
-!.astro/icon.d.ts
 .vuepress/dist
 .serverless/
 .fusebox/
@@ -131,9 +129,6 @@ next-env.d.ts
 # Gatsby
 .cache/
 
-# Astro generated
-.astro/
-
 # Serverless
 .serverless/
 
@@ -141,7 +136,7 @@ next-env.d.ts
 # Rust / Cargo
 # ────────────────────────────────────────────────
 
-/target
+target
 Cargo.lock
 *.node
 
