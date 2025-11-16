@@ -11,8 +11,6 @@ import {
   pluginsVite,
 } from "./config";
 
-import node from "@astrojs/node";
-
 // https://astro.build/config
 export default defineConfig({
   site: envVars.PUBLIC_SITE_URL,
@@ -21,9 +19,9 @@ export default defineConfig({
   experimental: flags,
   integrations: integrations,
   server: { host: true },
-  prefetch: { prefetchAll: true, defaultStrategy: "load" },
+  prefetch: { prefetchAll: true, defaultStrategy: "hover" },
   markdown: markdown,
   image: images,
-  adapter: node(adapter),
+  adapter: adapter,
   vite: pluginsVite,
 });

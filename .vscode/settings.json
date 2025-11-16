@@ -7,7 +7,7 @@
   },
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
-  "dotenv.enableAutocloaking": true,
+  "dotenv.enableAutocloaking": false,
   "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
   "editor.wordWrap": "bounded",
   "editor.wordWrapColumn": 96,

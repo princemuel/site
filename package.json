@@ -12,6 +12,7 @@
     "lint": "oxlint -c oxlintrc.json --deny-warnings --type-aware"
   },
   "devDependencies": {
+    "@astrojs/netlify": "catalog:",
     "@napi-rs/cli": "catalog:",
     "@total-typescript/ts-reset": "catalog:",
     "@types/node": "catalog:",

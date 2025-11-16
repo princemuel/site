@@ -1,21 +1,7 @@
-import type { UserOptions } from "node_modules/@astrojs/node/dist/types";
+import provider from "@astrojs/netlify";
 
-type Config = UserOptions;
-
-export const adapter = {
-  mode: "standalone",
+export const adapter = provider({
+  cacheOnDemandPages: true,
   experimentalStaticHeaders: true,
-} satisfies Config;
-// export const adapter = {
-//   imageService: "cloudflare",
-//   platformProxy: { enabled: true },
-//   sessionKVBindingName: "SESSION",
-// } satisfies Config;
-
-// type Config = NetlifyIntegrationConfig;
-
-// export const adapter = {
-//   cacheOnDemandPages: true,
-//   experimentalStaticHeaders: true,
-//   devFeatures: false,
-// } satisfies Config;
+  devFeatures: false,
+});
