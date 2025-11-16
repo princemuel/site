@@ -9,5 +9,5 @@ thumbnail = "https://github.com/princemuel.png"
 [links]
     mastodon = "https://mastodon.social/@princemuel"
     repo     = "https://github.com/princemuel"
-    site     = "https://princemuel.dev/about"
+    site     = "https://princemuel.netlify.app/about"
     twitter  = "https://twitter.com/iamprincemuel"

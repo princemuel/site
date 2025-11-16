@@ -29,7 +29,7 @@
   color: text-blue-700
 
 - id: website
-  href: https://princemuel.dev/about
+  href: https://princemuel.netlify.app/about
   text: Connect with me on LinkedIn
   icon: ion:earth
   color: text-green-700

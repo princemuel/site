@@ -2,7 +2,7 @@
 title: "Rate Limit Exceeded"
 status: 429
 description: "Too many requests have been made in a given time period."
-type: "https://princemuel.dev/problems/rate-limited"
+type: "https://princemuel.netlify.app/problems/rate-limited"
 extensions:
   limit: "The rate limit ceiling for this endpoint"
   remaining: "Number of requests remaining in current window"
@@ -14,7 +14,7 @@ Too many requests have been made in a given time period.
 
 ## Standard Fields
 
-- **type**: `https://princemuel.dev/problems/rate-limited`
+- **type**: `https://princemuel.netlify.app/problems/rate-limited`
 - **title**: `Rate Limit Exceeded`
 - **status**: `429`
 - **detail**: Description of the rate limit that was exceeded
@@ -44,7 +44,7 @@ Number of seconds to wait before making another request.
 
 ```json
 {
-  "type": "https://princemuel.dev/problems/rate-limited",
+  "type": "https://princemuel.netlify.app/problems/rate-limited",
   "title": "Rate Limit Exceeded",
   "status": 429,
   "detail": "You have exceeded the rate limit of 100 requests per hour",
@@ -60,7 +60,7 @@ Number of seconds to wait before making another request.
 
 ```json
 {
-  "type": "https://princemuel.dev/problems/rate-limited",
+  "type": "https://princemuel.netlify.app/problems/rate-limited",
   "title": "Rate Limit Exceeded",
   "status": 429,
   "detail": "User API key has exceeded 1000 requests per day",
