@@ -17,7 +17,7 @@
     "lint": "oxlint -c oxlintrc.json --deny-warnings --type-aware"
   },
   "dependencies": {
-    "@prisma/client": "^6.19.0",
+    "@prisma/client": "^7.0.0",
     "astro": "catalog:",
     "http-errors-enhanced": "^3.0.2",
     "isbot": "^5.1.32",
@@ -59,7 +59,7 @@
     "netlify-cli": "catalog:",
     "oxlint": "catalog:",
     "oxlint-tsgolint": "catalog:",
-    "prisma": "^6.19.0",
+    "prisma": "^7.0.0",
     "reading-time": "^1.5.0",
     "rehype-autolink-headings": "^7.1.0",
     "rehype-external-links": "^3.0.0",
