@@ -18,7 +18,7 @@ export default defineConfig({
   env: { validateSecrets: true, schema: envSchema },
   experimental: flags,
   integrations: integrations,
-  server: { host: true },
+  server: ({ command }) => ({ host: command === "dev" }),
   prefetch: { prefetchAll: true, defaultStrategy: "hover" },
   markdown: markdown,
   image: images,
