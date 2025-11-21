@@ -17,9 +17,7 @@ const getArgs = () => {
   const inputPath = path.resolve(cwd(), args[0]);
   const outFlagIndex = args.indexOf("--out");
   const outputPath =
-    outFlagIndex !== -1 && args[outFlagIndex + 1]
-      ? path.resolve(cwd(), args[outFlagIndex + 1])
-      : inputPath;
+    outFlagIndex !== -1 && args[outFlagIndex + 1] ? path.resolve(cwd(), args[outFlagIndex + 1]) : inputPath;
 
   return { inputPath, outputPath };
 };

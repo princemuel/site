@@ -7,3 +7,4 @@ wasi-worker-browser.mjs
 wasi-worker.mjs
 .yarnrc.yml
 *.geojson
+*.rs

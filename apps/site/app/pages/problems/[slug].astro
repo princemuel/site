@@ -5,10 +5,7 @@ import Link from "@/components/shared/link.astro";
 import Layout from "@/components/templates/problem.astro";
 
 export async function getStaticPaths() {
-  const entries = await getCollection(
-    "problems",
-    ({ data }) => !(import.meta.env.PROD && data.draft),
-  );
+  const entries = await getCollection("problems", ({ data }) => !(import.meta.env.PROD && data.draft));
 
   return entries.map((entry) => ({
     props: { entry },

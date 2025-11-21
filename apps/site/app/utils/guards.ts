@@ -18,11 +18,7 @@ export const hasValue = <T>(value: T | undefined | null): value is NonNullable<T
 };
 
 export const isBrowser = (() => {
-  if (
-    typeof window === "undefined" ||
-    typeof document === "undefined" ||
-    typeof HTMLElement === "undefined"
-  ) {
+  if (typeof window === "undefined" || typeof document === "undefined" || typeof HTMLElement === "undefined") {
     return false;
   }
   // Deno can polyfill browser APIs, check for native implementation

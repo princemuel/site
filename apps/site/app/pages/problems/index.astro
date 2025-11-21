@@ -38,12 +38,7 @@ entries.sort((a, b) => a.data.status - b.data.status);
                   <Link href={`/problems/${entry.id}/`}>{entry.data.title}</Link>
                 </h3>
 
-                <span
-                  class:list={[
-                    "status-badge",
-                    `status-${Math.floor(entry.data.status / 100)}xx`,
-                  ]}
-                >
+                <span class:list={["status-badge", `status-${Math.floor(entry.data.status / 100)}xx`]}>
                   {entry.data.status}
                 </span>
               </header>
@@ -60,9 +55,8 @@ entries.sort((a, b) => a.data.status - b.data.status);
     <section class="rfc-info">
       <h2>About RFC 9457</h2>
       <p>
-        RFC 9457 defines a standard format for problem details in HTTP APIs. Each problem type
-        has a unique URI that serves human-readable documentation (like these pages) and defines
-        the structure of error responses.
+        RFC 9457 defines a standard format for problem details in HTTP APIs. Each problem type has a unique URI
+        that serves human-readable documentation (like these pages) and defines the structure of error responses.
       </p>
 
       <h3>Standard Fields</h3>

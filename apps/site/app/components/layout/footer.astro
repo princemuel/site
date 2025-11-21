@@ -20,10 +20,7 @@ const buildDate = Temporal.Now.zonedDateTimeISO();
       <address class="flex items-center justify-center gap-4 text-3xl">
         {
           socials.map((r) => (
-            <Link
-              href={r.data.href}
-              class:list={["transition", r.data.color ?? "text-current"]}
-            >
+            <Link href={r.data.href} class:list={["transition", r.data.color ?? "text-current"]}>
               <Icon name={r.data.icon} title={r.data.text} class="text-current" />
             </Link>
           ))

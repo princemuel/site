@@ -24,7 +24,7 @@ catalog:
 
 catalogMode: prefer
 
-minimumReleaseAge: 120
+minimumReleaseAge: 114
 
 onlyBuiltDependencies:
   - "@parcel/watcher"

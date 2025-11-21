@@ -2,8 +2,7 @@
 <script is:inline>
   if (!globalThis.Theme) {
     const themeController = (() => {
-      const storedTheme =
-        typeof localStorage !== "undefined" && localStorage.getItem("x-theme");
+      const storedTheme = typeof localStorage !== "undefined" && localStorage.getItem("x-theme");
       const mql = globalThis.matchMedia("(prefers-color-scheme: light)");
       const theme = storedTheme || (mql.matches ? "light" : "dark");
       const $ = document.documentElement;

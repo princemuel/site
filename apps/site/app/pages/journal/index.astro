@@ -71,17 +71,11 @@ const route = {
                     </li>
                   </ul>
 
-                  <section
-                    id={`${uuid}-keywords`}
-                    class="flex flex-wrap items-center gap-x-3 gap-y-1"
-                  >
+                  <section id={`${uuid}-keywords`} class="flex flex-wrap items-center gap-x-3 gap-y-1">
                     <Link href={route.tag}>&lbrace;meta&rbrace;</Link>
                     <span role="separator">::</span>
                     {route.tags.map((tag) => (
-                      <Link
-                        href={new URL(`tags/${tag}`, "https://eyalkalderon.com")}
-                        class="underline"
-                      >
+                      <Link href={new URL(`tags/${tag}`, "https://eyalkalderon.com")} class="underline">
                         #{tag}
                       </Link>
                     ))}
@@ -89,15 +83,13 @@ const route = {
                 </header>
 
                 <p id={`${uuid}-summary`}>
-                  Mourning the slow death of Keybase and introducing Keyoxide, an open source
-                  decentralized replacement.
+                  Mourning the slow death of Keybase and introducing Keyoxide, an open source decentralized
+                  replacement.
                 </p>
 
                 <Link
                   href={route.readMore}
-                  aria-label={
-                    "Read more about Monitoring Wireguard in Uptime Kuma (with OPNsense)"
-                  }
+                  aria-label={"Read more about Monitoring Wireguard in Uptime Kuma (with OPNsense)"}
                   class="text-sky-700 dark:text-sky-400"
                 >
                   read more →

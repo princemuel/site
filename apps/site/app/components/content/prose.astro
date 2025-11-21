@@ -7,9 +7,6 @@ const { as: Tag = "article", class: classes, ...attrs } = Astro.props;
 ---
 
 {/* marker:content-['_⦿_'] */}
-<Tag
-  {...attrs}
-  class:list={["prose prose-base max-w-none prose-gray dark:prose-invert", classes]}
->
+<Tag {...attrs} class:list={["prose prose-base max-w-none prose-gray dark:prose-invert", classes]}>
   <slot />
 </Tag>

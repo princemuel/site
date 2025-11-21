@@ -6,10 +6,7 @@ import Shell from "@/components/frames/shell.astro";
 import Fence from "@/components/layout/fence.astro";
 
 export async function getStaticPaths() {
-  const entries = await getCollection(
-    "projects",
-    ({ data }) => !(import.meta.env.PROD && data.draft),
-  );
+  const entries = await getCollection("projects", ({ data }) => !(import.meta.env.PROD && data.draft));
 
   return entries.map((entry) => ({
     props: { entry },

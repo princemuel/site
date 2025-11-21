@@ -40,8 +40,7 @@ export function $<E extends Element>(
     return elements as NodeListOf<E>;
   }
 
-  const element =
-    parent.querySelector(selector) ?? throwAsError(`Element not found: ${selector}`);
+  const element = parent.querySelector(selector) ?? throwAsError(`Element not found: ${selector}`);
   if (!(element instanceof Constructor)) {
     throwAsError(`Element is not of type ${Constructor.name}: ${selector}`);
   }

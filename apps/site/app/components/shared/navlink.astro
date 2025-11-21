@@ -11,12 +11,9 @@ const thatPathname = Astro.props.href.toString();
 const thisPathname = Astro.url.pathname;
 
 const pathname =
-  thatPathname && "/" !== thatPathname && thatPathname.endsWith("/")
-    ? thatPathname.slice(0, -1)
-    : thatPathname;
+  thatPathname && "/" !== thatPathname && thatPathname.endsWith("/") ? thatPathname.slice(0, -1) : thatPathname;
 
-const isActive =
-  !!pathname && (pathname === thisPathname || thisPathname.startsWith(`${pathname}/`));
+const isActive = !!pathname && (pathname === thisPathname || thisPathname.startsWith(`${pathname}/`));
 ---
 
 <a {...Astro.props} aria-current={isActive ? "page" : "false"}>

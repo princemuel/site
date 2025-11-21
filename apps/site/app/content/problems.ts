@@ -7,8 +7,8 @@ export default defineCollection({
   schema: z.object({
     title: z.string(),
     status: z.number(),
-    description: z.string(),
     type: z.string().url(),
+    description: z.string(),
     extensions: z.record(z.string()).default({}),
     draft: z.boolean().default(false),
   }),

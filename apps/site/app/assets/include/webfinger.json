@@ -1,9 +1,6 @@
 {
   "subject": "acct:princemuel@mastodon.social",
-  "aliases": [
-    "https://mastodon.social/@princemuel",
-    "https://mastodon.social/users/princemuel"
-  ],
+  "aliases": ["https://mastodon.social/@princemuel", "https://mastodon.social/users/princemuel"],
   "links": [
     {
       "rel": "http://webfinger.net/rel/profile-page",

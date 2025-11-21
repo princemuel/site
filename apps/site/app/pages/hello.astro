@@ -1,6 +1,16 @@
 ---
 import Shell from "@/components/frames/shell.astro";
 import Fence from "@/components/layout/fence.astro";
+import { Debug } from "astro:components";
+
+import { db } from "database";
+
+const data = db.post.findMany();
 ---
 
-<Shell> <Fence /></Shell>
+<Shell>
+  <Fence>
+    <h1>{10}</h1>
+    <Debug {data} />
+  </Fence>
+</Shell>

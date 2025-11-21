@@ -10,7 +10,7 @@
   "dotenv.enableAutocloaking": false,
   "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
   "editor.wordWrap": "bounded",
-  "editor.wordWrapColumn": 96,
+  "editor.wordWrapColumn": 120,
   "editor.inlineSuggest.enabled": true,
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
@@ -64,9 +64,7 @@
   "tailwindCSS.includeLanguages": {
     "xslt": "html"
   },
-  "tailwindCSS.experimental.classRegex": [
-    ["([\"'`][^\"'`]*.*?[\"'`])", "[\"'`]([^\"'`]*).*?[\"'`]"]
-  ],
+  "tailwindCSS.experimental.classRegex": [["([\"'`][^\"'`]*.*?[\"'`])", "[\"'`]([^\"'`]*).*?[\"'`]"]],
   "workbench.tree.indent": 12,
   // Rust Analyzer settings
   "rust-analyzer.assist.preferSelf": true,

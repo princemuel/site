@@ -22,12 +22,7 @@ const { Content } = await render(entry);
         <Content frontmatter={entry.data} />
       </Prose>
 
-      <section
-        aria-label="PROJECTS DONE OR ONGOING"
-        role="feed"
-        aria-busy="false"
-        class="flex flex-col"
-      >
+      <section aria-label="PROJECTS DONE OR ONGOING" role="feed" aria-busy="false" class="flex flex-col">
         {
           entries.map(async (entry, idx) => {
             const { remarkPluginFrontmatter: frontmatter } = await render(entry);
@@ -79,13 +74,8 @@ const { Content } = await render(entry);
                     </li>
                   </ul>
 
-                  <section
-                    id={`${uuid}-keywords`}
-                    class="flex flex-wrap items-center gap-x-3 gap-y-1"
-                  >
-                    <Link href={`/categories/${item.category}`}>
-                      &lbrace;{item.category}&rbrace;
-                    </Link>
+                  <section id={`${uuid}-keywords`} class="flex flex-wrap items-center gap-x-3 gap-y-1">
+                    <Link href={`/categories/${item.category}`}>&lbrace;{item.category}&rbrace;</Link>
                     <span role="separator">::</span>
                     {item.tags.map((tag) => (
                       <Link href={`/tags/${tag}`} class="underline">

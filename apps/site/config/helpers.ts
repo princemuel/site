@@ -19,8 +19,7 @@ export const getFileModifiedTime = (filePath: string): Temporal.Instant => {
       cwd: process.cwd(),
     });
 
-    if (result.status !== 0 || !result.stdout?.trim())
-      throw new Error("Git command failed or returned empty");
+    if (result.status !== 0 || !result.stdout?.trim()) throw new Error("Git command failed or returned empty");
 
     return Temporal.Instant.from(result.stdout.trim());
   } catch {

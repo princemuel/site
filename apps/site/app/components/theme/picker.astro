@@ -78,8 +78,7 @@ type Props = HTMLAttributes<"button">;
 
   const getSystemScheme = (): ColorScheme => (mql.matches ? "light" : "dark");
 
-  const parseTheme = (value: unknown): Theme =>
-    value === "light" || value === "dark" ? value : "system";
+  const parseTheme = (value: unknown): Theme => (value === "light" || value === "dark" ? value : "system");
 
   const loadTheme = (): Theme => parseTheme(localStorage?.getItem(STORAGE_KEY));
 
@@ -87,8 +86,7 @@ type Props = HTMLAttributes<"button">;
     localStorage?.setItem(STORAGE_KEY, theme === "light" || theme === "dark" ? theme : "");
   };
 
-  const resolveScheme = (theme: Theme): ColorScheme =>
-    theme === "system" ? getSystemScheme() : theme;
+  const resolveScheme = (theme: Theme): ColorScheme => (theme === "system" ? getSystemScheme() : theme);
 
   // ============================================================================
   // Theme Application

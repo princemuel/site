@@ -13,11 +13,7 @@ export default defineCollection({
       author: reference("authors"),
       tools: z.array(z.string()).default([]),
       contributors: z.array(reference("authors")).default([]),
-      status: z
-        .enum(["concept", "planned", "in-progress", "completed", "archived"])
-        .default("planned"),
-      links: z
-        .array(z.object({ label: reference("labels"), url: z.string().min(2).url() }))
-        .default([]),
+      status: z.enum(["concept", "planned", "in-progress", "completed", "archived"]).default("planned"),
+      links: z.array(z.object({ label: reference("labels"), url: z.string().min(2).url() })).default([]),
     }),
 });

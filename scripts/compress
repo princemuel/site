@@ -53,9 +53,7 @@ const compressJson = async (jsonData, basePath) => {
 
       await fs.promises.writeFile(outPath, data);
 
-      console.log(
-        `📦 ${type.toUpperCase()}: ${formatSize(data.length)} (${ratio}% of original) → ${outPath}`,
-      );
+      console.log(`📦 ${type.toUpperCase()}: ${formatSize(data.length)} (${ratio}% of original) → ${outPath}`);
     }),
   );
 };

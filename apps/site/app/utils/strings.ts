@@ -2,8 +2,7 @@ type EndsWith<W extends string, S extends string> = W extends `${string}${S}` ? 
 
 export const capitalize = <S extends string>(str: S, locale?: Intl.LocalesArgument) => {
   if (!str) return str as Capitalize<S>;
-  return (str.charAt(0).toLocaleUpperCase(locale) +
-    str.slice(1).toLocaleLowerCase(locale)) as Capitalize<S>;
+  return (str.charAt(0).toLocaleUpperCase(locale) + str.slice(1).toLocaleLowerCase(locale)) as Capitalize<S>;
 };
 
 export const normalize = (str: string) =>
@@ -47,9 +46,6 @@ export const pluralize = <C extends number, N extends string, P extends string =
   return (count === 1 ? noun : (plural ?? `${noun}s`)) as C extends 1 ? N : P;
 };
 
-export const endsWith = <W extends string, S extends string>(
-  str: W,
-  suffix: S,
-): str is EndsWith<W, S> => {
+export const endsWith = <W extends string, S extends string>(str: W, suffix: S): str is EndsWith<W, S> => {
   return str.endsWith(suffix);
 };

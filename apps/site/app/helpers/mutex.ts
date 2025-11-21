@@ -84,8 +84,7 @@ export class MutexGuard<T extends object> implements ProxyHandler<T> {
   // Proxy handler methods
   public get(target: T, property: PropertyKey, receiver: any): any {
     // Check if guard is still valid
-    if (!this.#isValid)
-      throw new Error("Cannot access resource through invalidated mutex guard");
+    if (!this.#isValid) throw new Error("Cannot access resource through invalidated mutex guard");
 
     // Intercept release calls
     if (property === "release") {
@@ -97,8 +96,7 @@ export class MutexGuard<T extends object> implements ProxyHandler<T> {
   }
 
   public set(target: T, property: PropertyKey, value: any, receiver: any): boolean {
-    if (!this.#isValid)
-      throw new Error("Cannot modify resource through invalidated mutex guard");
+    if (!this.#isValid) throw new Error("Cannot modify resource through invalidated mutex guard");
 
     return Reflect.set(target, property, value, receiver);
   }
@@ -111,8 +109,7 @@ export class MutexGuard<T extends object> implements ProxyHandler<T> {
   }
 
   public ownKeys(target: T): ArrayLike<string | symbol> {
-    if (!this.#isValid)
-      throw new Error("Cannot enumerate properties on invalidated mutex guard");
+    if (!this.#isValid) throw new Error("Cannot enumerate properties on invalidated mutex guard");
 
     const keys = Reflect.ownKeys(target);
     // Add 'release' to the keys if it's not already there
@@ -121,12 +118,8 @@ export class MutexGuard<T extends object> implements ProxyHandler<T> {
     return keys;
   }
 
-  public getOwnPropertyDescriptor(
-    target: T,
-    property: PropertyKey,
-  ): PropertyDescriptor | undefined {
-    if (!this.#isValid)
-      throw new Error("Cannot get property descriptor on invalidated mutex guard");
+  public getOwnPropertyDescriptor(target: T, property: PropertyKey): PropertyDescriptor | undefined {
+    if (!this.#isValid) throw new Error("Cannot get property descriptor on invalidated mutex guard");
 
     if (property === "release") {
       return {

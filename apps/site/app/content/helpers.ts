@@ -9,6 +9,7 @@ export const baseSchema = z.object({
   headline: z.string().default(""),
   summary: z.string().default(""),
   draft: z.boolean().default(true),
+  comments: z.boolean().default(false),
   tags: z.array(z.string()).default([]),
   publishedAt: z.date(),
   updatedAt: z.date().optional(),
@@ -18,20 +19,13 @@ export const baseSchema = z.object({
   permalink: z.string().default("/"),
 });
 
+type ImageInfo = ImageMetadata;
 export const img = (image: ImageFunction) =>
   z
     .string()
     .url()
     .regex(/^https:.*/)
-    .transform(
-      (url) =>
-        ({
-          src: url,
-          width: 1200,
-          height: 630,
-          format: "jpg",
-        }) satisfies ImageMetadata,
-    )
+    .transform((url) => ({ src: url, width: 1200, height: 630, format: "jpg" }) as ImageInfo)
     .or(image());
 
 // const generateSlug = ((options) => {

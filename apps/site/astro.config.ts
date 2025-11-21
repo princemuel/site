@@ -1,15 +1,6 @@
 import { defineConfig } from "astro/config";
 
-import {
-  adapter,
-  envSchema,
-  envVars,
-  flags,
-  images,
-  integrations,
-  markdown,
-  pluginsVite,
-} from "./config";
+import { adapter, envSchema, envVars, flags, images, integrations, markdown, pluginsVite } from "./config";
 
 // https://astro.build/config
 export default defineConfig({
