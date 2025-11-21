@@ -4,9 +4,9 @@
   "author": "Prince Muel <68931805+princemuel@users.noreply.github.com>",
   "packageManager": "pnpm@10.23.0",
   "scripts": {
-    "build:native": "pnpm --workspace-concurrency=1 --filter './pkgs/*' run build",
+    "build:native": "pnpm --workspace-concurrency=1 --filter './packages/*' run build",
     "build:apps": "pnpm --workspace-concurrency=1 --filter './apps/*' run build",
-    "build": "pnpm --workspace-concurrency=1 --filter \"./pkgs/*\" --filter \"./apps/*\" build",
+    "build": "pnpm --workspace-concurrency=1 --filter \"./packages/*\" --filter \"./apps/*\" build",
     "dev": "pnpm --filter ./apps/site dev",
     "fmt": "oxfmt -c oxfmtrc.jsonc",
     "lint": "oxlint -c oxlintrc.json --deny-warnings --type-aware"

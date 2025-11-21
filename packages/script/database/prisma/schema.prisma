@@ -1,0 +1,52 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Post {
+  id         Int      @id @default(autoincrement())
+  slug       String   @unique
+  title      String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  comments Comment[]
+
+  @@map("posts")
+}
+
+model CommentAuthor {
+  id         Int      @id @default(autoincrement())
+  username   String   @unique
+  created_at DateTime @default(now())
+
+  comments Comment[]
+}
+
+model Comment {
+  id         Int      @id @default(autoincrement())
+  content    String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  post    Post @relation(fields: [post_id], references: [id], onDelete: Cascade)
+  post_id Int
+
+  author    CommentAuthor @relation(fields: [author_id], references: [id], onDelete: Cascade)
+  author_id Int
+
+  parent    Comment? @relation("ReplyToComment", fields: [parent_id], references: [id], onDelete: Cascade)
+  parent_id Int?
+
+  replies Comment[] @relation("ReplyToComment")
+
+  // Optimized indexes
+  @@index([post_id, parent_id]) // List comments quickly by post, grouped by parent
+  @@index([parent_id]) // Fast lookup of replies
+  @@index([created_at]) // Useful chronological ordering
+  @@map("comments")
+}
