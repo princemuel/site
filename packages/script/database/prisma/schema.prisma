@@ -19,7 +19,7 @@ model Post {
   @@map("posts")
 }
 
-model CommentAuthor {
+model Actor {
   id         Int      @id @default(autoincrement())
   username   String   @unique
   created_at DateTime @default(now())
@@ -36,8 +36,8 @@ model Comment {
   post    Post @relation(fields: [post_id], references: [id], onDelete: Cascade)
   post_id Int
 
-  author    CommentAuthor @relation(fields: [author_id], references: [id], onDelete: Cascade)
-  author_id Int
+  actor    Actor @relation(fields: [actor_id], references: [id], onDelete: Cascade)
+  actor_id Int
 
   parent    Comment? @relation("ReplyToComment", fields: [parent_id], references: [id], onDelete: Cascade)
   parent_id Int?
