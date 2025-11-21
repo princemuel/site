@@ -77,11 +77,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build all NAPI pkgs
-        run: pnpm --filter "./pkgs/*" build
+      - name: Build all NAPI packages
+        run: pnpm --filter "./packages/*" build
 
       - name: Verify build outputs
-        run: ls -R pkgs || true
+        run: ls -R packages || true
 
   test:
     name: Run Tests

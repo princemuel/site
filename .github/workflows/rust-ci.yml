@@ -1,6 +1,6 @@
 name: CI
 env:
-  DEBUG: pkgs:*
+  DEBUG: packages:*
   APP_NAME: tts
   MACOSX_DEPLOYMENT_TARGET: "10.13"
   CARGO_INCREMENTAL: "1"
