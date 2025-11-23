@@ -1,15 +1,104 @@
 ---
 import type { HTMLAttributes } from "astro/types";
+import { Temporal } from "temporal-polyfill";
 
-type Props = HTMLAttributes<"time">;
+type ISO = "full" | "date" | "time" | "month" | "yearless" | "week";
+type FormatPreset = "full" | "short" | "long";
 
-const { datetime, ...attrs } = Astro.props;
-// Temporal.Now.zonedDateTimeISO().epochMilliseconds;
-const instant = Temporal.Instant.from(datetime || Temporal.Now.instant());
+interface Props extends Omit<HTMLAttributes<"time">, "datetime"> {
+  datetime?: number | string | Date;
+  format?: FormatPreset;
+  locale?: Intl.LocalesArgument;
+  tz?: string;
+  time?: boolean;
+  date?: boolean;
+  pattern?: string;
+  iso?: ISO;
+}
 
-const zonedDateTime = instant.toZonedDateTimeISO(Temporal.Now.timeZoneId());
+// number | string | Date
+const {
+  datetime = Temporal.Now.instant().toString(),
+  format = "long",
+  locale = "en-US",
+  tz = Temporal.Now.timeZoneId(),
+  time = true,
+  date = true,
+  pattern,
+  iso = "full",
+  ...attrs
+} = Astro.props;
+
+const zdt = createInstant(datetime).toZonedDateTimeISO(tz);
+const output = pattern ? formatPattern(zdt, pattern) : formatPreset(zdt, format, date, time, locale);
+
+const instant = buildDatetime(zdt, iso);
+
+function createInstant(value?: number | string | Date) {
+  if (!value) return Temporal.Now.instant();
+  if (typeof value === "string") return Temporal.Instant.from(value);
+  if (value instanceof Date) return value.toTemporalInstant();
+  return Temporal.Instant.fromEpochMilliseconds(value);
+}
+
+function formatPreset(
+  zdt: Temporal.ZonedDateTime,
+  preset: FormatPreset,
+  date: boolean,
+  time: boolean,
+  locales: Intl.LocalesArgument,
+) {
+  const opts: Intl.DateTimeFormatOptions = {};
+
+  if (date) {
+    opts.year = preset === "short" ? "2-digit" : "numeric";
+    opts.month = preset === "full" ? "long" : "2-digit";
+    opts.day = "2-digit";
+  }
+
+  if (time) {
+    opts.hour = "2-digit";
+    opts.minute = "2-digit";
+    if (preset === "full") opts.second = "2-digit";
+  }
+
+  return zdt.toLocaleString(locales, opts);
+}
+
+function formatPattern(zdt: Temporal.ZonedDateTime, pat: string): string {
+  return pat
+    .replace(/yyyy/g, String(zdt.year))
+    .replace(/MM/g, pad(zdt.month))
+    .replace(/dd/g, pad(zdt.day))
+    .replace(/HH/g, pad(zdt.hour))
+    .replace(/mm/g, pad(zdt.minute))
+    .replace(/ss/g, pad(zdt.second));
+}
+
+const pad = (n = 0, maxLength = 2) => String(n).padStart(maxLength, "0");
+
+function buildDatetime(zdt: Temporal.ZonedDateTime, type: ISO) {
+  const y = pad(zdt.year, 4);
+  const m = pad(zdt.month);
+  const d = pad(zdt.day);
+  const h = pad(zdt.hour);
+  const min = pad(zdt.minute);
+  const s = pad(zdt.second);
+  const tz = zdt.offset;
+
+  const formats = {
+    full: `${y}-${m}-${d}T${h}:${min}:${s}${tz}`,
+    date: `${y}-${m}-${d}`,
+    time: `${h}:${min}`,
+    month: `${y}-${m}`,
+    yearless: `${m}-${d}`,
+    week: `${y}-W${pad(zdt.weekOfYear)}`,
+  } satisfies Record<ISO, string>;
+
+  return formats[type];
+}
 ---
 
-<time datetime={instant.toString()} {...attrs}>
-  <slot>{zonedDateTime.toPlainDate().toString()}</slot>
+<time datetime={instant} {...attrs}>
+  <slot>{output}</slot>
 </time>
