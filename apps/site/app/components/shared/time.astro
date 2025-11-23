@@ -29,10 +29,7 @@ const {
   ...attrs
 } = Astro.props;
 
-const zdt = createInstant(datetime).toZonedDateTimeISO(tz);
-const output = pattern ? formatPattern(zdt, pattern) : formatPreset(zdt, format, date, time, locale);
 
-const instant = buildDatetime(zdt, iso);
 
 function createInstant(value?: number | string | Date) {
   if (!value) return Temporal.Now.instant();
@@ -65,7 +62,9 @@ function formatPreset(
   return zdt.toLocaleString(locales, opts);
 }
 
-function formatPattern(zdt: Temporal.ZonedDateTime, pat: string): string {
+const pad = (n = 0, maxLength = 2) => String(n).padStart(maxLength, "0");
+
+function formatPattern(zdt: Temporal.ZonedDateTime, pat: string) {
   return pat
     .replace(/yyyy/g, String(zdt.year))
     .replace(/MM/g, pad(zdt.month))
@@ -74,8 +73,6 @@ function formatPattern(zdt: Temporal.ZonedDateTime, pat: string): string {
     .replace(/mm/g, pad(zdt.minute))
     .replace(/ss/g, pad(zdt.second));
 }
-
-const pad = (n = 0, maxLength = 2) => String(n).padStart(maxLength, "0");
 
 function buildDatetime(zdt: Temporal.ZonedDateTime, type: ISO) {
   const y = pad(zdt.year, 4);
@@ -97,6 +94,11 @@ function buildDatetime(zdt: Temporal.ZonedDateTime, type: ISO) {
 
   return formats[type];
 }
+
+const zdt = createInstant(datetime).toZonedDateTimeISO(tz);
+const output = pattern ? formatPattern(zdt, pattern) : formatPreset(zdt, format, date, time, locale);
+
+const instant = buildDatetime(zdt, iso);
 ---
 
 <time datetime={instant} {...attrs}>
