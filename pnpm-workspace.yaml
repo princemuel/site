@@ -8,7 +8,7 @@ catalog:
   '@emnapi/runtime': ^1.6.0
   '@napi-rs/cli': ^3.4.1
   '@napi-rs/wasm-runtime': ^1.0.7
-  '@sentry/astro': ^10.25.0
+  '@sentry/astro': ^10.27.0
   '@total-typescript/ts-reset': ^0.6.1
   '@types/node': ^24.10.1
   astro: ^5.15.7
