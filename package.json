@@ -18,7 +18,7 @@
     "@types/node": "catalog:",
     "oxlint": "catalog:",
     "oxlint-tsgolint": "catalog:",
-    "prettier": "^3.6.2",
+    "prettier": "catalog:",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-organize-attributes": "^1.0.0",
     "prettier-plugin-organize-imports": "^4.3.0",

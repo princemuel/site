@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 /**
  * Generates a numeric sequence (like Python's `range()`).
  *

@@ -1,0 +1,248 @@
+---
+// SPDX-License-Identifier: Apache-2.0
+import type { HTMLAttributes } from "astro/types";
+import { Temporal } from "temporal-polyfill";
+
+type ISO = "full" | "date" | "time" | "month" | "yearless" | "week";
+type FormatPreset = "full" | "short" | "long";
+type DurationFormat = "short" | "long" | "narrow" | "compact";
+
+interface Props extends Omit<HTMLAttributes<"time">, "datetime"> {
+  datetime?: number | string | Date;
+  format?: FormatPreset;
+  durationFormat?: DurationFormat;
+  locale?: Intl.LocalesArgument;
+  tz?: string;
+  time?: boolean;
+  date?: boolean;
+  pattern?: string;
+  iso?: ISO;
+}
+
+const {
+  datetime = Temporal.Now.instant().toString(),
+  format = "long",
+  durationFormat,
+  locale = "en-US",
+  tz = Temporal.Now.timeZoneId(),
+  time = true,
+  date = true,
+  pattern,
+  iso = "full",
+  ...attrs
+} = Astro.props;
+
+// Check if the input is a duration string
+function isDuration(value: string): boolean {
+  // ISO 8601 duration format: P[n]Y[n]M[n]DT[n]H[n]M[n]S or P[n]W
+  // Also supports shorthand like "2h 30m" or "7d 5h 24m 13s"
+  return /^P[\dYMWDTHS.,]+$/i.test(value) || /^\d+\s*[wdhms]/.test(value);
+}
+
+// Parse duration strings (both ISO 8601 and shorthand formats)
+function parseDuration(value: string): Temporal.Duration {
+  // If it's ISO 8601 format, use Temporal directly
+  if (/^P/i.test(value)) {
+    try {
+      return Temporal.Duration.from(value);
+    } catch (e) {
+      throw new Error(`Invalid ISO 8601 duration: ${value}`);
+    }
+  }
+
+  // Parse shorthand format like "2h 30m" or "7d 5h 24m 13s"
+  const parts: Record<string, number> = {};
+  const regex = /(\d+(?:\.\d+)?)\s*([wdhms])/gi;
+  let match;
+  let hasMatch = false;
+
+  while ((match = regex.exec(value)) !== null) {
+    hasMatch = true;
+    let [, num = "", unit = ""] = match;
+    unit = unit.toLowerCase();
+    switch (unit) {
+      case "w":
+        parts.weeks = parseFloat(num);
+        break;
+      case "d":
+        parts.days = parseFloat(num);
+        break;
+      case "h":
+        parts.hours = parseFloat(num);
+        break;
+      case "m":
+        parts.minutes = parseFloat(num);
+        break;
+      case "s":
+        parts.seconds = parseFloat(num);
+        break;
+    }
+  }
+
+  if (!hasMatch) {
+    throw new Error(`Invalid duration format: ${value}`);
+  }
+
+  return Temporal.Duration.from(parts);
+}
+
+// Format duration for display
+function formatDuration(
+  duration: Temporal.Duration,
+  locales: Intl.LocalesArgument,
+  format: DurationFormat = "short",
+): string {
+  const parts: string[] = [];
+
+  const units = [
+    { value: duration.years, short: "y", long: "year", narrow: "y" },
+    { value: duration.months, short: "mo", long: "month", narrow: "m" },
+    { value: duration.weeks, short: "w", long: "week", narrow: "w" },
+    { value: duration.days, short: "d", long: "day", narrow: "d" },
+    { value: duration.hours, short: "h", long: "hour", narrow: "h" },
+    { value: duration.minutes, short: "m", long: "minute", narrow: "m" },
+  ];
+
+  for (const unit of units) {
+    if (!unit.value) continue;
+
+    let label: string;
+    switch (format) {
+      case "narrow":
+        label = `${unit.value}${unit.narrow}`;
+        break;
+      case "short":
+        label = `${unit.value}${unit.short}`;
+        break;
+      case "long":
+        label = `${unit.value} ${unit.long}${unit.value !== 1 ? "s" : ""}`;
+        break;
+      case "compact":
+        // Only show most significant units (max 2)
+        label = `${unit.value}${unit.short}`;
+        break;
+    }
+    parts.push(label);
+
+    // For compact mode, stop after 2 units
+    if (format === "compact" && parts.length >= 2) break;
+  }
+
+  // Handle seconds + subseconds
+  const secs =
+    duration.seconds +
+    duration.milliseconds / 1000 +
+    duration.microseconds / 1_000_000 +
+    duration.nanoseconds / 1_000_000_000;
+
+  // Add seconds if we haven't hit compact limit or if it's the only value
+  if ((format !== "compact" || parts.length < 2) && (secs || parts.length === 0)) {
+    let label: string;
+    switch (format) {
+      case "narrow":
+      case "short":
+      case "compact":
+        label = `${secs}s`;
+        break;
+      case "long":
+        label = `${secs} second${secs !== 1 ? "s" : ""}`;
+        break;
+    }
+    parts.push(label);
+  }
+
+  const separator = format === "long" ? ", " : " ";
+  return parts.join(separator);
+}
+
+// Convert duration to ISO 8601 format for datetime attribute
+function durationToISO(duration: Temporal.Duration): string {
+  return duration.toString();
+}
+
+function createInstant(value?: number | string | Date) {
+  if (!value) return Temporal.Now.instant();
+  if (typeof value === "string") return Temporal.Instant.from(value);
+  if (value instanceof Date) return value.toTemporalInstant();
+  return Temporal.Instant.fromEpochMilliseconds(value);
+}
+
+function formatPreset(
+  zdt: Temporal.ZonedDateTime,
+  preset: FormatPreset,
+  date: boolean,
+  time: boolean,
+  locales: Intl.LocalesArgument,
+) {
+  const opts: Intl.DateTimeFormatOptions = {};
+
+  if (date) {
+    opts.year = preset === "short" ? "2-digit" : "numeric";
+    opts.month = preset === "full" ? "long" : "2-digit";
+    opts.day = "2-digit";
+  }
+
+  if (time) {
+    opts.hour = "2-digit";
+    opts.minute = "2-digit";
+    if (preset === "full") opts.second = "2-digit";
+  }
+
+  return zdt.toLocaleString(locales, opts);
+}
+
+const pad = (n = 0, maxLength = 2) => String(n).padStart(maxLength, "0");
+
+function formatPattern(zdt: Temporal.ZonedDateTime, pat: string) {
+  return pat
+    .replace(/yyyy/g, String(zdt.year))
+    .replace(/MM/g, pad(zdt.month))
+    .replace(/dd/g, pad(zdt.day))
+    .replace(/HH/g, pad(zdt.hour))
+    .replace(/mm/g, pad(zdt.minute))
+    .replace(/ss/g, pad(zdt.second));
+}
+
+function buildDatetime(zdt: Temporal.ZonedDateTime, type: ISO) {
+  const y = pad(zdt.year, 4);
+  const m = pad(zdt.month);
+  const d = pad(zdt.day);
+  const h = pad(zdt.hour);
+  const min = pad(zdt.minute);
+  const s = pad(zdt.second);
+  const tz = zdt.offset;
+
+  const formats = {
+    full: `${y}-${m}-${d}T${h}:${min}:${s}${tz}`,
+    date: `${y}-${m}-${d}`,
+    time: `${h}:${min}`,
+    month: `${y}-${m}`,
+    yearless: `${m}-${d}`,
+    week: `${y}-W${pad(zdt.weekOfYear)}`,
+  } satisfies Record<ISO, string>;
+
+  return formats[type];
+}
+
+// Handle both durations and instants
+let output: string;
+let instant: string;
+
+if (typeof datetime === "string" && isDuration(datetime)) {
+  // Handle duration
+  const duration = parseDuration(datetime);
+  // Use durationFormat if provided, otherwise fall back to format prop
+  const durFmt = durationFormat || (format === "full" ? "short" : format === "short" ? "compact" : "short");
+  output = formatDuration(duration, locale, durFmt);
+  instant = durationToISO(duration);
+} else {
+  // Handle instant/date/time
+  const zdt = createInstant(datetime).toZonedDateTimeISO(tz);
+  output = pattern ? formatPattern(zdt, pattern) : formatPreset(zdt, format, date, time, locale);
+  instant = buildDatetime(zdt, iso);
+}
+---
+
+<time datetime={instant} {...attrs}>
+  <slot>{output}</slot>
+</time>

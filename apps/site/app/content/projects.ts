@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 import { baseSchema, img } from "@/content/helpers";
 import { glob } from "astro/loaders";
 import { defineCollection, reference } from "astro:content";

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 import { createAppleSplashScreens, defineConfig, minimal2023Preset } from "@vite-pwa/assets-generator/config";
 
 export default defineConfig({

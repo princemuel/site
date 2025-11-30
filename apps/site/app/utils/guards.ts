@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 export const isString = (value: unknown): value is string => typeof value === "string";
 export const isResponse = (value: unknown): value is Response => value instanceof Response;
 

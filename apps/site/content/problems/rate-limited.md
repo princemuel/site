@@ -4,6 +4,7 @@ status: 429
 description: "Too many requests have been made in a given time period."
 type: "https://princemuel.netlify.app/problems/rate-limited"
 extensions:
+  instance: URI identifying where this error occurred
   limit: "The rate limit ceiling for this endpoint"
   remaining: "Number of requests remaining in current window"
   reset_time: "ISO 8601 timestamp when the rate limit resets"

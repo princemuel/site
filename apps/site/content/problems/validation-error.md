@@ -1,11 +1,12 @@
 ---
-title: "Validation Error"
+title: Validation Error
 status: 400
-description: "The request contains invalid or missing data that prevents processing."
-type: "https://princemuel.netlify.app/problems/validation-error"
+description: The request contains invalid or missing data that prevents processing.
+type: https://princemuel.netlify.app/problems/validation-error
 extensions:
-  errors: "Array of validation error objects with field and message properties"
-  invalid_params: "Array of parameter names that failed validation"
+  instance: URI identifying where this error occurred
+  errors: Array of validation error objects with field and message properties
+  invalid_params: Array of parameter names that failed validation
 ---
 
 The request contains invalid or missing data that prevents processing.

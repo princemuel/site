@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 // eslint-disable func-style
 // eslint-disable max-params
 import { throwAsError } from "@/helpers/error";

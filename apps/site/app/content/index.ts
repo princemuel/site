@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 export { default as authors } from "./authors";
 // export { default as journal } from "./journal";
 export { default as pages } from "./pages";

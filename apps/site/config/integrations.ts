@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 // import database from "@astrojs/db";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";

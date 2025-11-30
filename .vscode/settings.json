@@ -32,6 +32,7 @@
   // "emmet.includeLanguages": {
   //   "typescriptreact": "html"
   // },
+  "eslint.enable": false,
   "oxc.enable": true,
   "oxc.fmt.experimental": true,
   "[javascript]": {

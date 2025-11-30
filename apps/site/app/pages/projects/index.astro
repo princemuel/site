@@ -1,15 +1,18 @@
 ---
+// SPDX-License-Identifier: Apache-2.0
 import { getCollection, getEntry, render } from "astro:content";
 
 import Prose from "@/components/content/prose.astro";
 import Shell from "@/components/frames/shell.astro";
 import Fence from "@/components/layout/fence.astro";
 import Link from "@/components/shared/link.astro";
+import { hash } from "@/utils/hash";
 
 const [entry, entries] = await Promise.all([
   getEntry("pages", "projects"),
   getCollection("projects", ({ data }) => !(import.meta.env.PROD && data.draft)),
 ]);
+
 if (!entry) throw new Response(null, { status: 404 });
 
 const { Content } = await render(entry);
@@ -31,7 +34,7 @@ const { Content } = await render(entry);
             entry.data.words ||= frontmatter.words;
             entry.data.duration ||= frontmatter.duration;
 
-            const [uuid, item] = [entry.id, entry.data];
+            const [uuid, item] = [hash(entry.id), entry.data];
 
             return (
               <article

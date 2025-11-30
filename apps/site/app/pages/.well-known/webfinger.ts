@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 import { webfinger as buffer } from "../../assets/include";
 
 export const GET = () => {

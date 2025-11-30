@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 await import("../app/assets/scripts/temporal.server").then((m) => m.default());
 
 export { adapter } from "./adapter";

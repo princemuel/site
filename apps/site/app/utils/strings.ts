@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 type EndsWith<W extends string, S extends string> = W extends `${string}${S}` ? W : never;
 
 export const capitalize = <S extends string>(str: S, locale?: Intl.LocalesArgument) => {

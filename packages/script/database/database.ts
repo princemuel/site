@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 import "@dotenvx/dotenvx/config";
 import { PrismaLibSql } from "@prisma/adapter-libsql";
 import { PrismaClient } from "./generated/client";

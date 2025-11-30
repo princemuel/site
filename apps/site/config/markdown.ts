@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 import { rehypeHeadingIds } from "@astrojs/markdown-remark";
 import * as mdAstUtilToString from "mdast-util-to-string";
 import getReadingTime from "reading-time";

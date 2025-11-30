@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 export { default as humans } from "./humans.txt?raw";
 export { default as opensearch } from "./opensearch.xml?raw";
 export { default as pubkey } from "./pubkey.asc?raw";

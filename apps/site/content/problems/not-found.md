@@ -4,6 +4,7 @@ status: 404
 description: "The requested resource could not be found on this server."
 type: "https://princemuel.netlify.app/problems/not-found"
 extensions:
+  instance: URI identifying where this error occurred
   resource_type: "The type of resource that was not found"
   resource_id: "The identifier of the resource that was not found"
 ---

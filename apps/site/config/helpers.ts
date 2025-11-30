@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: Apache-2.0
 import { execSync, spawnSync } from "node:child_process";
 import { statSync } from "node:fs";
 
