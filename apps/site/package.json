@@ -17,7 +17,7 @@
     "lint": "oxlint -c oxlintrc.json --deny-warnings --type-aware"
   },
   "dependencies": {
-    "@prisma/client": "^7.0.1",
+    "@prisma/client": "^7.1.0",
     "astro": "catalog:",
     "database": "workspace:*",
     "http-errors-enhanced": "^4.0.2",
@@ -39,9 +39,9 @@
     "@faker-js/faker": "^10.1.0",
     "@fujocoded/expressive-code-output": "^0.1.0",
     "@iconify-json/ion": "^1.2.6",
-    "@iconify-json/lucide": "^1.2.76",
+    "@iconify-json/lucide": "^1.2.77",
     "@iconify-json/ri": "^1.2.6",
-    "@iconify-json/simple-icons": "^1.2.60",
+    "@iconify-json/simple-icons": "^1.2.61",
     "@iconify-json/uil": "^1.2.3",
     "@resvg/resvg-js": "^2.6.2",
     "@sentry/astro": "catalog:",
