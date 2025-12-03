@@ -1,19 +1,19 @@
 packages:
   - apps/*
-  - pkgs/script/*
+  - pkgs/*
 
 catalog:
-  '@astrojs/netlify': ^6.6.3
-  '@dotenvx/dotenvx': ^1.51.1
-  '@emnapi/core': ^1.6.0
-  '@emnapi/runtime': ^1.6.0
-  '@napi-rs/cli': ^3.4.1
-  '@napi-rs/wasm-runtime': ^1.0.7
-  '@prisma/adapter-libsql': 7.0.0
-  '@sentry/astro': ^10.25.0
-  '@total-typescript/ts-reset': ^0.6.1
-  '@types/node': 24.10.1
-  '@typescript/native-preview': 7.0.0-dev.20251203.1
+  "@astrojs/netlify": ^6.6.3
+  "@dotenvx/dotenvx": ^1.51.1
+  "@emnapi/core": ^1.6.0
+  "@emnapi/runtime": ^1.6.0
+  "@napi-rs/cli": ^3.4.1
+  "@napi-rs/wasm-runtime": ^1.0.7
+  "@prisma/adapter-libsql": 7.0.0
+  "@sentry/astro": ^10.25.0
+  "@total-typescript/ts-reset": ^0.6.1
+  "@types/node": 24.10.1
+  "@typescript/native-preview": 7.0.0-dev.20251203.1
   astro: latest
   esbuild: ^0.27.0
   netlify-cli: ^23.11.0
@@ -29,11 +29,11 @@ catalogMode: prefer
 minimumReleaseAge: 114
 
 onlyBuiltDependencies:
-  - '@parcel/watcher'
-  - '@prisma/client'
-  - '@prisma/engines'
-  - '@sentry/cli'
-  - '@tailwindcss/oxide'
+  - "@parcel/watcher"
+  - "@prisma/client"
+  - "@prisma/engines"
+  - "@sentry/cli"
+  - "@tailwindcss/oxide"
   - esbuild
   - netlify-cli
   - prisma
