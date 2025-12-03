@@ -19,7 +19,7 @@
   "dependencies": {
     "@prisma/client": "^6.19.0",
     "astro": "catalog:",
-    "http-errors-enhanced": "^3.0.2",
+    "http-errors-enhanced": "^4.0.0",
     "isbot": "^5.1.32",
     "outvariant": "^1.4.3",
     "satori": "^0.18.3",

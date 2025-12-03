@@ -99,8 +99,8 @@ importers:
         specifier: 'catalog:'
         version: 5.15.8(@netlify/blobs@10.1.0)(@types/node@24.10.1)(jiti@2.6.1)(lightningcss@1.30.2)(rollup@2.79.2)(terser@5.44.1)(typescript@5.9.3)(yaml@2.8.1)
       http-errors-enhanced:
-        specifier: ^3.0.2
-        version: 3.0.2
+        specifier: ^4.0.0
+        version: 4.0.2
       isbot:
         specifier: ^5.1.32
         version: 5.1.32
@@ -6071,9 +6071,9 @@ packages:
   http-cache-semantics@4.2.0:
     resolution: {integrity: sha512-dTxcvPXqPvXBQpq5dUr6mEMJX4oIEFv6bwom3FDwKRDsuIjjJGANqhBuoAn9c1RQJIdAKav33ED65E2ys+87QQ==}
 
-  http-errors-enhanced@3.0.2:
-    resolution: {integrity: sha512-Pl8CVX7eu46fYSfEGCnOGD8aZkd/2dtr9214BpNRDiU1THT7vsu+T87SDQZgxjOGmsNXaTZe1sqIo/oZgJIfow==}
-    engines: {node: '>= 20.18.0'}
+  http-errors-enhanced@4.0.2:
+    resolution: {integrity: sha512-5EXN1gmhJVvuWpNfz+RclWvLnnENEXNMPfww3gm30H9mQzPF4QSBj/MD5FRkVDxGIUhO/cR2GSLCd/6C6xpBcw==}
+    engines: {node: '>= 22.21.0'}
 
   http-errors@1.8.1:
     resolution: {integrity: sha512-Kpk9Sm7NmI+RHhnj6OIWDI1d6fIoFAtFt9RLaTMRlg/8w49juAStsrBgp0Dp4OdxdVbRIeKhtCUvoi/RuAhO4g==}
@@ -7159,6 +7159,7 @@ packages:
 
   moize@6.1.6:
     resolution: {integrity: sha512-vSKdIUO61iCmTqhdoIDrqyrtp87nWZUmBPniNjO0fX49wEYmyDO4lvlnFXiGcaH1JLE/s/9HbiK4LSHsbiUY6Q==}
+    deprecated: This library has been deprecated in favor of micro-memoize, which as-of version 5 incorporates most of the functionality that this library offers at nearly half the size and better speed.
 
   move-file@3.1.0:
     resolution: {integrity: sha512-4aE3U7CCBWgrQlQDMq8da4woBWDGHioJFiOZ8Ie6Yq2uwYQ9V2kGhTz4x3u6Wc+OU17nw0yc3rJ/lQ4jIiPe3A==}
@@ -16583,7 +16584,7 @@ snapshots:
 
   http-cache-semantics@4.2.0: {}
 
-  http-errors-enhanced@3.0.2: {}
+  http-errors-enhanced@4.0.2: {}
 
   http-errors@1.8.1:
     dependencies:
