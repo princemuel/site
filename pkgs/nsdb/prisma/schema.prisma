@@ -1,0 +1,107 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Commands to know:
+// `npx prisma generate` - update TypeScript definitions based on this schema
+// `npx prisma db push` - push the schema changes to the database
+// `npx prisma studio` - open the Studio, which allows you to edit the schema.
+// `npx prisma migrate reset` - reset the migrations to the last version. This will reset the DB and run the seed script
+// `npx prisma migrate dev --name <descriptive-name>` - generate a migration file for any changes you make to the schema (this will be committed).
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Post {
+  id          Int      @id @default(autoincrement())
+  slug        String   @unique
+  title       String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  impressions Int      @default(0)
+  reactions   Int      @default(0)
+
+  comments Comment[]
+
+  @@index([createdAt]) // Optimize for recent posts queries
+  @@map("posts")
+}
+
+model Actor {
+  id        Int      @id @default(autoincrement())
+  name      String? // Display name separate from handle
+  handle    String   @unique
+  image     String?
+  createdAt DateTime @default(now())
+
+  comments Comment[]
+
+  @@map("actors")
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  content   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  post   Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId Int
+
+  actor   Actor @relation(fields: [actorId], references: [id], onDelete: Cascade)
+  actorId Int
+
+  parent   Comment? @relation("Replies", fields: [parentId], references: [id], onDelete: Cascade)
+  parentId Int?
+
+  replies Comment[] @relation("Replies")
+
+  // Optimized indexes for SQLite
+  @@index([postId, createdAt]) // List comments by post chronologically
+  @@index([actorId]) // Lookup all comments by an actor
+  @@index([parentId]) // Fast lookup of replies to a comment
+  @@map("comments")
+}
+
+model Analytics {
+  id         String   @id @default(cuid())
+  occurredAt DateTime @default(now())
+
+  path     String
+  title    String?
+  referrer String?
+
+  country   String?
+  city      String?
+  latitude  Float?
+  longitude Float?
+  flag      String?
+
+  @@index([path])
+  @@index([occurredAt])
+  @@map("analytics")
+}
+
+model Reactions {
+  id         String   @id @default(cuid())
+  occurredAt DateTime @default(now())
+  slug       String
+  reaction   Reaction
+
+  @@index([slug])
+  @@index([reaction])
+  @@index([occurredAt])
+  @@map("reactions")
+}
+
+enum Reaction {
+  LIKE
+  LOVE
+  CLAP
+  INSIGHTFUL
+}

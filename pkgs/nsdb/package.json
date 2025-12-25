@@ -1,17 +1,23 @@
 {
-  "name": "database",
+  "name": "nsdb",
   "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
   "scripts": {
     "db:generate": "prisma generate",
-    "db:migrate": "prisma migrate dev",
-    "db:deploy": "prisma migrate deploy",
     "db:studio": "prisma studio",
+    "db:push": "prisma db push",
+    "db:migrate": "prisma migrate dev",
+    "db:migrate:deploy": "prisma migrate deploy",
+    "db:seed": "tsx prisma/seed.ts",
+    "type-check": "tsc --noEmit",
     "postinstall": "pnpm run db:generate"
   },
   "devDependencies": {
-    "@prisma/adapter-libsql": "catalog:",
+    "@prisma/adapter-libsql": "latest",
     "@types/node": "catalog:",
-    "prisma": "catalog:",
+    "prisma": "latest",
     "tsx": "catalog:",
     "typescript": "catalog:"
   },
