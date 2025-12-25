@@ -22,10 +22,13 @@ const getArgs = () => {
       ? path.resolve(process.cwd(), args[outFlagIndex + 1])
       : inputPath;
 
-  return { inputPath, outputPath };
+  return { path: { input: inputPath, output: outputPath } };
 };
 
-const formatSize = (/** @type {number} */ bytes) => `${(bytes / 1024).toFixed(2)} KiB`;
+/**
+ * @param {number} bytes
+ */
+const formatSize = (bytes) => `${(bytes / 1024).toFixed(2)} KiB`;
 
 /**
  *
@@ -44,7 +47,7 @@ const compressJson = async (jsonData, basePath) => {
     }),
   };
 
-  console.log(`🗂️ ORIGINAL: ${formatSize(buffer.length)}`);
+  console.log(`ORIGINAL: ${formatSize(buffer.length)}`);
 
   await Promise.all(
     Object.entries(compressions).map(async ([type, data]) => {
@@ -53,13 +56,13 @@ const compressJson = async (jsonData, basePath) => {
 
       await fs.promises.writeFile(outPath, data);
 
-      console.log(`📦 ${type.toUpperCase()}: ${formatSize(data.length)} (${ratio}% of original) → ${outPath}`);
+      console.log(`${type.toUpperCase()}: ${formatSize(data.length)} (${ratio}% of original) → ${outPath}`);
     }),
   );
 };
 
 const main = async () => {
-  const { inputPath, outputPath } = getArgs();
+  const { path } = getArgs();
 
   if (!fs.existsSync(inputPath)) {
     console.error(`❌ Input file not found: ${inputPath}`);
@@ -67,9 +70,9 @@ const main = async () => {
   }
 
   try {
-    const content = await fs.promises.readFile(inputPath, "utf8");
+    const content = await fs.promises.readFile(path.input, "utf8");
     const json = JSON.parse(content);
-    await compressJson(json, outputPath);
+    await compressJson(json, path.output);
   } catch (error) {
     // @ts-expect-error
     console.error(`❌ Error: ${error.message}`);
