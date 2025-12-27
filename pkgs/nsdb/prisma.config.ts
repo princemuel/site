@@ -1,14 +1,15 @@
 // SPDX-License-Identifier: Apache-2.0
-import { defineConfig, env } from "prisma/config";
-
 // import the .env file
 import "@dotenvx/dotenvx/config";
 
+import { defineConfig, env } from "prisma/config";
+
 export default defineConfig({
-  schema: "prisma/schema.prisma",
-  datasource: { url: env("DATABASE_URL") },
+  schema: "src/schema.prisma",
+  typedSql: { path: "src/queries" },
+  datasource: { url: env("LOCAL_DATABASE_URL") },
   migrations: {
-    path: "prisma/migrations",
+    path: "src/migrations",
     seed: `node --import=tsx src/seed.ts`,
   },
 });
