@@ -56,7 +56,9 @@ const compressJson = async (jsonData, basePath) => {
 
       await fs.promises.writeFile(outPath, data);
 
-      console.log(`${type.toUpperCase()}: ${formatSize(data.length)} (${ratio}% of original) → ${outPath}`);
+      console.log(
+        `${type.toUpperCase()}: ${formatSize(data.length)} (${ratio}% of original) → ${outPath}`,
+      );
     }),
   );
 };
@@ -64,8 +66,8 @@ const compressJson = async (jsonData, basePath) => {
 const main = async () => {
   const { path } = getArgs();
 
-  if (!fs.existsSync(inputPath)) {
-    console.error(`❌ Input file not found: ${inputPath}`);
+  if (!fs.existsSync(path.input)) {
+    console.error(`❌ Input file not found: ${path.input}`);
     process.exit(1);
   }
 
