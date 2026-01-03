@@ -3,7 +3,7 @@ layout: "@/components/frames/mdx.astro"
 title: Accessibility Statement
 description: Accesibility Statement for this site
 author: princemuel
-publishedAt: 2024-04-23T14:25:32.000Z
+publishedAt: 2024-04-23T14:25:32Z
 ---
 
 This site is made for people.

@@ -3,7 +3,7 @@ layout: "@/components/frames/mdx.astro"
 title: Terms of Service
 description: The terms and services of this website
 author: princemuel
-publishedAt: 2024-04-23T14:25:32.000Z
+publishedAt: 2024-04-23T14:25:32Z
 ---
 
 ## Liability

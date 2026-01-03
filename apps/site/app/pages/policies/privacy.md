@@ -3,7 +3,7 @@ layout: "@/components/frames/mdx.astro"
 title: Privacy Policy
 description: The privacy policy of this website
 author: princemuel
-publishedAt: 2024-04-23T14:25:32.000Z
+publishedAt: 2024-04-23T14:25:32Z
 ---
 
 princemuel.dev (&apos;we&apos;, &apos;us&apos;, or &apos;our&apos;)
