@@ -1,10 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
-// import database from "@astrojs/db";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 // import svelte from "@astrojs/svelte";
-import sentry from "@sentry/astro";
-import spotlightjs from "@spotlightjs/astro";
 import pwa from "@vite-pwa/astro";
 import codeblock from "astro-expressive-code";
 import icon from "astro-icon";
@@ -16,8 +13,6 @@ import type { MdxOptions } from "@astrojs/mdx";
 import type { SitemapOptions } from "@astrojs/sitemap";
 import type { PwaOptions } from "@vite-pwa/astro";
 import type { AstroUserConfig } from "astro";
-import type { SentryOptions } from "node_modules/@sentry/astro/build/types/integration/types";
-import { envVars } from "./dotenv";
 
 type IconifyOptions = Parameters<typeof icon>[0];
 type Config = NonNullable<NonNullable<AstroUserConfig["integrations"]>>;
@@ -33,7 +28,7 @@ const options = {
   mdx: {
     gfm: true,
     extendMarkdownConfig: true,
-  } as Partial<MdxOptions>,
+  } as MdxOptions,
 
   icon: {
     include: icons,
@@ -65,19 +60,12 @@ const options = {
       // runtimeCaching: cachePreset,
     },
   } as PwaOptions,
-
-  sentry: {
-    project: "princemuel-io",
-    authToken: envVars.SENTRY_AUTH_TOKEN,
-  } as SentryOptions,
 };
 
 export const integrations = [
   icon(options.icon),
   codeblock(),
   mdx(options.mdx),
-  sentry(options.sentry),
-  spotlightjs(),
   sitemap(options.sitemap),
   pwa(options.pwa),
   // database({ mode: 'web' }),

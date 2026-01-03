@@ -4,13 +4,24 @@
   "author": "Prince Muel <68931805+princemuel@users.noreply.github.com>",
   "packageManager": "pnpm@10.26.1+sha512.664074abc367d2c9324fdc18037097ce0a8f126034160f709928e9e9f95d98714347044e5c3164d65bd5da6c59c6be362b107546292a8eecb7999196e5ce58fa",
   "scripts": {
+    "dev": "pnpm --filter site dev",
+    "build": "pnpm --workspace-concurrency=1 --filter \"./pkgs/*\" --filter \"./apps/*\" build",
     "build:apps": "pnpm --workspace-concurrency=1 --filter './apps/*' run build",
     "build:pkgs": "pnpm --workspace-concurrency=1 --filter './pkgs/*' run build",
     "build:crates": "pnpm --workspace-concurrency=1 --filter './crates/*' run build",
-    "build": "pnpm --workspace-concurrency=1 --filter \"./pkgs/*\" --filter \"./apps/*\" build",
-    "dev": "pnpm --filter ./apps/site dev",
+    "preview": "pnpm --filter site preview",
+    "start": "pnpm --filter site start",
+    "db:generate": "pnpm --filter nsdb db:generate",
+    "db:push": "pnpm --filter nsdb db:push",
+    "db:studio": "pnpm --filter nsdb db:studio",
+    "db:migrate": "pnpm --filter nsdb db:migrate",
+    "type-check": "pnpm --recursive run type-check",
+    "lint": "oxlint -c oxlintrc.json --deny-warnings --type-aware",
     "fmt": "oxfmt -c oxfmtrc.jsonc",
-    "lint": "oxlint -c oxlintrc.json --deny-warnings --type-aware"
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "deploy:build": "pnpm install --frozen-lockfile && pnpm build",
+    "deploy:start": "cd apps/site && node ./dist/server/entry.mjs"
   },
   "devDependencies": {
     "@typescript/native-preview": "catalog:",

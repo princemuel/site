@@ -1,6 +1,4 @@
 // SPDX-License-Identifier: Apache-2.0
-await import("../app/assets/scripts/temporal.server").then((m) => m.default());
-
 export { adapter } from "./adapter";
 export { envSchema, envVars } from "./dotenv";
 export { experimental as flags } from "./experimental";

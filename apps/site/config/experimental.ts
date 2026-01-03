@@ -14,7 +14,7 @@ export const experimental = {
   headingIdCompat: true,
   // csp: envVars.NODE_ENV !== "development",
   preserveScriptOrder: true,
-  // liveContentCollections: true,
+  liveContentCollections: true,
   staticImportMetaEnv: true,
   chromeDevtoolsWorkspace: true,
 } satisfies Config;

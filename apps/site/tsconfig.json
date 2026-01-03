@@ -7,7 +7,9 @@
     "noErrorTruncation": true,
     // "erasableSyntaxOnly": true,
     "exactOptionalPropertyTypes": false,
-    "baseUrl": ".",
-    "paths": { "@/*": ["./app/*"] }
+    "paths": {
+      "*": ["./*"],
+      "@/*": ["./app/*"]
+    }
   }
 }

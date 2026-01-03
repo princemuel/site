@@ -1,13 +1,8 @@
 // SPDX-License-Identifier: Apache-2.0
-import provider from "@astrojs/netlify";
-export const adapter = provider({
+import adaptor from "@astrojs/netlify";
+export const adapter = adaptor({
+  // mode: "standalone",
   cacheOnDemandPages: true,
   experimentalStaticHeaders: true,
-  devFeatures: false,
+  // devFeatures: false,
 });
-
-// import provider from "@astrojs/node";
-// export const adapter = provider({
-//   mode: "standalone",
-//   experimentalStaticHeaders: true,
-// });

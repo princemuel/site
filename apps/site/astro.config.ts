@@ -1,7 +1,17 @@
 // SPDX-License-Identifier: Apache-2.0
-import { defineConfig } from "astro/config";
+import "./app/assets/scripts/temporal";
 
-import { adapter, envSchema, envVars, flags, images, integrations, markdown, pluginsVite } from "./config";
+import { defineConfig } from "astro/config";
+import {
+  adapter,
+  envSchema,
+  envVars,
+  flags,
+  images,
+  integrations,
+  markdown,
+  pluginsVite,
+} from "./config";
 
 // https://astro.build/config
 export default defineConfig({

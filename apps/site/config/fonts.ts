@@ -7,7 +7,7 @@ type Config = NonNullable<NonNullable<AstroUserConfig["experimental"]>["fonts"]>
 
 export const fonts = [
   {
-    name: "Sen",
+    name: "Maven Pro",
     provider: fontProviders.fontsource(),
     cssVariable: "--font-family-sans",
     subsets: ["latin"],

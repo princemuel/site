@@ -1,11 +1,9 @@
 //@ts-check
 import { defineEcConfig } from "astro-expressive-code";
 
-import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-sections";
-// import { pluginCodeOutput } from "@fujocoded/expressive-code-output";
-import { pluginFullscreen } from "expressive-code-fullscreen";
-
 import twDefaultTheme from "tailwindcss/defaultTheme";
+
+import { pluginCollapsibleSections } from "@expressive-code/plugin-collapsible-sections";
 
 const fonts = Object.fromEntries(
   Object.entries(twDefaultTheme.fontFamily).map(([key, value]) => [
@@ -15,8 +13,8 @@ const fonts = Object.fromEntries(
 );
 
 export default defineEcConfig({
-  themes: ["github-dark-default", "github-light-default"],
-  plugins: [pluginFullscreen(), pluginCollapsibleSections()],
+  themes: ["gruvbox-dark-hard", "gruvbox-light-hard"],
+  plugins: [pluginCollapsibleSections()],
   cascadeLayer: "shiki",
   emitExternalStylesheet: true,
   themeCssSelector: (theme) => `[data-code-theme='${theme.name}']`,
