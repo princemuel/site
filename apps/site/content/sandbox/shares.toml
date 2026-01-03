@@ -1,0 +1,30 @@
+#:schema ../../.astro/collections/shares.schema.json
+[whatsapp]
+href = "https://wa.me/?text="
+icon = "whatsapp"
+text = "Share this post via WhatsApp"
+
+[facebook]
+href = "https://www.facebook.com/sharer.php?u="
+icon = "facebook"
+text = "Share this post on Facebook"
+
+[twitter]
+href = "https://x.com/intent/tweet?url="
+icon = "twitter"
+text = "Tweet this post"
+
+[telegram]
+href = "https://t.me/share/url?url="
+icon = "telegram"
+text = "Share this post via Telegram"
+
+[pinterest]
+href = "https://pinterest.com/pin/create/button/?url="
+icon = "pinterest"
+text = "Share this post on Pinterest"
+
+[mail]
+href = "mailto:?subject=See%20this%20post&body="
+icon = "mail"
+text = "Share this post via email"

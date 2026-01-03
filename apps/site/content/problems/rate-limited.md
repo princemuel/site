@@ -3,6 +3,7 @@ title: "Rate Limit Exceeded"
 status: 429
 description: "Too many requests have been made in a given time period."
 type: "https://princemuel.netlify.app/problems/rate-limited"
+publishedAt: "2025-12-21T12:58:50Z"
 extensions:
   instance: URI identifying where this error occurred
   limit: "The rate limit ceiling for this endpoint"

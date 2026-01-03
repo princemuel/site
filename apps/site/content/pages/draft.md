@@ -3,8 +3,7 @@ title: Thoughts
 headline: "The home page url"
 description: A passionate software engineer who loves to tinker and draw inspiration from the world around them.
 draft: true
-publishedAt: 2025-10-05T23:21:50.990Z
-updatedAt: 2025-10-05T23:21:50.990Z
+publishedAt: "2025-10-05T23:21:50Z"
 tags:
   - thoughts
   - personal
@@ -12,7 +11,7 @@ permalink: /thoughts
 ---
 
 Who is Tyler Fisher?
-I’m a journalist and software engineer who has worked with prominent national news organizations and solo operations just getting off the ground. I own and operate Euphonos, my personal software studio that makes Sill, a link aggregation app for Bluesky and Mastodon. You can also hire me for consulting: email tyler@euphonos.studio.
+I’m a journalist and software engineer who has worked with prominent national news organizations and solo operations just getting off the ground. I own and operate Euphonos, my personal software studio that makes Sill, a link aggregation app for Bluesky and Mastodon. You can also hire me for consulting: email <tyler@euphonos.studio>.
 
 Most recently, I was the Chief Technology Officer at The 19th, an independent, nonprofit newsroom reporting on gender, politics and policy. Previously, I was a software engineer at the Washington Post, where I worked on election results infrastructure. I was deputy director at News Catalyst and the director of technology at the Tiny News Collective. I also used to work at Politico and NPR, building election results reporting systems, bespoke visual stories, and newsroom tooling.
 
