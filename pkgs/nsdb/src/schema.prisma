@@ -1,0 +1,131 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Commands to know:
+// `npx prisma generate` - update TypeScript definitions based on this schema
+// `npx prisma db push` - push the schema changes to the database
+// `npx prisma studio` - open the Studio, which allows you to edit the schema.
+// `npx prisma migrate reset` - reset the migrations to the last version. This will reset the DB and run the seed script
+// `npx prisma migrate dev --name <descriptive-name>` - generate a migration file for any changes you make to the schema (this will be committed).
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Post {
+  id          String    @id @default(cuid())
+  slug        String    @unique
+  title       String
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+  impressions Int       @default(0)
+  reactions   Int       @default(0)
+  comments    Comment[]
+
+  @@index([created_at]) // Optimize for recent posts queries
+  @@map("posts")
+}
+
+model Actor {
+  id         String    @id @default(cuid())
+  name       String? // Display name separate from handle
+  handle     String    @unique
+  image      String?
+  created_at DateTime  @default(now())
+  comments   Comment[]
+
+  @@map("actors")
+}
+
+model Comment {
+  id         String    @id @default(cuid())
+  content    String
+  created_at DateTime  @default(now())
+  updated_at DateTime  @updatedAt
+  post       Post      @relation(fields: [post_id], references: [id], onDelete: Cascade)
+  post_id    String
+  actor      Actor     @relation(fields: [actor_id], references: [id], onDelete: Cascade)
+  actor_id   String
+  parent     Comment?  @relation("Replies", fields: [parent_id], references: [id], onDelete: Cascade)
+  parent_id  String?
+  replies    Comment[] @relation("Replies")
+
+  // Optimized indexes for SQLite
+  @@index([post_id, created_at]) // List comments by post chronologically
+  @@index([actor_id]) // Lookup all comments by an actor
+  @@index([parent_id]) // Fast lookup of replies to a comment
+  @@map("comments")
+}
+
+model Session {
+  id             String    @id @default(cuid())
+  created_at     DateTime  @default(now())
+  updated_at     DateTime  @updatedAt
+  session_start  DateTime  @default(now())
+  session_end    DateTime?
+  page_url       String
+  source_url     String?
+  title          String?
+  user_agent     String?
+  country        String?
+  city           String?
+  latitude       Float?
+  longitude      Float?
+  flag           String?
+  duration_ms    Int?
+  duration_human String?
+  interactions   Int       @default(0)
+  events         Event[]
+
+  @@index([page_url])
+  @@index([session_start])
+  @@index([page_url, session_start])
+  @@map("sessions")
+}
+
+model Event {
+  id         String    @id @default(cuid())
+  timestamp  DateTime  @default(now())
+  slug       String
+  event      EventType
+  metadata   String?
+  session_id String
+  session    Session   @relation(fields: [session_id], references: [id], onDelete: Cascade)
+
+  @@index([slug])
+  @@index([event])
+  @@index([timestamp])
+  @@map("events")
+}
+
+model Reaction {
+  id          String       @id @default(cuid())
+  occurred_at DateTime     @default(now())
+  slug        String
+  reaction    ReactionType
+
+  @@index([slug])
+  @@index([reaction])
+  @@index([occurred_at])
+  @@map("reactions")
+}
+
+enum EventType {
+  PAGE_VIEW
+  CLICK
+  SCROLL
+  KEYDOWN
+  PAGE_EXIT
+}
+
+enum ReactionType {
+  LIKE
+  LOVE
+  CLAP
+  INSIGHTFUL
+}
