@@ -3,25 +3,25 @@ packages:
   - pkgs/*
 
 catalog:
-  '@dotenvx/dotenvx': ^1.51.1
-  '@total-typescript/ts-reset': ^0.6.1
-  '@types/node': 25.0.1
-  '@typescript/native-preview': 7.0.0-dev.20251212.1
+  "@dotenvx/dotenvx": ^1.51.1
+  "@total-typescript/ts-reset": ^0.6.1
+  "@types/node": 25.0.1
+  "@typescript/native-preview": 7.0.0-dev.20260111.1
   netlify-cli: ^23.11.0
-  oxlint: ^1.38.0
-  oxlint-tsgolint: ^0.10.1
+  oxlint: ^1.39.0
+  oxlint-tsgolint: ^0.11.0
   prettier: ^3.7.4
   tsx: 4.21.0
   typescript: 5.9.3
   vite: ^6.4.1
 
-catalogMode: prefer
+catalogMode: manual
 
 onlyBuiltDependencies:
-  - '@parcel/watcher'
-  - '@prisma/client'
-  - '@prisma/engines'
-  - '@tailwindcss/oxide'
+  - "@parcel/watcher"
+  - "@prisma/client"
+  - "@prisma/engines"
+  - "@tailwindcss/oxide"
   - esbuild
   - netlify-cli
   - prisma
