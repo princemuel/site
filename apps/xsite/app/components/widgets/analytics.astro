@@ -1,0 +1,187 @@
+---
+type Props = {
+  framework?: string;
+  name?: string;
+  version?: string;
+  pathname?: string | URL;
+};
+
+const {
+  name = "x-analytics",
+  version = "0.1",
+  framework = "astro",
+  pathname = Astro.url.pathname,
+} = Astro.props;
+---
+
+<x-analytics
+  data-sdkn={name + `/${framework}`}
+  data-sdkvn={version}
+  data-url={pathname}
+  data-is-prod={import.meta.env.PROD}></x-analytics>
+
+<script>
+  import { createElement } from "@/helpers/dom";
+  import { actions, getActionPath } from "astro:actions";
+
+  type Session = {
+    id?: string;
+    interactions: number;
+    start: Temporal.Instant;
+  };
+
+  type EventBatchItem = {
+    event: Uppercase<keyof GlobalEventHandlersEventMap>;
+    timestamp: string;
+    metadata: string | null;
+  };
+
+  createElement(
+    "x-analytics",
+    class Analytics extends HTMLElement {
+      #controller?: AbortController;
+      #session: Session = { interactions: 0, start: Temporal.Now.instant() };
+
+      // Scroll throttling
+      #lastScrollTime = Temporal.Now.instant();
+      #scrollThrottle = Temporal.Duration.from({ seconds: 1 });
+
+      // Event batching
+      #eventBatch: EventBatchItem[] = [];
+      #batchSize = 10;
+      #batchTimer?: number;
+
+      async connectedCallback() {
+        // if (this.dataset.isProd !== "true") return;
+        this.#controller = new AbortController();
+
+        // Initialize session
+        try {
+          const { data } = await actions.trackPageView({
+            page_url: this.dataset.url ?? "",
+            source_url: document.referrer,
+            title: document.title,
+          });
+
+          this.#session.id = data?.session_id;
+        } catch (error) {
+          console.error("Analytics init failed:", error);
+        }
+
+        // Start batch timer
+        this.#batchTimer = window.setInterval(() => this.#flushBatch(), 30_000);
+
+        // Track events
+        const { signal } = this.#controller;
+        document.addEventListener("visibilitychange", this, { signal });
+        document.addEventListener("click", this, { signal });
+        document.addEventListener("keydown", this, { signal });
+        document.addEventListener("scroll", this, { signal, passive: true });
+      }
+
+      handleEvent<E extends keyof GlobalEventHandlersEventMap>(
+        event: GlobalEventHandlersEventMap[E],
+      ) {
+        if (!this.#session.id) return;
+
+        switch (event.type) {
+          case "visibilitychange":
+            this.#onVisibilityChange();
+            break;
+          case "click":
+          case "keydown":
+          case "scroll":
+            this.#track(event);
+            break;
+        }
+      }
+
+      #track<K extends keyof GlobalEventHandlersEventMap>(event: GlobalEventHandlersEventMap[K]) {
+        // Handle scroll throttling
+        if (event.type === "scroll") {
+          const now = Temporal.Now.instant();
+          const timeSinceLastScroll = now.since(this.#lastScrollTime);
+          if (Temporal.Duration.compare(timeSinceLastScroll, this.#scrollThrottle) < 0) return;
+          this.#lastScrollTime = now;
+        }
+
+        // Increment interactions count (single source of truth)
+        this.#session.interactions += 1;
+        let metadata: Record<string, any> = {};
+
+        // Add to batch
+        this.#eventBatch.push({
+          event: event?.type.toUpperCase() as Uppercase<keyof GlobalEventHandlersEventMap>,
+          timestamp: Temporal.Now.instant().toString(),
+          metadata: metadata ? JSON.stringify(metadata) : null,
+        });
+
+        // Flush if batch is full
+        if (this.#eventBatch.length >= this.#batchSize) this.#flushBatch();
+      }
+
+      async #flushBatch() {
+        if (this.#eventBatch.length === 0 || !this.#session.id) return;
+
+        const events = [...this.#eventBatch];
+        this.#eventBatch = [];
+
+        try {
+          await actions.trackEvent({
+            session_id: this.#session.id,
+            page_url: this.dataset.url ?? "",
+            //@ts-expect-error - dynamic event types
+            events,
+          });
+        } catch (err) {
+          console.error("Batch tracking failed:", err);
+        }
+      }
+
+      #onVisibilityChange() {
+        if (document.visibilityState !== "hidden" || !this.#session.id) return;
+
+        // Flush pending events
+        this.#flushBatchSync();
+
+        // Calculate session duration
+        const end = Temporal.Now.instant();
+        const duration = end.since(this.#session.start);
+        const data = JSON.stringify({
+          session_id: this.#session.id,
+          page_url: this.dataset.url ?? "",
+          duration_ms: duration.total("milliseconds"),
+          duration_human: duration.toString(),
+          interactions: this.#session.interactions,
+        });
+
+        // Send exit event
+        navigator.sendBeacon(
+          getActionPath(actions.trackPageExit),
+          new Blob([data], { type: "application/json" }),
+        );
+      }
+      #flushBatchSync() {
+        if (this.#eventBatch.length === 0 || !this.#session.id) return;
+        const data = JSON.stringify({
+          session_id: this.#session.id,
+          page_url: this.dataset.url ?? "",
+          events: this.#eventBatch,
+        });
+
+        navigator.sendBeacon(
+          getActionPath(actions.trackEvent),
+          new Blob([data], { type: "application/json" }),
+        );
+
+        this.#eventBatch = [];
+      }
+
+      disconnectedCallback() {
+        this.#flushBatchSync();
+        this.#controller?.abort();
+        if (this.#batchTimer) clearInterval(this.#batchTimer);
+      }
+    },
+  );
+</script>

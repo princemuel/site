@@ -1,0 +1,82 @@
+---
+// SPDX-License-Identifier: Apache-2.0
+import { Image } from "astro:assets";
+import { getCollection, render } from "astro:content";
+
+import { developer, placeholder } from "@/assets";
+
+import Prose from "@/components/content/prose.astro";
+import Shell from "@/components/frames/shell.astro";
+import Link from "@/components/shared/link.astro";
+import Pattern from "@/components/shared/pattern.astro";
+import { Icon } from "astro-icon/components";
+
+export async function getStaticPaths() {
+  const entries = await getCollection(
+    "projects",
+    ({ data }) => !(import.meta.env.PROD && data.draft),
+  );
+
+  return entries.map((entry) => ({
+    props: { entry },
+    params: { slug: decodeURI(entry.id) },
+  }));
+}
+
+const { entry } = Astro.props;
+
+const markdown = await render(entry);
+
+const { Content, remarkPluginFrontmatter: frontmatter } = markdown;
+
+entry.data.words ??= frontmatter.words;
+entry.data.duration ??= frontmatter.duration;
+---
+
+<Shell>
+  <div class="feature grid min-h-120 lg:grid-cols-6 lg:grid-rows-8">
+    <Pattern class="hidden lg:col-span-1 lg:row-span-6 lg:block" />
+    <header class="flex flex-col items-center gap-12 py-16 text-center lg:col-span-4 lg:row-span-8">
+      <Image src={developer} alt={"Just a dev"} class="w-60" />
+      <section
+        class="flex items-center gap-2 font-mono text-base font-medium tracking-widest uppercase"
+      >
+        <Link href="#" class="text-black">Engineering</Link>
+        <span class="text-gray-300">&mdash;</span>
+        <time class="text-gray-500">10 May 2023</time>
+      </section>
+
+      <h1 id="a11ty-headline" class="text-4xl font-black text-balance lg:text-6xl">
+        {entry.data.title}
+      </h1>
+
+      <section
+        class="inline-grid grid-cols-[3fr_1fr_auto_1fr_3fr] items-center gap-5 text-2xl font-medium text-gray-500"
+      >
+        <hr class="border border-gray-200" />
+        <Link
+          href="https://bsky.app/profile/kettanaito.com"
+          class="p-5 hover:text-black"
+          aria-label="Follow me on Bluesky"
+        >
+          <Icon name="bluesky" />
+        </Link>
+        <Image src={placeholder} alt="kettanaito's avatar" class="size-12 rounded-full shadow-lg" />
+        <Link
+          href="https://twitter.com/kettanaito"
+          class="p-5 hover:text-black"
+          aria-label='Follow me on "Twitter"'
+        >
+          <Icon name="x" />
+        </Link>
+        <hr class="border border-gray-200" />
+      </section>
+    </header>
+
+    <Pattern class="hidden lg:col-span-1 lg:row-span-6 lg:block" />
+  </div>
+
+  <Prose as="article" aria-labelledby="a11ty-headline">
+    <Content frontmatter={entry.data} />
+  </Prose>
+</Shell>

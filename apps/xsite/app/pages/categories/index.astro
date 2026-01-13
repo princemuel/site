@@ -1,0 +1,27 @@
+---
+// SPDX-License-Identifier: Apache-2.0
+import { getCollection } from "astro:content";
+
+import Shell from "@/components/frames/shell.astro";
+import Link from "@/components/shared/link.astro";
+
+const collections = await Promise.all([getCollection("projects"), getCollection("journal")]);
+
+const entries = Array.from(new Set(collections.flat().flatMap((item) => item.data.category ?? "")));
+---
+
+<Shell>
+  <section class="flex flex-col gap-4">
+    <h1 id="a11ty-headline" class="">Tags</h1>
+
+    <section class="flex flex-col">
+      {
+        entries.map((entry) => (
+          <Link href={`/categories/${entry}`} class="underline">
+            {entry}
+          </Link>
+        ))
+      }
+    </section>
+  </section>
+</Shell>

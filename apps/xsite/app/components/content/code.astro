@@ -1,0 +1,50 @@
+---
+import { Code as ExpressiveCode } from "astro-expressive-code/components";
+// import { decode } from "tiny-decode";
+import type { PluginFramesProps } from "astro-expressive-code";
+
+interface Props {
+  /**
+   * @desc Markdoc places the fence content in the `content` property.
+   * @example: `\r\n## Heading\r\n`
+   */
+  content: string;
+  /**
+   * @desc Markdoc places the parsed fence language in the `language` property.
+   * @example: `typescript`
+   */
+  language?: string;
+  /**
+   * @desc title is a custom Markdoc schema addition to pass a title to the code fence.
+   * @summary `title` is not required.
+   * If using Expressive Code's commented file name, it will populate that.
+   * If both are specified, it will follow Expressive Code's default behavior.
+   */
+  title?: string;
+  /**
+   * @desc Custom Markdoc schema addition to specify the Expressive Code frame type
+   * @summary `frame` is not required, and if not specified, defaults to `auto`.
+   * @example
+   * ```javascript {\% frame="none" %}
+   *     var foo = "a";
+   * ``` will set the frame to none.
+   */
+  frame?: PluginFramesProps["frame"];
+}
+
+// const content = decode((await Astro.slots.render("default")).trim());
+
+const { content, language, title, frame } = Astro.props;
+---
+
+<!-- <ExpressiveCode
+  code={content}
+  title={Astro.props.title ?? undefined}
+  class={Astro.props.class ?? undefined}
+  mark={Astro.props.mark ?? undefined}
+  ins={Astro.props.ins ?? undefined}
+  del={Astro.props.del ?? undefined}
+  frame={Astro.props.frame ?? "auto"}
+  lang={Astro.props["data-language"] ?? undefined}
+/> -->
+<ExpressiveCode code={content} lang={language} title={title} frame={frame} />

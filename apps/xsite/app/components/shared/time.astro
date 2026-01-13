@@ -1,0 +1,15 @@
+---
+// SPDX-License-Identifier: Apache-2.0
+import type { HTMLAttributes } from "astro/types";
+
+// type ISO = "full" | "date" | "time" | "month" | "yearless" | "week";
+// type FormatPreset = "full" | "short" | "long";
+
+interface Props extends HTMLAttributes<"time"> {}
+
+const { datetime, ...attrs } = Astro.props;
+---
+
+<time datetime={datetime} {...attrs}>
+  <slot>Hi</slot>
+</time>

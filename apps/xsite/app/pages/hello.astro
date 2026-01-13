@@ -1,0 +1,261 @@
+---
+// SPDX-License-Identifier: Apache-2.0
+import { getEntry, render } from "astro:content";
+
+import Prose from "@/components/content/prose.astro";
+import Shell from "@/components/frames/shell.astro";
+import { ACTION_QUERY_PARAMS, actions, isInputError } from "astro:actions";
+
+export const prerender = false;
+
+const entry = await getEntry("pages", "hello");
+if (!entry) throw new Response(null, { status: 404 });
+
+const { Content } = await render(entry);
+
+const data = entry.data;
+
+const result = Astro.getActionResult(actions.contact);
+
+console.log("[ERROR]", result?.error);
+
+const formErrors = isInputError(result?.error) ? result.error.fields : {};
+
+if (!result?.error && result?.data) {
+  // Successful form submission logic can go here
+  const link = Astro.url.searchParams;
+  link.delete(ACTION_QUERY_PARAMS.actionName);
+  link.delete(ACTION_QUERY_PARAMS.actionPayload);
+  return Astro.redirect(link, 303);
+}
+---
+
+<Shell>
+  <Prose as="header">
+    <h1 id="a11ty-headline" class="">{data.headline}</h1>
+    <Content frontmatter={entry.data} />
+  </Prose>
+
+  <Prose as="section" class="space-y-5" aria-labelledby="contact-me">
+    <h2 id="contact-me">Contact Me</h2>
+    <p>Let me know what's on your mind and I'll get back to you as soon as possible.</p>
+
+    <form method="POST" action={actions.contact} class="flex flex-col gap-6 md:gap-8">
+      <section class="grid grid-cols-6 gap-5">
+        <input type="hidden" name="honeypot" placeholder="do not fill this" class="sr-only" />
+        <div class="group col-span-full flex flex-col gap-2 sm:col-span-3">
+          <label class="space-x-1 text-sm font-medium text-gray-600" for="fields.firstName.input">
+            <span>First Name</span><span class="text-red-400">*</span>
+          </label>
+
+          <input
+            type="text"
+            id="fields.firstName.input"
+            name="firstName"
+            aria-autocomplete="both"
+            class="rounded border border-gray-500 bg-transparent px-4 py-3 text-gray-900"
+            autocomplete="given-name"
+            aria-invalid={Boolean(formErrors?.firstName)}
+            aria-errormessage="fields.firstName.error"
+          />
+
+          <span
+            role="alert"
+            aria-live="polite"
+            aria-atomic="true"
+            class="text-sm font-light text-red-400"
+            id="fields.firstName.error"
+          >
+            {formErrors?.firstName?.join(" ")}
+          </span>
+        </div>
+
+        <div class="group col-span-full flex flex-col gap-2 sm:col-span-3">
+          <label for="fields.lastName.input" class="space-x-1 text-sm font-medium text-gray-600">
+            <span>Last Name</span><span class="text-red-400">*</span>
+          </label>
+          <input
+            type="text"
+            id="fields.lastName.input"
+            name="lastName"
+            aria-autocomplete="both"
+            class="rounded border border-gray-500 bg-transparent px-4 py-3 text-gray-900"
+            autocomplete="family-name"
+            aria-invalid={Boolean(formErrors?.lastName)}
+            aria-errormessage="fields.lastName.error"
+          />
+          <span
+            role="alert"
+            aria-live="polite"
+            aria-atomic="true"
+            class="text-sm font-light text-red-400"
+            id="fields.lastName.error"
+          >
+            {formErrors?.lastName?.join(" ")}
+          </span>
+        </div>
+
+        <div class="group col-span-full flex flex-col gap-2">
+          <label for="fields.email.input" class="space-x-1 text-sm font-medium text-gray-600">
+            <span>Email Address</span><span class="text-red-400">*</span>
+          </label>
+          <input
+            type="email"
+            id="fields.email.input"
+            name="email"
+            aria-autocomplete="both"
+            class="rounded border border-gray-500 bg-transparent px-4 py-3 text-gray-900"
+            autocomplete="email"
+            aria-invalid={Boolean(formErrors?.email)}
+            aria-errormessage="fields.email.error"
+          />
+          <span
+            role="alert"
+            aria-live="polite"
+            aria-atomic="true"
+            class="text-sm font-light text-red-400"
+            id="fields.email.error"
+          >
+            {formErrors?.email?.join(" ")}
+          </span>
+        </div>
+
+        <fieldset class="group col-span-full space-y-3">
+          <legend class="space-x-1 text-sm font-medium text-gray-600">
+            Query Type <span class="text-red-400">*</span>
+          </legend>
+
+          <section class="grid grid-cols-6 gap-5">
+            <label
+              class="col-span-full flex items-center gap-2 rounded border border-gray-500 px-4 py-3 text-gray-900 sm:col-span-3"
+            >
+              <input
+                type="radio"
+                id="fields.general.input"
+                name="queryType"
+                value="general"
+                class="rounded-full"
+                aria-invalid={Boolean(formErrors?.queryType)}
+                aria-errormessage="fields.query.error"
+              />
+              <span>General Enquiry</span>
+            </label>
+
+            <label
+              class="col-span-full flex items-center gap-2 rounded border border-gray-500 px-4 py-3 text-gray-900 sm:col-span-3"
+            >
+              <input
+                type="radio"
+                id="fields.contract.input"
+                name="queryType"
+                value="contract"
+                class="rounded-full"
+                aria-invalid={Boolean(formErrors?.queryType)}
+                aria-errormessage="fields.query.error"
+              />
+              <span>Contract Work</span>
+            </label>
+
+            <label
+              class="col-span-full flex items-center gap-2 rounded border border-gray-500 px-4 py-3 text-gray-900 sm:col-span-3"
+            >
+              <input
+                type="radio"
+                id="fields.support.input"
+                name="queryType"
+                value="support"
+                class="rounded-full"
+                aria-invalid={Boolean(formErrors?.queryType)}
+                aria-errormessage="fields.query.error"
+              />
+              <span>Technical Support</span>
+            </label>
+
+            <label
+              class="col-span-full flex items-center gap-2 rounded border border-gray-500 px-4 py-3 text-gray-900 sm:col-span-3"
+            >
+              <input
+                type="radio"
+                id="fields.issues.input"
+                name="queryType"
+                value="issues"
+                class="rounded-full"
+                aria-invalid={Boolean(formErrors?.queryType)}
+                aria-errormessage="fields.query.error"
+              />
+              <span>Bug Report</span>
+            </label>
+          </section>
+
+          <span
+            role="alert"
+            aria-live="polite"
+            aria-atomic="true"
+            class="inline-block text-sm font-light text-red-400"
+            id="fields.query.error"
+          >
+            {formErrors?.queryType?.join(" ")}
+          </span>
+        </fieldset>
+
+        <div class="group col-span-full flex flex-col gap-2">
+          <label for="fields.message.input" class="space-x-1 text-sm font-medium text-gray-600">
+            <span>Message</span>
+            <span class="text-red-400">*</span>
+          </label>
+          <textarea
+            transition:persist="message"
+            name="message"
+            id="fields.message.input"
+            autocapitalize="on"
+            class="min-h-32 rounded border border-gray-500 bg-transparent px-4 py-3 text-gray-900"
+            autocomplete="on"
+            aria-invalid={Boolean(formErrors?.message)}
+            aria-errormessage="fields.message.error"
+          >
+          </textarea>
+          <span
+            role="alert"
+            aria-live="polite"
+            aria-atomic="true"
+            class="text-sm font-light text-red-400"
+            id="fields.message.error"
+          >
+            {formErrors?.message?.join(" ")}
+          </span>
+        </div>
+
+        <div class="group col-span-full flex flex-col gap-2">
+          <div class="flex items-center gap-2">
+            <input
+              type="checkbox"
+              id="fields.consent.input"
+              name="consent"
+              class=""
+              aria-invalid={Boolean(formErrors?.consent)}
+              aria-errormessage="fields.email.error"
+            />
+            <label class="space-x-1 text-sm font-medium text-gray-600" for="fields.consent.input">
+              <span>I consent to being contacted by Prince Muel</span>
+              <span class="text-red-400">*</span>
+            </label>
+          </div>
+
+          <span
+            role="alert"
+            aria-live="polite"
+            aria-atomic="true"
+            class="text-sm font-light text-red-400"
+            id="fields.consent.error"
+          >
+            {formErrors?.consent?.join(" ")}
+          </span>
+        </div>
+
+        <button type="submit" class="col-span-full rounded bg-gray-700 px-4 py-3 text-white">
+          Submit
+        </button>
+      </section>
+    </form>
+  </Prose>
+</Shell>

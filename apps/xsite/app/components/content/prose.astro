@@ -1,0 +1,13 @@
+---
+// SPDX-License-Identifier: Apache-2.0
+import type { HTMLTag, Polymorphic } from "astro/types";
+
+type Props<Tag extends HTMLTag> = Polymorphic<{ as: Tag }>;
+
+const { as: Tag = "article", class: clsx, ...attrs } = Astro.props;
+---
+
+{/* marker:content-['_⦿_'] */}
+<Tag {...attrs} class:list={["prose prose-base max-w-none prose-gray dark:prose-invert", clsx]}>
+  <slot />
+</Tag>

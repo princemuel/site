@@ -1,0 +1,11 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type Props = HTMLAttributes<"video">;
+const { src, ...attrs } = Astro.props;
+---
+
+<video controls {...attrs} class="my-10 h-auto w-full overflow-hidden rounded bg-black">
+  <source src={src} type="video/mp4" />
+  This browser does not display the video tag.
+</video>
