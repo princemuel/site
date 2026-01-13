@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: Apache-2.0
-// import the .env file
 import "@dotenvx/dotenvx/config";
 
 import { defineConfig, env } from "prisma/config";

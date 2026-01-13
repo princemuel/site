@@ -1,0 +1,14 @@
+{
+  "name": "xutils",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "type-check": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@typescript/native-preview": "catalog:",
+    "@types/node": "catalog:"
+  }
+}
