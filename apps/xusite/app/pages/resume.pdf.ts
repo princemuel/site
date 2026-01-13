@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 import { GOOGLE_DRIVE_FILE_ID, GOOGLE_DRIVE_TOKEN } from "astro:env/server";
 
-import { secs } from "@/utils/time";
+import { secs } from "xuutils";
 import type { APIRoute } from "astro";
 import { NotFoundError } from "http-errors-enhanced";
 

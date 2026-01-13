@@ -7,7 +7,7 @@ import {
   UPSTASH_REDIS_REST_URL,
 } from "astro:env/server";
 
-import { remember } from "@/helpers/singleton";
+import { remember } from "xuutils";
 
 const tokens = UPSTASH_LIMIT_TOKEN;
 const window = UPSTASH_LIMIT_WINDOW as Parameters<typeof Ratelimit.slidingWindow>["1"];

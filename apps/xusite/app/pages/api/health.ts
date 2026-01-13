@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-import { db } from "nsdb";
+import { db } from "xusqldb";
 
 import { getErrorMessage } from "@/helpers/error";
 

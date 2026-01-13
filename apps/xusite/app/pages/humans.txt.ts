@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 import { humans as buffer } from "@/assets/include";
-import { secs } from "@/utils/time";
+import { secs } from "xuutils";
 
 import type { APIRoute } from "astro";
 

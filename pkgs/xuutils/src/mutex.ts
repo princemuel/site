@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: Apache-2.0
-import { createDeferred } from "./deferred";
+// SPDX-License-Identifier: Apache-2.0
 
 type AcquiredMutex<T> = T & { release: () => void };
 
 export class Mutex<T extends object> {
   #locked = false;
   #guard: MutexGuard<T> | null = null;
-  #waitlist: Deferred<AcquiredMutex<T>>[] = [];
+  #waitlist: PromiseWithResolvers<AcquiredMutex<T>>[] = [];
 
   constructor(private readonly resource: T) {}
 
@@ -16,7 +16,7 @@ export class Mutex<T extends object> {
       return this.#createGuardedResource();
     }
 
-    const deferred = createDeferred<AcquiredMutex<T>>();
+    const deferred = Promise.withResolvers<AcquiredMutex<T>>();
     this.#waitlist.push(deferred);
     return deferred.promise;
   }
@@ -119,8 +119,12 @@ export class MutexGuard<T extends object> implements ProxyHandler<T> {
     return keys;
   }
 
-  public getOwnPropertyDescriptor(target: T, property: PropertyKey): PropertyDescriptor | undefined {
-    if (!this.#isValid) throw new Error("Cannot get property descriptor on invalidated mutex guard");
+  public getOwnPropertyDescriptor(
+    target: T,
+    property: PropertyKey,
+  ): PropertyDescriptor | undefined {
+    if (!this.#isValid)
+      throw new Error("Cannot get property descriptor on invalidated mutex guard");
 
     if (property === "release") {
       return {

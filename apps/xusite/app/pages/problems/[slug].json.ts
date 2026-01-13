@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
-import { omit } from "@/utils/object";
-import { secs } from "@/utils/time";
+import { omit } from "xuutils";
+import { secs } from "xuutils";
 import type { APIRoute, InferGetStaticParamsType, InferGetStaticPropsType } from "astro";
 import { getCollection } from "astro:content";
 

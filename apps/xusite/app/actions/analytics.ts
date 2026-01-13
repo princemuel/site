@@ -1,5 +1,5 @@
 import { defineAction } from "astro:actions";
-import { db } from "nsdb";
+import { db } from "xusqldb";
 
 import { z } from "astro/zod";
 

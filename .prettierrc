@@ -6,7 +6,7 @@
   "trailingComma": "all",
   "tailwindFunctions": ["tw", "tv"],
   "tailwindAttributes": ["tw"],
-  "tailwindStylesheet": "./apps/xsite/app/global.css",
+  "tailwindStylesheet": "./apps/xusite/app/global.css",
   "attributeGroups": ["^class$", "^(id|name)$", "$DEFAULT", "^aria-"],
   "plugins": [
     "prettier-plugin-astro",

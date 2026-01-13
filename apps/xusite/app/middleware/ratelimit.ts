@@ -2,7 +2,7 @@ import { UPSTASH_LIMIT_WINDOW } from "astro:env/server";
 
 import { println$ } from "@/helpers/println";
 import { ratelimiter } from "@/lib/cache";
-import { hash } from "@/utils/hash";
+import { hash } from "xuutils";
 
 import type { MiddlewareHandler } from "astro";
 
