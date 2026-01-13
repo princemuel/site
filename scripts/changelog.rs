@@ -6,7 +6,7 @@ walkdir = "2"
 ---
 
 use rayon::prelude::*;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 use std::process::Command;
 use walkdir::WalkDir;
 
@@ -18,7 +18,8 @@ fn get_cpu_count() -> usize {
         .unwrap_or(4)
 }
 
-fn process_file(fname: &PathBuf, ignore_pattern: &str) -> Option<String> {
+fn process_file(path: impl AsRef<Path>, ignore_pattern: &str) -> Option<String> {
+    let path = path.as_ref().to_str()?;
     let output = Command::new("git")
         .args([
             "log",
@@ -27,7 +28,7 @@ fn process_file(fname: &PathBuf, ignore_pattern: &str) -> Option<String> {
             "--date=iso",
             "--pretty=format:%cs|%H;",
             "--",
-            fname.to_str()?,
+            path,
         ])
         .output()
         .ok()?;
@@ -43,7 +44,7 @@ fn process_file(fname: &PathBuf, ignore_pattern: &str) -> Option<String> {
         .lines()
         .find(|line| !ignore_pattern.split('|').any(|hash| line.contains(hash)))?;
 
-    Some(format!("{}|{}", fname.display(), line))
+    Some(format!("{}|{}", path, line))
 }
 
 fn main() {
