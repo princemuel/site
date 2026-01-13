@@ -1,11 +1,15 @@
 {
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "js/ts.implicitProjectConfig.target": "ESNext",
   "typescript.experimental.useTsgo": true,
-  "dotenv.enableAutocloaking": false,
+  "typescript.updateImportsOnFileMove.enabled": "always",
   "editor.wordWrap": "bounded",
   "editor.wordWrapColumn": 108,
   "editor.inlineSuggest.enabled": true,
+  "dotenv.enableAutocloaking": false,
   "oxc.enable": true,
-  "oxc.fmt.experimental": true,
+  "oxc.typeAware": true,
+  "oxc.fixKind": "safe_fix_or_suggestion",
   "mdx.server.enable": true,
   "mdx.validate.validateDuplicateLinkDefinitions": "warning",
   "mdx.validate.validateFileLinks": "warning",
@@ -13,9 +17,7 @@
   "mdx.validate.validateMarkdownFileLinkFragments": "warning",
   "mdx.validate.validateReferences": "warning",
   "mdx.validate.validateUnusedLinkDefinitions": "warning",
-  "prettier.documentSelectors": [
-    "**/*.astro"
-  ],
+  "prettier.documentSelectors": ["**/*.astro"],
   "astro.content-intellisense": true,
   "[astro]": {
     "editor.defaultFormatter": "astro-build.astro-vscode"
@@ -42,27 +44,33 @@
   "rust-analyzer.inlayHints.typeHints.enable": false,
   "rust-analyzer.inlayHints.chainingHints.enable": false,
   // Formatting with rustfmt
-  "rust-analyzer.rustfmt.extraArgs": [
-    "+nightly"
-  ],
+  "rust-analyzer.rustfmt.extraArgs": ["+nightly"],
+  "rust-analyzer.testExplorer": true,
+  "rust-analyzer.semanticHighlighting.punctuation.enable": true,
+  "rust-analyzer.linkedProjects": ["scripts/migrate.rs"],
+  "rust-analyzer.rustc.source": "discover",
   "[rust]": {
     "editor.defaultFormatter": "rust-lang.rust-analyzer"
   },
-  "rust-analyzer.testExplorer": true,
-  "rust-analyzer.semanticHighlighting.punctuation.enable": true,
+  "material-icon-theme.activeIconPack": "react_redux",
   "material-icon-theme.folders.associations": {
+    ".cargo": "rust",
     "journal": "dump",
-    "crates": "tools",
+    "crates": "rust",
     "films": "video",
+    "frames": "template",
     "series": "television",
     "games": "shader",
-    "problems": "error"
+    "problems": "error",
+    "xusite": "client",
+    "xuutils": "utils",
+    "xusqldb": "database"
   },
   "[shellscript]": {
     "editor.defaultFormatter": "mads-hartmann.bash-ide-vscode"
   },
   "yaml.schemas": {
-    "https://json.schemastore.org/github-issue-config.json": "file:///home/nyx/Lab/Projects/Repos/site/.github/ISSUE_TEMPLATE/config.yml"
+    "https://json.schemastore.org/github-issue-config.json": "file:///home/nyx/Lab/Projects/Repos/website/.github/ISSUE_TEMPLATE/config.yml"
   },
   "[toml]": {
     "editor.defaultFormatter": "tamasfe.even-better-toml"

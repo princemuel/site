@@ -1,5 +1,5 @@
 {
-  "name": "xutils",
+  "name": "xuutils",
   "type": "module",
   "exports": {
     ".": "./src/index.ts"

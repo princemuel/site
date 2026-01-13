@@ -1,5 +1,5 @@
 {
-  "name": "site",
+  "name": "xusite",
   "type": "module",
   "version": "0.0.1",
   "description": "My personal website built with Astro, Tailwind CSS, MDX, and the Github API",
@@ -21,7 +21,8 @@
     "astro": "^5.16.9",
     "http-errors-enhanced": "^4.0.2",
     "isbot": "^5.1.32",
-    "xsqldb": "workspace:*",
+    "xusqldb": "workspace:*",
+    "xuutils": "workspace:*",
     "outvariant": "^1.4.3",
     "resend": "^6.7.0",
     "satori": "^0.18.3",

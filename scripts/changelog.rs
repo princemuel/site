@@ -54,7 +54,7 @@ fn main() {
     let ignore_pattern = IGNORE_LIST.join("|");
 
     // Find all .md and .mdx files
-    let files: Vec<PathBuf> = WalkDir::new("apps/site/content")
+    let files: Vec<PathBuf> = WalkDir::new("apps/xusite/content")
         .into_iter()
         .filter_map(|e| e.ok())
         .filter(|e| e.file_type().is_file())

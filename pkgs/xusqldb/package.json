@@ -1,5 +1,5 @@
 {
-  "name": "xsqldb",
+  "name": "xusqldb",
   "type": "module",
   "exports": {
     ".": "./src/index.ts"
