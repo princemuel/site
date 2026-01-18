@@ -11,12 +11,12 @@ export default defineCollection({
     z.object({
       name: z.string().min(2),
       handle: z.string().min(2),
-      email: z.string().email().optional(),
+      email: z.email().optional(),
       bio: z.string().min(2).optional(),
       role: z.string().min(2).optional(),
       thumbnail: img(image).optional(),
       image: img(image).optional(),
       location: z.string().min(2).optional(),
-      links: z.record(z.string(), z.string().url()).default({}),
+      links: z.record(z.string(), z.url()).default({}),
     }),
 });

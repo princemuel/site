@@ -3,6 +3,7 @@ import { ActionError, defineAction } from "astro:actions";
 import { z } from "astro/zod";
 
 export default defineAction({
+  input: z.object({ name: z.string() }),
   handler: (body, { locals }) => {
     if (locals.ratelimit.throttle) {
       throw new ActionError({
@@ -13,5 +14,4 @@ export default defineAction({
 
     return `Hello, ${body.name}!`;
   },
-  input: z.object({ name: z.string() }),
 });

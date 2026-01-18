@@ -5,16 +5,16 @@ import { z } from "astro/zod";
 import { defineCollection } from "astro:content";
 
 export default defineCollection({
-  loader: glob({ base: "content/problems", pattern: "**/[^_]*.{md,mdx}" }),
+  loader: glob({ base: "content/problems", pattern: "**/[!_]*.{md,mdoc}" }),
   schema: z.object({
     title: z.string(),
     status: z.number(),
-    type: z.string().url(),
+    type: z.url(),
     description: z.string(),
     extensions: z.record(z.string(), z.string()).default({}),
     draft: z.boolean().default(false),
-    publishedAt: z.string().datetime(),
-    updatedAt: z.string().datetime().optional(),
+    publishedAt: z.iso.datetime({ offset: true }),
+    updatedAt: z.iso.datetime({ offset: true }).optional(),
     revisions: z.array(revision).default([]),
   }),
 });

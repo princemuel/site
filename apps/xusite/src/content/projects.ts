@@ -5,7 +5,7 @@ import { z } from "astro/zod";
 import { defineCollection, reference } from "astro:content";
 
 export default defineCollection({
-  loader: glob({ base: "content/projects", pattern: "**/[^_]*.{md,mdx}" }),
+  loader: glob({ base: "content/projects", pattern: "**/[!_]*.{md,mdoc}" }),
   schema: ({ image }) =>
     baseSchema.extend({
       category: z.string().min(2),
@@ -17,6 +17,6 @@ export default defineCollection({
       status: z
         .enum(["concept", "planned", "in-progress", "completed", "archived"])
         .default("planned"),
-      links: z.array(z.object({ label: reference("labels"), url: z.string().url() })).default([]),
+      links: z.array(z.object({ label: reference("labels"), url: z.url() })).default([]),
     }),
 });

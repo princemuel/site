@@ -4,7 +4,7 @@ import { z } from "astro/zod";
 import type { ImageMetadata } from "astro";
 import type { ImageFunction } from "astro:content";
 
-export const revision = z.object({ note: z.string(), date: z.string().datetime() });
+export const revision = z.object({ note: z.string(), date: z.iso.datetime({ offset: true }) });
 export const baseSchema = z.object({
   title: z.string().min(2),
   description: z.string().min(2),
@@ -13,11 +13,11 @@ export const baseSchema = z.object({
   draft: z.boolean().default(true),
   comments: z.boolean().default(false),
   tags: z.array(z.string()).default([]),
-  publishedAt: z.string().datetime(),
-  updatedAt: z.string().datetime().optional(),
+  publishedAt: z.iso.datetime({ offset: true }),
+  updatedAt: z.iso.datetime({ offset: true }).optional(),
   revisions: z.array(revision).default([]),
   duration: z.string().default("1 min read"),
-  words: z.number().int().nonnegative().lte(65_535).default(0),
+  words: z.uint32().lte(65_535).default(0),
   language: z.enum(["en", "es", "fr"]).default("en"),
   permalink: z.string().default("/"),
 });
@@ -25,9 +25,7 @@ export const baseSchema = z.object({
 type ImageInfo = ImageMetadata;
 export const img = (image: ImageFunction) =>
   z
-    .string()
-    .url()
-    .regex(/^https:.*/)
+    .url({ protocol: /^https$/, hostname: z.regexes.domain })
     .transform((url) => ({ src: url, width: 1200, height: 630, format: "jpg" }) as ImageInfo)
     .or(image());
 
@@ -41,7 +39,7 @@ export const img = (image: ImageFunction) =>
 // export const withMetadata = (content: Content) => {
 //   const loader = glob({
 //     base: `content/${content}`,
-//     pattern: "**/[^_]*.{md,mdx}",
+//     pattern: "**/[!_]*.{md,mdoc}",
 //   });
 
 //   return {

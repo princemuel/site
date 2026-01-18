@@ -33,7 +33,7 @@ export const routes = defineCollection({
 export const shares = defineCollection({
   loader: file("content/sandbox/shares.toml"),
   schema: z.object({
-    href: z.string().url(),
+    href: z.url(),
     text: z.string().min(2),
     icon: z.custom<Icon>((val) => typeof val === "string"),
   }),

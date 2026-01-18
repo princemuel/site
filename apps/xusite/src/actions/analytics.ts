@@ -6,7 +6,7 @@ import { z } from "astro/zod";
 export const trackPageView = defineAction({
   input: z.object({
     page_url: z.string(),
-    source_url: z.string().url(),
+    source_url: z.url(),
     title: z.string(),
   }),
   handler: async (body, { request, locals }) => {

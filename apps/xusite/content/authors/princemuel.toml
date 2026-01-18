@@ -10,5 +10,5 @@ thumbnail = "https://github.com/princemuel.png"
 [links]
 mastodon = "https://mastodon.social/@princemuel"
 repo     = "https://github.com/princemuel"
-site     = "https://princemuel.netlify.app/about"
+site     = "https://princemuel.netlify.src/about"
 twitter  = "https://twitter.com/iamprincemuel"

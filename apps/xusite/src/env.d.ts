@@ -6,11 +6,11 @@
 
 declare var Theme: ThemeController;
 var __singletons__: Map<string, unknown> | undefined;
-type NetlifyLocals = import("@astrojs/netlify").NetlifyLocals;
+type RuntimeLocals = import("@astrojs/cloudflare").Runtime;
 
 declare namespace App {
-  interface Locals extends NetlifyLocals {
-    content_slot: { title: string; description: string };
+  interface Locals extends RuntimeLocals {
+    content: { title: string; description: string };
     auth: { start_time: number };
     ratelimit: { limit: number; remaining: number; reset: number; throttle: boolean };
     botinfo: { blocked: boolean; isMissingUA: boolean; isBot: boolean };

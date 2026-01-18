@@ -19,11 +19,7 @@ export default defineAction({
       .min(1, { message: "This field is required" })
       .max(32)
       .trim(),
-    email: z
-      .string({ message: "This field is required" })
-      .min(1, { message: "This field is required" })
-      .email({ message: "Please enter a valid email address" })
-      .trim(),
+    email: z.email({ message: "Please enter a valid email address" }).trim(),
     message: z
       .string({ message: "This field is required" })
       .min(1, { message: "This field is required" })

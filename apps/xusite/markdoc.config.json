@@ -1,6 +1,6 @@
 [
   {
-    "id": "xsite",
+    "id": "xusite",
     "path": "content",
     "schema": {
       "path": "markdoc.config.ts",

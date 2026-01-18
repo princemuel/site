@@ -40,7 +40,7 @@ const buildDate = Temporal.Now.zonedDateTimeISO();
       </span>
 
       <span class="before:mx-1 before:content-['::'] max-sm:hidden">
-        <Link href={new URL("/sitemap-index.xml", Astro.site)}>Sitemap</Link>
+        <Link href={new URL("/sitemap-index.xml", import.meta.env.SITE)}>Sitemap</Link>
       </span>
     </p>
   </section>
