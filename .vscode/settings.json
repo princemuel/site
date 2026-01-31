@@ -17,7 +17,9 @@
   "mdx.validate.validateMarkdownFileLinkFragments": "warning",
   "mdx.validate.validateReferences": "warning",
   "mdx.validate.validateUnusedLinkDefinitions": "warning",
-  "prettier.documentSelectors": ["**/*.astro"],
+  "prettier.documentSelectors": [
+    "**/*.astro"
+  ],
   "astro.content-intellisense": true,
   "[astro]": {
     "editor.defaultFormatter": "astro-build.astro-vscode"
@@ -44,10 +46,15 @@
   "rust-analyzer.inlayHints.typeHints.enable": false,
   "rust-analyzer.inlayHints.chainingHints.enable": false,
   // Formatting with rustfmt
-  "rust-analyzer.rustfmt.extraArgs": ["+nightly"],
+  "rust-analyzer.rustfmt.extraArgs": [
+    "+nightly"
+  ],
   "rust-analyzer.testExplorer": true,
   "rust-analyzer.semanticHighlighting.punctuation.enable": true,
-  "rust-analyzer.linkedProjects": ["scripts/migrate.rs"],
+  "rust-analyzer.linkedProjects": [
+    "scripts/migrate.rs",
+    "scripts/changelog.rs"
+  ],
   "rust-analyzer.rustc.source": "discover",
   "[rust]": {
     "editor.defaultFormatter": "rust-lang.rust-analyzer"
@@ -62,14 +69,18 @@
     "series": "television",
     "games": "shader",
     "problems": "error",
-    "xusite": "client",
-    "xuutils": "utils",
-    "xusqldb": "database"
+    "studio": "client",
   },
+  // "files.associations": {
+  //   "*.agent.md": "chatagent",
+  //   "*.instructions.md": "instructions",
+  //   "*.prompt.md": "prompt"
+  // },
   "[shellscript]": {
     "editor.defaultFormatter": "mads-hartmann.bash-ide-vscode"
   },
   "yaml.schemas": {
+    "./.schemas/collection.schema.json": "*.collection.yml",
     "https://json.schemastore.org/github-issue-config.json": "file:///home/nyx/Lab/Projects/Repos/website/.github/ISSUE_TEMPLATE/config.yml"
   },
   "[toml]": {
@@ -79,5 +90,6 @@
   "template-string-converter.convertWithinTemplateString": true,
   "template-string-converter.convertOutermostQuotes": true,
   "template-string-converter.autoRemoveTemplateString": true,
-  "template-string-converter.addBracketsToProps": true
+  "template-string-converter.addBracketsToProps": true,
+  "markdown.validate.enabled": true
 }

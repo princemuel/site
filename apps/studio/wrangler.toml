@@ -1,0 +1,18 @@
+# schema reference (optional but useful for editors)
+# $schema = "./node_modules/wrangler/config-schema.json"
+compatibility_date = "2026-01-12"
+main               = "@astrojs/cloudflare/entrypoints/server"
+name               = "@core/shell"
+
+compatibility_flags = [
+  "nodejs_compat",
+  "nodejs_als",
+  "global_fetch_strictly_public",
+]
+
+[assets]
+binding   = "ASSETS"
+directory = "./dist"
+
+[observability]
+enabled = true

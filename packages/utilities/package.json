@@ -1,0 +1,14 @@
+{
+  "name": "@core/utils",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@typescript/native-preview": "catalog:",
+    "@types/node": "catalog:"
+  }
+}

@@ -9,7 +9,7 @@ use std::io::{self, BufRead as _, Write};
 use std::path::PathBuf;
 use std::process::{Command, Stdio};
 
-const MIGRATIONS_DIR: &str = "./pkgs/xusqldb/src/migrations";
+const MIGRATIONS_DIR: &str = "./packages/xusqldb/src/migrations";
 const MIGRATIONS_TABLE: &str = "_migrations";
 
 type Result<T> = core::result::Result<T, Box<dyn core::error::Error>>;

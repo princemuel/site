@@ -1,9 +1,0 @@
-{
-  "$schema": "./node_modules/wrangler/config-schema.json",
-  "main": "@astrojs/cloudflare/entrypoints/server",
-  "name": "xusite",
-  "compatibility_date": "2026-01-12",
-  "compatibility_flags": ["nodejs_compat", "nodejs_als", "global_fetch_strictly_public"],
-  "assets": { "binding": "ASSETS", "directory": "./dist" },
-  "observability": { "enabled": true },
-}

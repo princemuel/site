@@ -1,35 +1,28 @@
 packages:
   - apps/*
-  - pkgs/*
+  - packages/*
 
 catalog:
-  "@dotenvx/dotenvx": ^1.51.1
-  "@total-typescript/ts-reset": ^0.6.1
-  "@types/node": 25.0.1
-  "@typescript/native-preview": 7.0.0-dev.20260111.1
-  netlify-cli: ^23.11.0
-  oxlint: ^1.39.0
-  oxlint-tsgolint: ^0.11.0
-  prettier: ^3.7.4
+  '@dotenvx/dotenvx': ^1.51.1
+  '@total-typescript/ts-reset': ^0.6.1
+  '@types/node': 25.0.1
+  '@typescript/native-preview': 7.0.0-dev.20260130.1
+  oxlint: ^1.42.0
+  oxlint-tsgolint: ^0.11.4
+  prettier: ^3.8.1
   tsx: 4.21.0
-  typescript: 5.9.3
-  vite: ^6.4.1
+  vite: ^7.3.1
 
 catalogMode: manual
 
 onlyBuiltDependencies:
-  - "@parcel/watcher"
-  - "@prisma/client"
-  - "@prisma/engines"
-  - "@tailwindcss/oxide"
+  - '@prisma/engines'
   - esbuild
-  - netlify-cli
   - prisma
-  - protobufjs
   - sharp
-  - unix-dgram
+  - workerd
 
 supportedArchitectures:
-  cpu: [current, wasm32]
+  cpu: [current]
 
 verifyDepsBeforeRun: install

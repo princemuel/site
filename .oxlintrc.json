@@ -16,7 +16,7 @@
     "curly": ["deny", "multi-line", "consistent"],
     "no-ternary": "allow",
     "no-magic-numbers": "allow",
-    "typescript/strict-boolean-expressions": "deny"
+    "typescript/strict-boolean-expressions": ["deny", { "allowNullableBoolean": true }],
   },
   "env": { "builtin": true, "shared-node-browser": true },
   "extends": [],
