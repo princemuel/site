@@ -2,6 +2,7 @@
 export { default as adapter } from "./adapter";
 export { envSchema, envVars } from "./dotenv";
 export { experimental as flags } from "./experimental";
+export { fonts } from "./fonts";
 export { images } from "./images";
 export { integrations } from "./integrations";
 export { markdown } from "./markdown";

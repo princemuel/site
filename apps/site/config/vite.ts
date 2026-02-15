@@ -14,7 +14,5 @@ export const pluginsVite = {
     __DEPLOY_CHANNEL__: JSON.stringify(envVars.DEPLOY_CHANNEL ?? "development"),
     __BUILD_TIME__: JSON.stringify(new Date()),
     __GIT_COMMIT__: JSON.stringify(getGitCommit(envVars.COMMIT_REF)),
-  },
-  ssr: { external: ["debug"], noExternal: [] },
-  optimizeDeps: { exclude: ["debug"] },
+  }
 } satisfies Config;

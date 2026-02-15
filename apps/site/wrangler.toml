@@ -2,7 +2,7 @@
 # $schema = "./node_modules/wrangler/config-schema.json"
 compatibility_date = "2026-01-12"
 main               = "@astrojs/cloudflare/entrypoints/server"
-name               = "@core/shell"
+name               = "studio"
 
 compatibility_flags = [
   "nodejs_compat",

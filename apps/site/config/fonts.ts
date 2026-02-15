@@ -3,7 +3,7 @@ import { fontProviders } from "astro/config";
 
 import type { AstroUserConfig } from "astro";
 
-type Config = NonNullable<NonNullable<AstroUserConfig["experimental"]>["fonts"]>;
+type Config = NonNullable<AstroUserConfig["fonts"]>;
 
 export const fonts = [
   {
