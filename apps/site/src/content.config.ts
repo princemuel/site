@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
-
 import {
   authors,
-  climes,
   genres,
   journal,
   labels,
@@ -19,7 +17,6 @@ export const collections = {
   pages,
   problems,
   projects,
-  climes,
   genres,
   labels,
   routes,

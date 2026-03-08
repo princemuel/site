@@ -1,3 +1,27 @@
+---
+title: From a Dream
+description: Afternoon reflections on creativity, structure, and the unexpected beauty of chaos
+headline: Contemplative and curious
+summary: >
+  Spent the afternoon at the old library downtown, then got to thinking about how chaos sometimes reveals structure. Why? The rain started halfway through my reading, and I watched people scatter, then regroup under the awnings.
+draft: true
+comments: true
+tags:
+  - story
+  - fiction
+  - dream
+  - contemplative
+date: "2025-10-06T03:56:56.491Z"
+permalink: /journal/2025-12-12-patterns-in-chaos
+category: reflection
+mood: contemplative
+links:
+  - label: design
+    url: https://example.com/design-resources
+  - label: philosophy
+    url: https://plato.stanford.edu/entries/chaos
+---
+
 # From a Dream
 
 We flinched!
@@ -9,9 +33,9 @@ like the whole world waiting to take a breath.
 
 That silence is broken again by the guttural roar and sputter of machine gun fire,
 which makes us shudder...again. We is myself, my pals Bo and Rachel, and a few other stragglers
-we picked up while trying to hide. Hughes, our other friend, has been missing since the gunfire started,
-and I've been listening absentmindedly to Bo and Rachel have a silent argument
-about going back for him.
+we've somewhat picked up whilst trying to hide. Hughes, our other friend, has been missing
+since the gunfire started, and I've been (passively? absentmindedly?) listening absentmindedly
+to Bo and Rachel have a silent argument about going back for him.
 Bo is all for going back for him, you know, 'leave no man behind all all', but Rachel says
 we should go back when our group are out of danger...... I agree
 

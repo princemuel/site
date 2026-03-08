@@ -3,7 +3,7 @@ title: Validation Error
 status: 400
 description: The request contains invalid or missing data that prevents processing.
 type: https://princemuel.netlify.app/problems/validation-error
-publishedAt: "2025-12-21T12:58:50Z"
+date: "2025-12-21T12:58:50Z"
 extensions:
   instance: URI identifying where this error occurred
   errors: Array of validation error objects with field and message properties

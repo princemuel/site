@@ -1,3 +1,3 @@
 // SPDX-License-Identifier: Apache-2.0
-export { db } from "./database";
+export { db } from "./prisma";
 export * from "./prisma/client";

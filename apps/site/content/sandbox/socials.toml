@@ -36,7 +36,7 @@ icon  = "ion:earth"
 text  = "Connect with me on LinkedIn"
 
 [github]
-color = "text-gray-900 dark:text-gray-100"
+color = "text-slate-900 dark:text-slate-100"
 href  = "https://github.com/princemuel"
 icon  = "ion:logo-github"
 text  = "Check out my projects on GitHub"
@@ -48,7 +48,7 @@ icon  = "lucide:mail-plus"
 text  = "Send me a message"
 
 [rss]
-color = "text-gray-500"
+color = "text-slate-500"
 href  = "/rss.xml"
 icon  = "lucide:rss"
 text  = "Subscribe to my rss feed"

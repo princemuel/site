@@ -3,7 +3,7 @@ title: About Me
 headline: "Get in Touch"
 description: Get in touch with me.
 draft: true
-publishedAt: "2026-01-01T01:23:50Z"
+date: "2026-01-01T01:23:50Z"
 tags:
   - about
   - personal

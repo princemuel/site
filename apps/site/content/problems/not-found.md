@@ -3,7 +3,7 @@ title: "Resource Not Found"
 status: 404
 description: "The requested resource could not be found on this server."
 type: "https://princemuel.netlify.app/problems/not-found"
-publishedAt: "2025-12-21T12:58:50Z"
+date: "2025-12-21T12:58:50Z"
 extensions:
   instance: URI identifying where this error occurred
   resource_type: "The type of resource that was not found"

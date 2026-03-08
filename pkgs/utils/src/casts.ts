@@ -11,7 +11,7 @@ export const toValidNumber = (number: unknown, defaultValue = 0): number => {
 
 const TRUTHY_STRINGS = new Set(["true", "1", "yes", "on"]);
 export const toBool = (value?: unknown): boolean => {
-  if (value === null) return false;
+  if (value == null) return false;
   if (typeof value === "boolean") return value;
   if (typeof value === "number") return value !== 0;
   if (typeof value === "string") return TRUTHY_STRINGS.has(value.toLowerCase().trim());

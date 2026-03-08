@@ -3,7 +3,7 @@ title: Projects
 headline: "Projects I've worked on"
 description: If you listen to a UNIX shell, can you hear the C?
 draft: true
-publishedAt: "2025-10-05T23:21:50Z"
+date: "2025-10-05T23:21:50Z"
 tags:
   - about
   - personal

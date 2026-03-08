@@ -1,5 +1,5 @@
 {
-  "name": "@core/utils",
+  "name": "@repo/utils",
   "type": "module",
   "exports": {
     ".": "./src/index.ts"

@@ -4,13 +4,12 @@ import { PrismaLibSql } from "@prisma/adapter-libsql";
 
 import { PrismaClient } from "./prisma/client";
 
-const client = globalThis as typeof globalThis & { db?: PrismaClient };
-const production = process.env.NODE_ENV === "production";
-const adapter = new PrismaLibSql({
+var g = globalThis as typeof globalThis & { __db__?: PrismaClient };
+var adapter = new PrismaLibSql({
   url: `${process.env.DATABASE_URL}`,
   authToken: `${process.env.DATABASE_TOKEN}`,
 });
+export var db = g.__db__ ?? new PrismaClient({ adapter });
 
-export const db = client.db ?? new PrismaClient({ adapter });
-if (!production) client.db = db;
+if (process.env.NODE_ENV !== "production") g.__db__ = db;
 process.on("beforeExit", () => void db.$disconnect());
