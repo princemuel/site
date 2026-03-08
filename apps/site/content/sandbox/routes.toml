@@ -3,33 +3,40 @@
 href = "/"
 icon = "lucide:home"
 text = "home"
+order = 0
 
 [about]
 href = "/about"
 icon = "lucide:user-round-pen"
 text = "about me"
+order = 2
 
 [projects]
 href = "/projects"
 icon = "lucide:flask-conical"
 text = "projects"
+order = 3
 
 [posts]
 href = "/posts"
 icon = "lucide:file-text"
 text = "posts"
+order = 4
 
 [wiki]
 href = "/wiki"
 icon = "lucide:library"
 text = "wiki"
+order = 5
 
 [journal]
 href = "/journal"
 icon = "lucide:files"
 text = "journal"
+order = 6
 
 [contact]
 href = "/hello"
 icon = "lucide:mail-plus"
 text = "contact me"
+order = 7
