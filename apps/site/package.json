@@ -6,9 +6,11 @@
   "private": true,
   "author": "Prince Muel <68931805+princemuel@users.noreply.github.com>",
   "scripts": {
+    "predev": "tsx --tsconfig ./tsconfig.scripts.json ./scripts/iconify.ts",
     "dev": "astro dev",
     "cf:generate": "wrangler types",
     "start": "wrangler types && astro dev",
+    "prebuild": "tsx --tsconfig ./tsconfig.scripts.json ./scripts/iconify.ts",
     "build": "wrangler types && astro check && astro build",
     "preview": "wrangler types && astro preview",
     "astro": "astro",

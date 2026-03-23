@@ -3,4 +3,3 @@
 
 # Astro generated
 .astro/*
-!.astro/icon.d.ts

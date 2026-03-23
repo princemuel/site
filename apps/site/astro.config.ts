@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-import "./src/assets/scripts/temporal";
+import "./src/polyfills/temporal";
 
 import { defineConfig } from "astro/config";
 import {
@@ -12,6 +12,8 @@ import {
   integrations,
   markdown,
   pluginsVite,
+  prefetch,
+  security,
 } from "./config";
 
 // https://astro.build/config
@@ -23,7 +25,8 @@ export default defineConfig({
   fonts: fonts,
   integrations: integrations,
   server: ({ command }) => ({ host: command === "dev" }),
-  prefetch: true,
+  prefetch: prefetch,
+  security: security,
   markdown: markdown,
   image: images,
   adapter: adapter,

@@ -3,13 +3,14 @@ import { file } from "astro/loaders";
 import { z } from "astro/zod";
 import { defineCollection } from "astro:content";
 
-import type { Icon } from "virtual:astro-icon";
+import { IconEnum } from "@/content/helpers";
 
 export const labels = defineCollection({
   loader: file("content/sandbox/labels.toml"),
   schema: z.object({
     text: z.string().min(2),
-    icon: z.custom<Icon>(),
+    icon: IconEnum,
+    order: z.uint32().default(0),
   }),
 });
 
@@ -17,7 +18,8 @@ export const genres = defineCollection({
   loader: file("content/sandbox/genres.toml"),
   schema: z.object({
     text: z.string().min(2),
-    icon: z.custom<Icon>(),
+    icon: IconEnum,
+    order: z.uint32().default(0),
   }),
 });
 
@@ -26,25 +28,8 @@ export const routes = defineCollection({
   schema: z.object({
     href: z.string(),
     text: z.string().min(2),
-    icon: z.custom<Icon>(),
-  }),
-});
-
-export const shares = defineCollection({
-  loader: file("content/sandbox/shares.toml"),
-  schema: z.object({
-    href: z.url(),
-    text: z.string().min(2),
-    icon: z.custom<Icon>(),
-  }),
-});
-
-export const climes = defineCollection({
-  loader: file("content/sandbox/climes.toml"),
-  schema: z.object({
-    main: z.string().min(2),
-    description: z.string().min(2),
-    icon: z.string().min(2),
+    icon: IconEnum,
+    order: z.uint32().default(0),
   }),
 });
 
@@ -53,7 +38,18 @@ export const socials = defineCollection({
   schema: z.object({
     href: z.string().min(2),
     text: z.string().min(2),
-    icon: z.custom<Icon>(),
+    icon: IconEnum,
+    order: z.uint32().default(0),
     color: z.string().min(2).optional(),
+  }),
+});
+
+export const sharers = defineCollection({
+  loader: file("content/sandbox/sharers.toml"),
+  schema: z.object({
+    href: z.string(),
+    text: z.string().min(2),
+    icon: IconEnum,
+    order: z.uint32().default(0),
   }),
 });

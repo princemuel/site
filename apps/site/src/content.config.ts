@@ -8,10 +8,11 @@ import {
   problems,
   projects,
   routes,
+  sharers,
   socials,
 } from "@/content";
 
-export const collections = {
+const entries = {
   authors,
   journal,
   pages,
@@ -19,6 +20,9 @@ export const collections = {
   projects,
   genres,
   labels,
+  sharers,
   routes,
   socials,
 };
+
+export const collections = { ...entries };

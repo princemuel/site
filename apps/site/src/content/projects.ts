@@ -5,7 +5,7 @@ import { z } from "astro/zod";
 import { defineCollection, reference } from "astro:content";
 
 export default defineCollection({
-  loader: glob({ base: "content/projects", pattern: "**/[!_]*.{md,mdoc}" }),
+  loader: glob({ base: "content/projects", pattern: "**/[!_]*.{md,mdx}" }),
   schema: ({ image }) =>
     baseSchema.safeExtend({
       category: z.string().min(2),

@@ -5,7 +5,7 @@ import { z } from "astro/zod";
 import { defineCollection } from "astro:content";
 
 export default defineCollection({
-  loader: glob({ base: "content/problems", pattern: "**/[!_]*.{md,mdoc}" }),
+  loader: glob({ base: "content/problems", pattern: "**/[!_]*.{md,mdx}" }),
   schema: z.object({
     title: z.string(),
     status: z.uint32(),
@@ -13,8 +13,8 @@ export default defineCollection({
     description: z.string(),
     extensions: z.record(Keys, z.string()).default({}),
     draft: z.boolean().default(false),
-    publishedAt: z.iso.datetime({ offset: true }),
-    updatedAt: z.iso.datetime({ offset: true }).optional(),
+    date: z.iso.datetime({ offset: true }),
+    updated: z.iso.datetime({ offset: true }).optional(),
     revisions: z.array(revision).default([]),
   }),
 });

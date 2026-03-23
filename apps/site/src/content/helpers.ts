@@ -1,10 +1,12 @@
 // SPDX-License-Identifier: Apache-2.0
 import { z } from "astro/zod";
 
+import { iconNames } from "@/assets/icons";
 import type { ImageMetadata } from "astro";
 import type { ImageFunction } from "astro:content";
 
-export const revision = z.object({ note: z.string(), date: z.iso.datetime({ offset: true }) });
+export const revision = z.object({ date: z.iso.datetime({ offset: true }), note: z.string() });
+
 export const baseSchema = z.object({
   title: z.string().min(2),
   description: z.string().min(2),
@@ -13,8 +15,8 @@ export const baseSchema = z.object({
   draft: z.boolean().default(true),
   comments: z.boolean().default(false),
   tags: z.array(z.string()).default([]),
-  publishedAt: z.iso.datetime({ offset: true }),
-  updatedAt: z.iso.datetime({ offset: true }).optional(),
+  date: z.iso.datetime({ offset: true }),
+  updated: z.iso.datetime({ offset: true }).optional(),
   revisions: z.array(revision).default([]),
   duration: z.string().default("1 min read"),
   words: z.uint32().lte(65_535).default(0),
@@ -23,6 +25,8 @@ export const baseSchema = z.object({
 });
 
 export const Keys = z.union([z.string(), z.number(), z.symbol()]);
+
+export const IconEnum = z.enum(iconNames);
 
 type ImageInfo = ImageMetadata;
 export const img = (image: ImageFunction) =>
@@ -41,7 +45,7 @@ export const img = (image: ImageFunction) =>
 // export const withMetadata = (content: Content) => {
 //   const loader = glob({
 //     base: `content/${content}`,
-//     pattern: "**/[!_]*.{md,mdoc}",
+//     pattern: "**/[!_]*.{md,mdx}",
 //   });
 
 //   return {

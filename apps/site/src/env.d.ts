@@ -1,4 +1,3 @@
-// SPDX-License-Identifier: Apache-2.0
 /// <reference types="vite-plugin-pwa/vanillajs" />
 /// <reference types="vite-plugin-pwa/info" />
 /// <reference types="vite-plugin-pwa/pwa-assets" />
@@ -6,6 +5,7 @@
 
 declare var Theme: ThemeController;
 var __singletons__: Map<string, unknown> | undefined;
+
 type RuntimeLocals = import("@astrojs/cloudflare").Runtime;
 
 declare namespace App {
