@@ -36,11 +36,6 @@ async function main() {
     local: localCollection,
   };
 
-  const totalIcons = Object.values(all).reduce(
-    (sum, col) => sum + Object.keys(col.icons).length,
-    0,
-  );
-
   const { type: iconType, names: iconNames } = buildIconType(all);
 
   let output = `\
@@ -67,9 +62,6 @@ declare module "virtual:iconify" {
 
   await mkdir(dirname(ICONS_OUTPUT_FILE), { recursive: true });
   await writeFile(ICONS_OUTPUT_FILE, output, "utf-8");
-  console.log(
-    `[icons] Generated ${totalIcons} icons across ${Object.keys(all).length} sets → ${ICONS_OUTPUT_FILE}`,
-  );
 }
 
 main().catch((err) => {
@@ -137,8 +129,6 @@ async function loadLocalCollection(
 
   iconSet.forEachSync((name, type) => {
     if (type !== "icon") return;
-
-    console.log("[ICON NAME]", name);
 
     const svg = iconSet.toSVG(name);
     if (!svg) {
