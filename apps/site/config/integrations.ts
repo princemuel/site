@@ -1,19 +1,17 @@
 // SPDX-License-Identifier: Apache-2.0
-import markdown from "@astrojs/markdoc";
+import markdown from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 // import svelte from "@astrojs/svelte";
-import pwa from "@vite-pwa/astro";
+// import pwa from "@vite-pwa/astro";
 import codeblock from "astro-expressive-code";
-import icon from "astro-icon";
 
-import icons from "./iconify.json";
 import manifest from "./manifest.json";
 
+import type { MdxOptions } from "@astrojs/mdx";
 import type { SitemapOptions } from "@astrojs/sitemap";
 import type { PwaOptions } from "@vite-pwa/astro";
 import type { AstroUserConfig } from "astro";
 
-type IconifyOptions = Parameters<typeof icon>[0];
 type Config = NonNullable<NonNullable<AstroUserConfig["integrations"]>>;
 
 const options = {
@@ -24,13 +22,7 @@ const options = {
     filter: (page) => !/\/(?:api|draft|private)\/|\.(?:xml|rss)$|\/feed/.test(page),
   } as SitemapOptions,
 
-  markdown: { ignoreIndentation: true },
-
-  icon: {
-    include: icons,
-    iconDir: "src/assets/icons",
-    svgoOptions: { multipass: true },
-  } as IconifyOptions,
+  markdown: { gfm: true, extendMarkdownConfig: true } as Partial<MdxOptions>,
 
   pwa: {
     registerType: "prompt",
@@ -59,11 +51,10 @@ const options = {
 };
 
 export const integrations = [
-  icon(options.icon),
   codeblock(),
   markdown(options.markdown),
   sitemap(options.sitemap),
-  pwa(options.pwa),
+  // pwa(options.pwa),
   // database({ mode: 'web' }),
   // svelte(),
 ] satisfies Config;

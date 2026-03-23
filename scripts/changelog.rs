@@ -1,5 +1,6 @@
 #!/usr/bin/env -S cargo +nightly -Zscript
 ---cargo
+package.edition="2024"
 [dependencies]
 rayon = "1"
 walkdir = "2"
@@ -53,8 +54,8 @@ fn main() {
 
     let ignore_pattern = IGNORE_LIST.join("|");
 
-    // Find all .md and .mdx files
-    let files: Vec<PathBuf> = WalkDir::new("apps/@core/shell/content")
+    // Find all markdown files
+    let files: Vec<PathBuf> = WalkDir::new("apps/site/content")
         .into_iter()
         .filter_map(|e| e.ok())
         .filter(|e| e.file_type().is_file())
@@ -62,8 +63,8 @@ fn main() {
             e.path()
                 .extension()
                 .and_then(|ext| ext.to_str())
-                .map(|ext| ext == "md" || ext == "mdx")
-                .unwrap_or(false)
+                .map(|ext| ext == "md" || ext == "mdx" || ext == "mdoc")
+                .unwrap_or_else(|| false)
         })
         .map(|e| e.path().to_owned())
         .collect();

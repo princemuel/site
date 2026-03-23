@@ -34,5 +34,5 @@ process_file() {
 export -f process_file
 
 # # Collect outputs in parallel but without newlines
-find apps/@core/shell/content -type f \( -name "*.md" -o -name "*.mdx" \) -print0 |
+find apps/site/content -type f \( -name "*.md" -o -name "*.mdx" \) -print0 |
     xargs -0 -P "$JOBS" -I{} bash -c 'process_file "$@"' _ {}

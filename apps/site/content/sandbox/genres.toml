@@ -4,7 +4,7 @@ icon = "lucide:gamepad-2"
 text = "Game"
 
 [website]
-icon = "lucide:home"
+icon = "lucide:house"
 text = "Website"
 
 [app]
@@ -12,61 +12,61 @@ icon = "ri:app-store-fill"
 text = "Web App"
 
 [template]
-icon = "lucide:home"
+icon = "lucide:house"
 text = "Template"
 
 [plugin]
-icon = "lucide:home"
+icon = "lucide:house"
 text = "Plugin"
 
 [library]
-icon = "lucide:home"
+icon = "lucide:house"
 text = "Library"
 
 [docs]
-icon = "lucide:home"
+icon = "lucide:house"
 text = "Docs"
 
 [tool]
-icon = "lucide:home"
+icon = "lucide:house"
 text = "Tool"
 
 [resource]
-icon = "lucide:home"
+icon = "lucide:house"
 text = "Resource"
 
 [design]
-icon = "lucide:home"
+icon = "lucide:house"
 text = "Design"
 
 [service]
-icon = "lucide:home"
+icon = "lucide:house"
 text = "Service"
 
 [script]
-icon = "lucide:home"
+icon = "lucide:house"
 text = "Script"
 
 [theme]
-icon = "lucide:home"
+icon = "lucide:house"
 text = "Theme"
 
 [widget]
-icon = "lucide:home"
+icon = "lucide:house"
 text = "Widget"
 
 [component]
-icon = "lucide:home"
+icon = "lucide:house"
 text = "Component"
 
 [hardware]
-icon = "lucide:home"
+icon = "lucide:house"
 text = "Hardware"
 
 [cli]
-icon = "lucide:home"
+icon = "lucide:house"
 text = "Cli"
 
 [tutorial]
-icon = "lucide:home"
+icon = "lucide:house"
 text = "Tutorial"

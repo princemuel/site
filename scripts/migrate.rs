@@ -1,5 +1,6 @@
 #!/usr/bin/env -S cargo +nightly -Zscript
 ---cargo
+package.edition="2024"
 [dependencies]
 ---
 
@@ -9,7 +10,7 @@ use std::io::{self, BufRead as _, Write};
 use std::path::PathBuf;
 use std::process::{Command, Stdio};
 
-const MIGRATIONS_DIR: &str = "./packages/xusqldb/src/migrations";
+const MIGRATIONS_DIR: &str = "./pkgs/db/src/migrations";
 const MIGRATIONS_TABLE: &str = "_migrations";
 
 type Result<T> = core::result::Result<T, Box<dyn core::error::Error>>;
@@ -35,8 +36,9 @@ enum Mode {
     Backfill,
 }
 impl From<env::Args> for Mode {
-    fn from(args: env::Args) -> Self {
-        let mut args = args;
+    fn from(mut args: env::Args) -> Self {
+        // let mut args = args;:w
+
         args.nth(1)
             .filter(|arg| arg == "--backfill")
             .map(|_| Self::Backfill)

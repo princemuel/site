@@ -1,26 +1,26 @@
 #:schema ../../.astro/collections/labels.schema.json
 [demo]
-icon = "lucide:home"
+icon = "lucide:house"
 text = "Demo"
 
 [docs]
-icon = "lucide:home"
+icon = "lucide:house"
 text = "Docs"
 
 [website]
-icon = "lucide:home"
+icon = "lucide:house"
 text = "Website"
 
 [repo]
-icon = "lucide:home"
+icon = "lucide:house"
 text = "Repository"
 
 [tweet]
-icon = "lucide:home"
+icon = "lucide:house"
 text = "Tweet"
 
 [meeting]
-icon = "lucide:home"
+icon = "lucide:house"
 text = "Meeting Notes"
 
 [game]
@@ -32,56 +32,57 @@ icon = "ri:app-store-fill"
 text = "Web App"
 
 [template]
-icon = "lucide:home"
+icon = "lucide:house"
 text = "Template"
 
 [plugin]
-icon = "lucide:home"
+icon = "lucide:house"
 text = "Plugin"
 
 [library]
-icon = "lucide:home"
+icon = "lucide:house"
 text = "Library"
 
 [tool]
-icon = "lucide:home"
+icon = "lucide:house"
 text = "Tool"
 
 [resource]
-icon = "lucide:home"
+icon = "lucide:house"
 text = "Resource"
 
 [design]
-icon = "lucide:home"
+icon = "lucide:house"
 text = "Design"
 
 [service]
-icon = "lucide:home"
+icon = "lucide:house"
 text = "Service"
 
 [script]
-icon = "lucide:home"
+icon = "lucide:house"
 text = "Script"
 
 [theme]
-icon = "lucide:home"
+icon = "lucide:house"
 text = "Theme"
 
 [widget]
-icon = "lucide:home"
+icon = "lucide:house"
 text = "Widget"
 
 [component]
-icon = "lucide:home"
+icon = "lucide:house"
 text = "Component"
 
 [hardware]
-icon = "lucide:home"
+icon = "lucide:house"
 text = "Hardware"
 
 [cli]
-icon = "lucide:home"
+icon = "lucide:house"
 text = "Cli"
+
 [tutorial]
-icon = "lucide:home"
+icon = "lucide:house"
 text = "Tutorial"
