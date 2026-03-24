@@ -1,9 +1,10 @@
-import { cleanupSVG, importDirectory, isEmptyColor, parseColors, runSVGO } from "@iconify/tools";
-import { getIcons } from "@iconify/utils";
-import { loadCollectionFromFS } from "@iconify/utils/lib/loader/fs";
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+
+import { cleanupSVG, importDirectory, isEmptyColor, parseColors, runSVGO } from "@iconify/tools";
+import { getIcons } from "@iconify/utils";
+import { loadCollectionFromFS } from "@iconify/utils/lib/loader/fs";
 
 import type { SVG } from "@iconify/tools";
 import type { IconifyJSON } from "@iconify/types";
@@ -15,16 +16,13 @@ const root = resolve(__dirname, "..");
 
 const ICONS_CONFIG = resolve(root, "src/assets/icons/icons.json");
 const LOCAL_ICON_DIR = resolve(root, "src/assets/icons");
-const ICONS_OUTPUT_FILE = resolve(root, "src/assets/icons/index.ts");
-const TYPES_OUTPUT_FILE = resolve(root, ".astro/icon.d.ts");
+const OUTPUT_FILE = resolve(root, "src/assets/icons/index.ts");
 
 type IconConfig = Record<string, string[]>;
 
 async function main() {
   const raw = await readFile(ICONS_CONFIG, "utf-8");
   const iconConfig = JSON.parse(raw) as IconConfig;
-
-  console.log("[icons] Loading collections...");
 
   const [iconifyCollections, localCollection] = await Promise.all([
     loadIconifyCollections(iconConfig),
@@ -36,32 +34,23 @@ async function main() {
     local: localCollection,
   };
 
-  const { type: iconType, names: iconNames } = buildIconType(all);
+  const iconNames = buildIconNames(all);
 
-  let output = `\
+  const output = `\
 // AUTO-GENERATED — do not edit manually
 
-declare module "virtual:iconify" {
-  export type Icon = ${iconType};
-}
+import type { IconifyJSON } from "@iconify/types";
+
+export const iconNames = [${iconNames.map((name) => `\n\t"${name}"`).join(",")}
+] as const;
+
+export const icons: Record<string, IconifyJSON> = ${JSON.stringify(all, null, 2)};
  `;
 
-  await mkdir(dirname(TYPES_OUTPUT_FILE), { recursive: true });
-  await writeFile(TYPES_OUTPUT_FILE, output, "utf-8");
+  await mkdir(dirname(OUTPUT_FILE), { recursive: true });
+  await writeFile(OUTPUT_FILE, output, "utf-8");
 
-  output = `\
- // AUTO-GENERATED — do not edit manually
-
- import type { IconifyJSON } from "@iconify/types";
-
- export const iconNames = [${iconNames.map((name) => `\n\t"${name}"`).join(",")}
- ] as const;
-
- export const icons: Record<string, IconifyJSON> = ${JSON.stringify(all, null, 2)};
- `;
-
-  await mkdir(dirname(ICONS_OUTPUT_FILE), { recursive: true });
-  await writeFile(ICONS_OUTPUT_FILE, output, "utf-8");
+  console.log("[icons] icon collections generated successfully");
 }
 
 main().catch((err) => {
@@ -69,17 +58,12 @@ main().catch((err) => {
   process.exit(1);
 });
 
-function buildIconType(collections: Record<string, IconifyJSON>, defaultPack = "local") {
-  const names = Object.entries(collections).flatMap(([prefix, col]) => {
-    const icons = Object.keys(col.icons);
-    const aliases = Object.keys(col.aliases ?? {});
-    return [...icons, ...aliases].map((name) =>
+function buildIconNames(collections: Record<string, IconifyJSON>, defaultPack = "local") {
+  return Object.entries(collections).flatMap(([prefix, col]) => {
+    return [...Object.keys(col.icons), ...Object.keys(col.aliases ?? {})].map((name) =>
       prefix === defaultPack ? name : `${prefix}:${name}`,
     );
   });
-
-  const type = names.length === 0 ? "never" : names.map((name) => `\n\t\t|\t"${name}"`).join("");
-  return { type, names };
 }
 
 async function loadIconifyCollections(config: IconConfig) {
@@ -180,6 +164,11 @@ function isBlack(color: Color): boolean {
   switch (color.type) {
     case "rgb":
       return color.r === 0 && color.r === color.g && color.g === color.b;
+    case "hsl":
+      return color.l === 0;
+    case "lab":
+    case "lch":
+      return color.l === 0;
   }
   return false;
 }
@@ -188,6 +177,11 @@ function isWhite(color: Color): boolean {
   switch (color.type) {
     case "rgb":
       return color.r === 255 && color.r === color.g && color.g === color.b;
+    case "hsl":
+      return color.l === 1;
+    case "lab":
+    case "lch":
+      return color.l === 100;
   }
   return false;
 }
