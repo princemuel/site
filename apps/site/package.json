@@ -31,7 +31,7 @@
     "@astrojs/check": "^0.9.5",
     "@astrojs/db": "^0.18.2",
     "@astrojs/mdx": "^4.3.10",
-    "@astrojs/node": "^9.5.0",
+    "@astrojs/node": "^10.0.0",
     "@astrojs/rss": "^4.0.13",
     "@astrojs/sitemap": "^3.6.0",
     "@expressive-code/plugin-collapsible-sections": "^0.41.3",
