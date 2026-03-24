@@ -6,6 +6,10 @@
 declare var Theme: ThemeController;
 var __singletons__: Map<string, unknown> | undefined;
 
+const __BUILD_TIME__: string;
+const __DEPLOY_CHANNEL__: string;
+const __GIT_COMMIT__: string;
+
 type RuntimeLocals = import("@astrojs/cloudflare").Runtime;
 
 declare namespace App {

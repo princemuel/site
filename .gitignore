@@ -57,6 +57,7 @@ tmp-*
 .dynamodb/
 .nx/cache
 .nx/workspace-data
+.turbo
 
 # Coverage
 coverage

@@ -1,8 +1,8 @@
- // AUTO-GENERATED — do not edit manually
+// AUTO-GENERATED — do not edit manually
 
- import type { IconifyJSON } from "@iconify/types";
+import type { IconifyJSON } from "@iconify/types";
 
- export const iconNames = [
+export const iconNames = [
 	"ion:earth",
 	"ion:alert-circle",
 	"ion:logo-github",
@@ -59,9 +59,9 @@
 	"twitter",
 	"whatsapp",
 	"x"
- ] as const;
+] as const;
 
- export const icons: Record<string, IconifyJSON> = {
+export const icons: Record<string, IconifyJSON> = {
   "ion": {
     "prefix": "ion",
     "icons": {
@@ -197,7 +197,7 @@
   },
   "local": {
     "prefix": "local",
-    "lastModified": 1774277173,
+    "lastModified": 1774346799,
     "icons": {
       "archive": {
         "body": "<g fill=\"none\" stroke=\"currentColor\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\"><path stroke=\"none\" d=\"M0 0h24v24H0z\"/><path d=\"M3 6a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v0a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2m2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8m-9 4h4\"/></g>"

@@ -3,13 +3,14 @@ This website was built by Samuel Chukwuzube!
 /* TEAM */
 Chef: Samuel Chukwuzube
 Contact: {{URL}}
+Github: princemuel
 Twitter: @iamprincemuel
 
 /* SITE */
 Last update: {{DATETIME}}
 Doctype: HTML5
 Language: English / French
-Standards: HTML5, CSS3, ES2024
+Standards: HTML5, CSS3, ESNext, Typescript
 IDE: Neovim, Visual Studio Code, Figma
 Components: TailwindCSS, Javascript etc.
 Software: Astro, Markdown, MDX, Svelte, Typescript

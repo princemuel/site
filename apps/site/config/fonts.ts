@@ -3,11 +3,11 @@ import { fontProviders } from "astro/config";
 
 import type { AstroUserConfig } from "astro";
 
-type Config = NonNullable<AstroUserConfig["fonts"]>;
+type Config = AstroUserConfig["fonts"];
 
 export const fonts = [
   {
-    name: "Maven Pro",
+    name: "Sen",
     provider: fontProviders.fontsource(),
     cssVariable: "--font-family-sans",
     subsets: ["latin"],

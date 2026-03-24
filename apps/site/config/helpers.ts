@@ -4,8 +4,7 @@ import { statSync } from "node:fs";
 
 export const getGitCommit = (defaultValue?: string) => {
   try {
-    if (defaultValue) return defaultValue;
-    return execSync("git rev-parse HEAD", { encoding: "utf8" }).trim();
+    return defaultValue || execSync("git rev-parse HEAD", { encoding: "utf8" }).trim();
   } catch {
     return defaultValue || "unknown";
   }
@@ -13,34 +12,30 @@ export const getGitCommit = (defaultValue?: string) => {
 
 export const getFileModifiedTime = (
   filePath: string,
-  options?: { useAuthorDate?: boolean },
+  options?: { useAuthor?: boolean },
 ): Temporal.Instant => {
-  const { useAuthorDate = false } = options ?? {};
-
+  const { useAuthor = false } = options ?? {};
   if (!filePath || typeof filePath !== "string") return Temporal.Now.instant();
 
   try {
-    // %cI = committer date (when commit was applied)
-    // %aI = author date (when changes were originally made)
-    const dateFormat = useAuthorDate ? "%aI" : "%cI";
-    const result = spawnSync(
-      "git",
-      ["log", "-1", `--pretty=format:${dateFormat}`, "--", filePath],
-      { encoding: "utf8", cwd: process.cwd() },
-    );
+    const dateFormat = useAuthor ? "%aI" : "%cI";
+    const result = spawnSync("git", ["log", "-1", `--format=${dateFormat}`, "--", filePath], {
+      encoding: "utf8",
+      cwd: process.cwd(),
+    });
 
-    if (result.status !== 0 || !result.stdout?.trim()) {
-      throw new Error("Git command failed or returned empty");
+    const datetime = result.stdout?.trim();
+    // Explicitly check for empty output (uncommitted files)
+    if (result.status !== 0 || !datetime) {
+      throw new Error("Not in git or no commits for this file");
     }
-
-    return Temporal.Instant.from(result.stdout.trim());
+    return Temporal.Instant.from(datetime);
   } catch {
-    // Fallback to file system modified time
     try {
+      // Fallback to FS mtime (ensure it's converted to strict ISO for Temporal)
       const stats = statSync(filePath);
-      return Temporal.Instant.from(stats.mtime.toISOString());
+      return stats.mtime.toTemporalInstant();
     } catch {
-      // Last resort: current time
       return Temporal.Now.instant();
     }
   }

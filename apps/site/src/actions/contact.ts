@@ -3,27 +3,26 @@ import { ActionError, defineAction } from "astro:actions";
 import { RESEND_ADDRESS } from "astro:env/server";
 
 import { resend } from "@/lib/api";
-import { capitalize } from "@core/utils";
+import { capitalize } from "@repo/utils";
 
 export default defineAction({
   accept: "form",
   input: z.object({
-    honeypot: z.string().max(0, "Invalid submission detected.").optional(),
-    firstName: z.string().min(1, { error: "This field is required" }).max(32).trim(),
-    lastName: z.string().min(1, { error: "This field is required" }).max(32).trim(),
-    email: z.email({ error: "Please enter a valid email address" }).trim(),
+    fruity: z.literal("").optional(),
+    firstName: z.string("This field is required").max(32).trim(),
+    lastName: z.string("This field is required").max(32).trim(),
+    email: z.email("Please enter a valid email address").trim(),
     message: z
-      .min(1, { error: "This field is required" })
-      .min(20, { error: "Message must be up to 20 chars" })
+      .string("This field is required")
+      .trim()
+      .min(20, "Message must be up to 20 chars")
       .max(255)
       .trim(),
-    queryType: z.enum(["general", "contract", "support", "issues"], {
-      error: "Please select a query type",
-    }),
+    queryType: z.enum(["general", "contract", "support", "issues"], "Please select a query type"),
     consent: z.stringbool({ message: "To submit this form, please consent to being contacted" }),
   }),
   handler: async (body, { locals }) => {
-    if (body.honeypot) {
+    if (body.fruity) {
       throw new ActionError({
         code: "BAD_REQUEST",
         message: "Invalid submission detected.",

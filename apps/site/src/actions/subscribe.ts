@@ -8,12 +8,12 @@ import { resend } from "@/lib/api";
 export default defineAction({
   accept: "form",
   input: z.object({
-    email: z.email({ message: "Please enter a valid email address" }),
-    honeypot: z.string().max(0, "Invalid submission detected.").optional(),
+    email: z.email("Please enter a valid email address"),
+    fruity: z.literal("").optional(),
   }),
   handler: async (body, { locals }) => {
     // oxlint-disable-next-line strict-boolean-expressions
-    if (body.honeypot) {
+    if (body.fruity) {
       throw new ActionError({
         code: "BAD_REQUEST",
         message: "Invalid submission detected.",

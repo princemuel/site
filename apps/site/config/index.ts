@@ -6,4 +6,6 @@ export { fonts } from "./fonts";
 export { images } from "./images";
 export { integrations } from "./integrations";
 export { markdown } from "./markdown";
+export { prefetch } from "./prefetch";
+export { security } from "./security";
 export { pluginsVite } from "./vite";

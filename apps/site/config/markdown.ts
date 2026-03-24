@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 import { rehypeHeadingIds } from "@astrojs/markdown-remark";
-import * as mdAstUtilToString from "mdast-util-to-string";
+import { toString } from "mdast-util-to-string";
 import getReadingTime from "reading-time";
 // import { toString as hastUtilToString } from "hast-util-to-string";
 // import { h } from "hastscript";
@@ -15,15 +15,13 @@ import { visit } from "unist-util-visit";
 import { getFileModifiedTime } from "./helpers";
 
 import type { AstroUserConfig } from "astro";
-type Config = NonNullable<NonNullable<AstroUserConfig["markdown"]>>;
+type Config = NonNullable<AstroUserConfig["markdown"]>;
 type RemarkPlugin = NonNullable<Config["remarkPlugins"]>[number];
-
-const { toString: parseToString } = mdAstUtilToString;
 
 const remarkReadingTime: RemarkPlugin = () => {
   return (tree, file) => {
     if (file.data.astro?.frontmatter) {
-      const textOnPage = parseToString(tree);
+      const textOnPage = toString(tree);
       const readingTime = getReadingTime(textOnPage);
       file.data.astro.frontmatter.words = readingTime.words;
       file.data.astro.frontmatter.duration = readingTime.text;
@@ -39,35 +37,35 @@ const remarkDeruntify: RemarkPlugin = () => (tree) => {
 };
 
 const remarkModifiedTime: RemarkPlugin = () => (_, file) => {
-  if (file.data?.astro?.frontmatter) {
-    const frontmatter = file.data.astro.frontmatter;
-    // Skip files without publishedAt
-    if (!frontmatter.publishedAt || !file.history?.[0]) return;
+  if (!file.data?.astro?.frontmatter) return;
 
-    try {
-      const gitModified = getFileModifiedTime(file.history[0]);
-      const published = Temporal.Instant.from(frontmatter.publishedAt);
-      const daysSincePublish = gitModified.since(published).total("days");
+  const frontmatter = file.data.astro.frontmatter;
+  // Skip files without date
+  if (!frontmatter.date || !file.history?.[0]) return;
 
-      // Get the latest revision date if revisions exist
-      const latestRevisionDate = frontmatter.revisions?.length
-        ? Temporal.Instant.from(frontmatter.revisions[frontmatter.revisions.length - 1].date)
-        : null;
+  try {
+    const timeModified = getFileModifiedTime(file.history[0]).toZonedDateTimeISO("UTC");
+    const published = Temporal.Instant.from(frontmatter.date).toZonedDateTimeISO("UTC");
+    const daysSincePublished = timeModified.since(published).total("days");
 
-      // Only auto-set updatedAt if:
-      // 1. No manual updatedAt already set
-      // 2. More than 1 day since publish
-      // 3. Git shows changes newer than latest revision (or no revisions exist)
-      const shouldSetUpdatedAt =
-        !frontmatter.updatedAt &&
-        daysSincePublish > 1 &&
-        (!latestRevisionDate || Temporal.Instant.compare(gitModified, latestRevisionDate) > 0);
+    // Get the latest revision date if revisions exist
+    const latestRevisionDate = frontmatter.revisions?.length
+      ? Temporal.Instant.from(
+          frontmatter.revisions[frontmatter.revisions.length - 1].date,
+        ).toZonedDateTimeISO("UTC")
+      : null;
 
-      if (shouldSetUpdatedAt) frontmatter.updatedAt = gitModified.toString();
-    } catch {
-      return;
-    }
-  }
+    // Only auto-set updated if:
+    // 1. No manual updated already set
+    // 2. More than 1 day since publish
+    // 3. Git shows changes newer than latest revision (or no revisions exist)
+    const shouldSetUpdatedAt =
+      !frontmatter.updated &&
+      Math.abs(daysSincePublished) > 1 &&
+      (!latestRevisionDate || Temporal.ZonedDateTime.compare(timeModified, latestRevisionDate) > 0);
+
+    if (shouldSetUpdatedAt) frontmatter.updated = timeModified.toInstant().toString();
+  } catch {}
 };
 
 export const markdown = {

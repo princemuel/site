@@ -12,11 +12,11 @@ import type { SitemapOptions } from "@astrojs/sitemap";
 import type { PwaOptions } from "@vite-pwa/astro";
 import type { AstroUserConfig } from "astro";
 
-type Config = NonNullable<NonNullable<AstroUserConfig["integrations"]>>;
+type Config = NonNullable<AstroUserConfig["integrations"]>;
 
 const options = {
   sitemap: {
-    changefreq: "weekly",
+    changefreq: "daily",
     priority: 0.7,
     lastmod: new Date(),
     filter: (page) => !/\/(?:api|draft|private)\/|\.(?:xml|rss)$|\/feed/.test(page),

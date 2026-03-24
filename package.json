@@ -1,37 +1,27 @@
 {
-  "name": "repo",
+  "name": "princemuel",
   "private": true,
   "author": "Prince Muel <68931805+princemuel@users.noreply.github.com>",
-  "packageManager": "pnpm@10.28.0+sha512.05df71d1421f21399e053fde567cea34d446fa02c76571441bfc1c7956e98e363088982d940465fd34480d4d90a0668bc12362f8aa88000a64e83d0b0e47be48",
+  "packageManager": "pnpm@10.32.1",
   "scripts": {
-    "dev": "pnpm --filter @core/shell dev",
-    "build": "pnpm --workspace-concurrency=1 --filter \"./packages/*\" --filter \"./apps/*\" build",
-    "build:apps": "pnpm --workspace-concurrency=1 --filter './apps/*' run build",
-    "build:packages": "pnpm --workspace-concurrency=1 --filter './packages/*' run build",
-    "build:crates": "pnpm --workspace-concurrency=1 --filter './crates/*' run build",
-    "preview": "pnpm --filter @core/shell preview",
-    "start": "pnpm --filter @core/shell start",
-    "db:generate": "pnpm --filter @core/db db:generate",
-    "db:push": "pnpm --filter @core/db db:push",
-    "db:studio": "pnpm --filter @core/db db:studio",
-    "db:migrate-dev": "pnpm --filter @core/db db:migrate-dev",
-    "db:migrate-deploy": "pnpm --filter @core/db db:migrate-deploy",
-    "type-check": "pnpm --recursive run type-check",
-    "lint": "oxlint --type-aware -c oxlintrc.json --deny-warnings --type-aware",
-    "fmt": "oxfmt -c oxfmtrc.jsonc",
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "deploy:build": "pnpm install --frozen-lockfile && pnpm build",
-    "deploy:start": "cd apps/@core/shell && node ./dist/server/entry.mjs"
+    "build": "turbo run build",
+    "clean": "turbo run clean",
+    "dev": "turbo run dev",
+    "format": "turbo run format",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "typecheck": "turbo run typecheck"
   },
   "devDependencies": {
-    "@typescript/native-preview": "catalog:",
+    "oxfmt": "catalog:",
     "oxlint": "catalog:",
     "oxlint-tsgolint": "catalog:",
     "prettier": "catalog:",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-organize-attributes": "^1.0.0",
     "prettier-plugin-organize-imports": "^4.3.0",
-    "prettier-plugin-tailwindcss": "^0.7.2"
+    "prettier-plugin-tailwindcss": "^0.7.2",
+    "typescript": "catalog:",
+    "turbo": "^2.8.20"
   }
 }
