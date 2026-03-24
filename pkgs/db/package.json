@@ -15,12 +15,12 @@
     "postinstall": "pnpm run db:generate"
   },
   "devDependencies": {
-    "@prisma/client": "^7.4.2",
-    "@prisma/adapter-libsql": "^7.4.2",
-    "@typescript/native-preview": "catalog:",
+    "@prisma/client": "^7.5.0",
+    "@prisma/adapter-libsql": "^7.5.0",
     "@types/node": "catalog:",
-    "prisma": "^7.4.2",
-    "tsx": "catalog:"
+    "prisma": "^7.5.0",
+    "tsx": "catalog:",
+    "typescript": "catalog:"
   },
   "dependencies": {
     "@dotenvx/dotenvx": "catalog:"

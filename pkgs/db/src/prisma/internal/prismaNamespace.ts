@@ -80,12 +80,12 @@ export type PrismaVersion = {
 }
 
 /**
- * Prisma Client JS version: 7.4.2
- * Query Engine version: 94a226be1cf2967af2541cca5529f0f7ba866919
+ * Prisma Client JS version: 7.5.0
+ * Query Engine version: 280c870be64f457428992c43c1f6d557fab6e29e
  */
 export const prismaVersion: PrismaVersion = {
-  client: "7.4.2",
-  engine: "94a226be1cf2967af2541cca5529f0f7ba866919"
+  client: "7.5.0",
+  engine: "280c870be64f457428992c43c1f6d557fab6e29e"
 }
 
 /**
@@ -893,10 +893,10 @@ export const PostScalarFieldEnum = {
   id: 'id',
   slug: 'slug',
   title: 'title',
-  created_at: 'created_at',
-  updated_at: 'updated_at',
   impressions: 'impressions',
-  reactions: 'reactions'
+  reactions: 'reactions',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
 } as const
 
 export type PostScalarFieldEnum = (typeof PostScalarFieldEnum)[keyof typeof PostScalarFieldEnum]
@@ -916,11 +916,11 @@ export type ActorScalarFieldEnum = (typeof ActorScalarFieldEnum)[keyof typeof Ac
 export const CommentScalarFieldEnum = {
   id: 'id',
   content: 'content',
-  created_at: 'created_at',
-  updated_at: 'updated_at',
   post_id: 'post_id',
   actor_id: 'actor_id',
-  parent_id: 'parent_id'
+  parent_id: 'parent_id',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
 } as const
 
 export type CommentScalarFieldEnum = (typeof CommentScalarFieldEnum)[keyof typeof CommentScalarFieldEnum]
@@ -928,8 +928,6 @@ export type CommentScalarFieldEnum = (typeof CommentScalarFieldEnum)[keyof typeo
 
 export const SessionScalarFieldEnum = {
   id: 'id',
-  created_at: 'created_at',
-  updated_at: 'updated_at',
   session_start: 'session_start',
   session_end: 'session_end',
   page_url: 'page_url',
@@ -943,7 +941,9 @@ export const SessionScalarFieldEnum = {
   flag: 'flag',
   duration_ms: 'duration_ms',
   duration_human: 'duration_human',
-  interactions: 'interactions'
+  interactions: 'interactions',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
 } as const
 
 export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
@@ -1001,16 +1001,16 @@ export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 
 
 
 /**
- * Reference to a field of type 'DateTime'
+ * Reference to a field of type 'Int'
  */
-export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
     
 
 
 /**
- * Reference to a field of type 'Int'
+ * Reference to a field of type 'DateTime'
  */
-export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
     
 
 

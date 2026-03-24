@@ -21,39 +21,42 @@ model Post {
   id          String    @id @default(cuid())
   slug        String    @unique
   title       String
-  created_at  DateTime  @default(now())
-  updated_at  DateTime  @updatedAt
   impressions Int       @default(0)
   reactions   Int       @default(0)
   comments    Comment[]
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
   @@index([created_at]) // Optimize for recent posts queries
   @@map("posts")
 }
 
 model Actor {
-  id         String    @id @default(cuid())
-  name       String? // Display name separate from handle
-  handle     String    @unique
-  image      String?
-  created_at DateTime  @default(now())
-  comments   Comment[]
+  id       String    @id @default(cuid())
+  name     String? // Display name separate from handle
+  handle   String    @unique
+  image    String?
+  comments Comment[]
+
+  created_at DateTime @default(now())
 
   @@map("actors")
 }
 
 model Comment {
-  id         String    @id @default(cuid())
-  content    String
-  created_at DateTime  @default(now())
-  updated_at DateTime  @updatedAt
-  post       Post      @relation(fields: [post_id], references: [id], onDelete: Cascade)
-  post_id    String
-  actor      Actor     @relation(fields: [actor_id], references: [id], onDelete: Cascade)
-  actor_id   String
-  parent     Comment?  @relation("Replies", fields: [parent_id], references: [id], onDelete: Cascade)
-  parent_id  String?
-  replies    Comment[] @relation("Replies")
+  id        String    @id @default(cuid())
+  content   String
+  post      Post      @relation(fields: [post_id], references: [id], onDelete: Cascade)
+  post_id   String
+  actor     Actor     @relation(fields: [actor_id], references: [id], onDelete: Cascade)
+  actor_id  String
+  parent    Comment?  @relation("Replies", fields: [parent_id], references: [id], onDelete: Cascade)
+  parent_id String?
+  replies   Comment[] @relation("Replies")
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
   // Optimized indexes for SQLite
   @@index([post_id, created_at]) // List comments by post chronologically
@@ -64,8 +67,6 @@ model Comment {
 
 model Session {
   id             String    @id @default(cuid())
-  created_at     DateTime  @default(now())
-  updated_at     DateTime  @updatedAt
   session_start  DateTime  @default(now())
   session_end    DateTime?
   page_url       String
@@ -81,6 +82,9 @@ model Session {
   duration_human String?
   interactions   Int       @default(0)
   events         Event[]
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
 
   @@index([page_url])
   @@index([session_start])

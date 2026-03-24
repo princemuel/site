@@ -76,10 +76,10 @@ export const PostScalarFieldEnum = {
   id: 'id',
   slug: 'slug',
   title: 'title',
-  created_at: 'created_at',
-  updated_at: 'updated_at',
   impressions: 'impressions',
-  reactions: 'reactions'
+  reactions: 'reactions',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
 } as const
 
 export type PostScalarFieldEnum = (typeof PostScalarFieldEnum)[keyof typeof PostScalarFieldEnum]
@@ -99,11 +99,11 @@ export type ActorScalarFieldEnum = (typeof ActorScalarFieldEnum)[keyof typeof Ac
 export const CommentScalarFieldEnum = {
   id: 'id',
   content: 'content',
-  created_at: 'created_at',
-  updated_at: 'updated_at',
   post_id: 'post_id',
   actor_id: 'actor_id',
-  parent_id: 'parent_id'
+  parent_id: 'parent_id',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
 } as const
 
 export type CommentScalarFieldEnum = (typeof CommentScalarFieldEnum)[keyof typeof CommentScalarFieldEnum]
@@ -111,8 +111,6 @@ export type CommentScalarFieldEnum = (typeof CommentScalarFieldEnum)[keyof typeo
 
 export const SessionScalarFieldEnum = {
   id: 'id',
-  created_at: 'created_at',
-  updated_at: 'updated_at',
   session_start: 'session_start',
   session_end: 'session_end',
   page_url: 'page_url',
@@ -126,7 +124,9 @@ export const SessionScalarFieldEnum = {
   flag: 'flag',
   duration_ms: 'duration_ms',
   duration_human: 'duration_human',
-  interactions: 'interactions'
+  interactions: 'interactions',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
 } as const
 
 export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
