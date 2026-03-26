@@ -39,3 +39,6 @@ overrides:
   vite: ^6.4.1
 
 verifyDepsBeforeRun: install
+minimumReleaseAgeExclude:
+  # Renovate security update: astro@5.18.1
+  - astro@5.18.1
