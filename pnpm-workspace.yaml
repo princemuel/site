@@ -16,7 +16,7 @@ catalog:
   netlify-cli: ^23.11.0
   oxlint: ^1.28.0
   oxlint-tsgolint: ^0.6.0
-  typescript: ^5.9.3
+  typescript: ^6.0.0
 
 catalogMode: prefer
 
