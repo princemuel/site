@@ -2,15 +2,16 @@
 // SPDX-License-Identifier: Apache-2.0
 import { getCollection, getEntry, render } from "astro:content";
 
-import { Icon } from "astro-icon/components";
+import Icon from "@/components/shared/icon.astro";
 
-import { hasValues } from "@core/utils";
+import { hasValues } from "@repo/utils";
 
 import { excluded } from "@/assets/include";
 
 import Prose from "@/components/content/prose.astro";
 import Shell from "@/components/frames/shell.astro";
 import Link from "@/components/shared/link.astro";
+import ProseLink from "@/components/shared/prose-link.astro";
 
 const entry = await getEntry("pages", "home");
 if (!entry) throw new Response(null, { status: 404 });
@@ -24,7 +25,7 @@ const [{ Content }, routes] = await Promise.all([
 ---
 
 <Shell>
-  <header class="flex flex-col gap-6 border border-gray-200 p-5 dark:border-gray-700">
+  <header class="flex flex-col gap-6 border border-zinc-200 p-5 dark:border-zinc-700">
     <h1 id="a11ty-headline" class="text-2xl">
       <span lang="he" dir="rtl">אַהְלָן! 👋🏼 </span>
     </h1>
@@ -32,13 +33,13 @@ const [{ Content }, routes] = await Promise.all([
     <p class="text-base">
       I’m a software engineer with a passion for safe programming languages, distributed systems,
       computer graphics, and cryptography. I build open source software and love to draw.
-      <Link href="/about">Learn about me</Link>
+      <Link href="/about">Learn about me here</Link>
       or <Link href="https://github.com/princemuel">check out my GitHub</Link>.
     </p>
   </header>
 
   <Prose as="article" aria-labelledby="a11ty-headline" class="">
-    <Content frontmatter={entry.data} />
+    <Content components={{ a: ProseLink }} frontmatter={entry.data} />
     {
       hasValues(routes) ? (
         <ul class="not-prose flex flex-col gap-3">

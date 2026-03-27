@@ -1,10 +1,14 @@
 ---
 // SPDX-License-Identifier: Apache-2.0
+import { ACTION_QUERY_PARAMS, actions, isInputError } from "astro:actions";
 import { getEntry, render } from "astro:content";
 
 import Prose from "@/components/content/prose.astro";
 import Shell from "@/components/frames/shell.astro";
-import { ACTION_QUERY_PARAMS, actions, isInputError } from "astro:actions";
+import Pot from "@/components/widgets/pot.astro";
+
+import { println$ } from "@/helpers/println";
+import ProseLink from "@/components/shared/prose-link.astro";
 
 export const prerender = false;
 
@@ -17,7 +21,7 @@ const data = entry.data;
 
 const result = Astro.getActionResult(actions.contact);
 
-console.log("[ERROR]", result?.error);
+println$("[ERROR]", result?.error);
 
 const formErrors = isInputError(result?.error) ? result.error.fields : {};
 
@@ -33,7 +37,7 @@ if (!result?.error && result?.data) {
 <Shell>
   <Prose as="header">
     <h1 id="a11ty-headline" class="">{data.headline}</h1>
-    <Content frontmatter={entry.data} />
+    <Content components={{ a: ProseLink }} frontmatter={entry.data} />
   </Prose>
 
   <Prose as="section" class="space-y-5" aria-labelledby="contact-me">
@@ -42,9 +46,9 @@ if (!result?.error && result?.data) {
 
     <form method="POST" action={actions.contact} class="flex flex-col gap-6 md:gap-8">
       <section class="grid grid-cols-6 gap-5">
-        <input type="hidden" name="honeypot" placeholder="do not fill this" class="sr-only" />
+        <Pot name="fruity" />
         <div class="group col-span-full flex flex-col gap-2 sm:col-span-3">
-          <label class="space-x-1 text-sm font-medium text-gray-600" for="fields.firstName.input">
+          <label class="space-x-1 text-sm font-medium text-zinc-600" for="fields.firstName.input">
             <span>First Name</span><span class="text-red-400">*</span>
           </label>
 
@@ -53,7 +57,7 @@ if (!result?.error && result?.data) {
             id="fields.firstName.input"
             name="firstName"
             aria-autocomplete="both"
-            class="rounded border border-gray-500 bg-transparent px-4 py-3 text-gray-900"
+            class="rounded border border-zinc-500 bg-transparent px-4 py-3 text-zinc-900"
             autocomplete="given-name"
             aria-invalid={Boolean(formErrors?.firstName)}
             aria-errormessage="fields.firstName.error"
@@ -63,7 +67,8 @@ if (!result?.error && result?.data) {
             role="alert"
             aria-live="polite"
             aria-atomic="true"
-            class="text-sm font-light text-red-400"
+            aria-relevant="all"
+            class="text-sm text-red-400"
             id="fields.firstName.error"
           >
             {formErrors?.firstName?.join(" ")}
@@ -71,7 +76,7 @@ if (!result?.error && result?.data) {
         </div>
 
         <div class="group col-span-full flex flex-col gap-2 sm:col-span-3">
-          <label for="fields.lastName.input" class="space-x-1 text-sm font-medium text-gray-600">
+          <label for="fields.lastName.input" class="space-x-1 text-sm font-medium text-zinc-600">
             <span>Last Name</span><span class="text-red-400">*</span>
           </label>
           <input
@@ -79,7 +84,7 @@ if (!result?.error && result?.data) {
             id="fields.lastName.input"
             name="lastName"
             aria-autocomplete="both"
-            class="rounded border border-gray-500 bg-transparent px-4 py-3 text-gray-900"
+            class="rounded border border-zinc-500 bg-transparent px-4 py-3 text-zinc-900"
             autocomplete="family-name"
             aria-invalid={Boolean(formErrors?.lastName)}
             aria-errormessage="fields.lastName.error"
@@ -88,7 +93,8 @@ if (!result?.error && result?.data) {
             role="alert"
             aria-live="polite"
             aria-atomic="true"
-            class="text-sm font-light text-red-400"
+            aria-relevant="all"
+            class="text-sm text-red-400"
             id="fields.lastName.error"
           >
             {formErrors?.lastName?.join(" ")}
@@ -96,7 +102,7 @@ if (!result?.error && result?.data) {
         </div>
 
         <div class="group col-span-full flex flex-col gap-2">
-          <label for="fields.email.input" class="space-x-1 text-sm font-medium text-gray-600">
+          <label for="fields.email.input" class="space-x-1 text-sm font-medium text-zinc-600">
             <span>Email Address</span><span class="text-red-400">*</span>
           </label>
           <input
@@ -104,7 +110,7 @@ if (!result?.error && result?.data) {
             id="fields.email.input"
             name="email"
             aria-autocomplete="both"
-            class="rounded border border-gray-500 bg-transparent px-4 py-3 text-gray-900"
+            class="rounded border border-zinc-500 bg-transparent px-4 py-3 text-zinc-900"
             autocomplete="email"
             aria-invalid={Boolean(formErrors?.email)}
             aria-errormessage="fields.email.error"
@@ -113,7 +119,8 @@ if (!result?.error && result?.data) {
             role="alert"
             aria-live="polite"
             aria-atomic="true"
-            class="text-sm font-light text-red-400"
+            aria-relevant="all"
+            class="text-sm text-red-400"
             id="fields.email.error"
           >
             {formErrors?.email?.join(" ")}
@@ -121,13 +128,13 @@ if (!result?.error && result?.data) {
         </div>
 
         <fieldset class="group col-span-full space-y-3">
-          <legend class="space-x-1 text-sm font-medium text-gray-600">
+          <legend class="space-x-1 text-sm font-medium text-zinc-600">
             Query Type <span class="text-red-400">*</span>
           </legend>
 
           <section class="grid grid-cols-6 gap-5">
             <label
-              class="col-span-full flex items-center gap-2 rounded border border-gray-500 px-4 py-3 text-gray-900 sm:col-span-3"
+              class="col-span-full flex items-center gap-2 rounded border border-zinc-500 px-4 py-3 text-zinc-900 sm:col-span-3"
             >
               <input
                 type="radio"
@@ -142,7 +149,7 @@ if (!result?.error && result?.data) {
             </label>
 
             <label
-              class="col-span-full flex items-center gap-2 rounded border border-gray-500 px-4 py-3 text-gray-900 sm:col-span-3"
+              class="col-span-full flex items-center gap-2 rounded border border-zinc-500 px-4 py-3 text-zinc-900 sm:col-span-3"
             >
               <input
                 type="radio"
@@ -157,7 +164,7 @@ if (!result?.error && result?.data) {
             </label>
 
             <label
-              class="col-span-full flex items-center gap-2 rounded border border-gray-500 px-4 py-3 text-gray-900 sm:col-span-3"
+              class="col-span-full flex items-center gap-2 rounded border border-zinc-500 px-4 py-3 text-zinc-900 sm:col-span-3"
             >
               <input
                 type="radio"
@@ -172,7 +179,7 @@ if (!result?.error && result?.data) {
             </label>
 
             <label
-              class="col-span-full flex items-center gap-2 rounded border border-gray-500 px-4 py-3 text-gray-900 sm:col-span-3"
+              class="col-span-full flex items-center gap-2 rounded border border-zinc-500 px-4 py-3 text-zinc-900 sm:col-span-3"
             >
               <input
                 type="radio"
@@ -191,7 +198,8 @@ if (!result?.error && result?.data) {
             role="alert"
             aria-live="polite"
             aria-atomic="true"
-            class="inline-block text-sm font-light text-red-400"
+            aria-relevant="all"
+            class="inline-block text-sm text-red-400"
             id="fields.query.error"
           >
             {formErrors?.queryType?.join(" ")}
@@ -199,17 +207,16 @@ if (!result?.error && result?.data) {
         </fieldset>
 
         <div class="group col-span-full flex flex-col gap-2">
-          <label for="fields.message.input" class="space-x-1 text-sm font-medium text-gray-600">
+          <label for="fields.message.input" class="space-x-1 text-sm font-medium text-zinc-600">
             <span>Message</span>
             <span class="text-red-400">*</span>
           </label>
           <textarea
-            transition:persist="message"
             name="message"
             id="fields.message.input"
             autocapitalize="on"
-            class="min-h-32 rounded border border-gray-500 bg-transparent px-4 py-3 text-gray-900"
-            autocomplete="on"
+            class="min-h-32 rounded border border-zinc-500 bg-transparent px-4 py-3 text-zinc-900"
+            autocomplete="off"
             aria-invalid={Boolean(formErrors?.message)}
             aria-errormessage="fields.message.error"
           >
@@ -218,7 +225,8 @@ if (!result?.error && result?.data) {
             role="alert"
             aria-live="polite"
             aria-atomic="true"
-            class="text-sm font-light text-red-400"
+            aria-relevant="all"
+            class="text-sm text-red-400"
             id="fields.message.error"
           >
             {formErrors?.message?.join(" ")}
@@ -235,7 +243,7 @@ if (!result?.error && result?.data) {
               aria-invalid={Boolean(formErrors?.consent)}
               aria-errormessage="fields.email.error"
             />
-            <label class="space-x-1 text-sm font-medium text-gray-600" for="fields.consent.input">
+            <label class="space-x-1 text-sm font-medium text-zinc-600" for="fields.consent.input">
               <span>I consent to being contacted by Prince Muel</span>
               <span class="text-red-400">*</span>
             </label>
@@ -245,14 +253,15 @@ if (!result?.error && result?.data) {
             role="alert"
             aria-live="polite"
             aria-atomic="true"
-            class="text-sm font-light text-red-400"
+            aria-relevant="all"
+            class="text-sm text-red-400"
             id="fields.consent.error"
           >
             {formErrors?.consent?.join(" ")}
           </span>
         </div>
 
-        <button type="submit" class="col-span-full rounded bg-gray-700 px-4 py-3 text-white">
+        <button type="submit" class="col-span-full rounded bg-blue-700 px-4 py-3 text-white">
           Submit
         </button>
       </section>

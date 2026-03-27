@@ -52,7 +52,7 @@
 @utility content-auto {
   content-visibility: auto;
 }
-@custom-variant dark (&:where([data-color-scheme="dark"], [data-color-scheme="dark"] *));
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 @media (hover: hover) and (pointer: fine) {
   body {

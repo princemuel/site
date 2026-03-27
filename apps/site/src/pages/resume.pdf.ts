@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 import { GOOGLE_DRIVE_FILE_ID, GOOGLE_DRIVE_TOKEN } from "astro:env/server";
 
-import { secs } from "@core/utils";
+import { secs } from "@repo/utils";
 import type { APIRoute } from "astro";
 import { NotFoundError } from "http-errors-enhanced";
 
@@ -24,7 +24,7 @@ export const GET: APIRoute = async () => {
       headers: {
         "Content-Type": "application/pdf",
         "Content-Disposition": "inline; filename=princemuel-resume.pdf",
-        "Cache-Control": `public, max-age=${secs({ h: 1 })}, stale-while-revalidate=${secs({ d: 1 })}`,
+        "Cache-Control": `public, max-age=${secs({ hours: 1 })}, stale-while-revalidate=${secs({ days: 1 })}`,
         "Content-Length": body.byteLength.toString(),
       },
     });

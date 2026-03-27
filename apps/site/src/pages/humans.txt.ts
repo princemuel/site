@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 import { humans as buffer } from "@/assets/include";
-import { secs } from "@core/utils";
+import { secs } from "@repo/utils";
 
 import type { APIRoute } from "astro";
 
@@ -9,14 +9,15 @@ export const GET: APIRoute = async (ctx) => {
     .replaceAll("{{URL}}", new URL("hello", ctx.site).toString())
     .replaceAll(
       "{{DATETIME}}",
-      new Intl.DateTimeFormat("en-CA").format(new Date()).replaceAll("-", "."),
+      Temporal.PlainDate.from(Temporal.ZonedDateTime.from(__BUILD_TIME__)).toString(),
     )
     .trim();
+
   return new Response(body, {
     status: 200,
     headers: {
       "Content-Type": "text/plain; charset=UTF-8",
-      "Cache-Control": `public, max-age=${secs({ d: 365 })}, immutable`,
+      "Cache-Control": `public, max-age=${secs({ days: 365 })}, immutable`,
     },
   });
 };
