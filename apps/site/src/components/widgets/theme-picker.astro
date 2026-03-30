@@ -1,6 +1,6 @@
 ---
 // SPDX-License-Identifier: Apache-2.0
-import { Icon } from "astro-icon/components";
+import Icon from "@/components/shared/icon.astro";
 
 import type { HTMLAttributes } from "astro/types";
 
@@ -13,25 +13,25 @@ type Props = HTMLAttributes<"button">;
     title="Toggle Theme"
     class:list={[
       "group relative flex items-center p-3 text-2xl",
-      "text-gray-900 dark:text-gray-200",
-      "hover:text-gray-200 dark:hover:text-gray-900",
-      "hover:bg-gray-900 dark:hover:bg-gray-200",
-      "focus:text-gray-200 dark:focus:text-gray-900",
-      "focus:bg-gray-900 dark:focus:bg-gray-200",
+      "text-zinc-900 dark:text-zinc-200",
+      "hover:text-zinc-200 dark:hover:text-zinc-900",
+      "hover:bg-zinc-900 dark:hover:bg-zinc-200",
+      "focus:text-zinc-200 dark:focus:text-zinc-900",
+      "focus:bg-zinc-900 dark:focus:bg-zinc-200",
       Astro.props.class,
     ]}
   >
     <span class="sr-only">Toggle theme</span>
     <Icon
       data-id="x-light"
-      name="uil:moon"
+      name="lucide:cloud-moon"
       role="presentation"
       class="text-inherit data-[hidden=true]:hidden"
       data-hidden="false"
     />
     <Icon
       data-id="x-dark"
-      name="uil:sun"
+      name="lucide:sun"
       role="presentation"
       class="text-inherit data-[hidden=true]:hidden"
       data-hidden="false"
@@ -102,8 +102,8 @@ type Props = HTMLAttributes<"button">;
     const $ = document.documentElement;
     const scheme = resolveScheme(theme);
 
-    $.dataset.colorScheme = scheme;
-    $.dataset.codeTheme = `gruvbox-${theme}-hard`;
+    $.dataset.theme = scheme;
+    $.dataset.codeTheme = `github-${scheme}-default`;
 
     storeTheme(theme);
   };
@@ -166,7 +166,7 @@ type Props = HTMLAttributes<"button">;
 
       //@ts-expect-error
       // oxlint-disable-next-line no-unused-private-class-members
-      onclick(e: MouseEvent) {
+      onclick(_e) {
         onThemeChange(parseTheme(themeCycler.next().value));
       }
     },

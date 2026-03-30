@@ -4,7 +4,8 @@ import { Font } from "astro:assets";
 
 import "@/assets/styles/prose.css";
 import "@/assets/styles/transitions.css";
-export interface Props {
+
+interface Props {
   title: string;
   description: string;
 }
@@ -40,27 +41,34 @@ const { title, description } = Astro.props;
     --font-mono: var(--font-family-mono);
   }
 
-  *,
+  /* *,
   ::after,
   ::before {
     box-sizing: border-box;
-  }
+  } */
   html {
     font-family: var(--font-sans);
     background: #ffffff;
     scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   body {
     position: relative;
-    display: grid;
-    min-height: 100svh;
     margin: 0;
     padding: 0;
     background: #ffffff;
     color: #24292f;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    min-height: 100svh;
+    line-height: 1.6;
+  }
+
+  main {
+    margin-inline: auto;
+    padding-inline: 1rem;
+    min-height: 100svh;
+    max-width: 50rem;
   }
   code {
     font-family: var(--font-mono);

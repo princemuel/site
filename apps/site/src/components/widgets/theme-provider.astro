@@ -7,8 +7,8 @@
       const mql = globalThis.matchMedia("(prefers-color-scheme: light)");
       const theme = storedTheme || (mql.matches ? "light" : "dark");
       const $ = document.documentElement;
-      $.dataset.colorScheme = theme;
-      $.dataset.codeTheme = `gruvbox-${theme}-hard`;
+      $.dataset.theme = theme;
+      $.dataset.codeTheme = `github-${theme}-default`;
       return {
         value: theme,
         selectThemeIcon(theme = storedTheme) {
