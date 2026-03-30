@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 import { getCollection, render } from "astro:content";
 
-import Fence from "@/components/layout/fence.astro";
 import Link from "@/components/shared/link.astro";
 import Layout from "@/components/templates/problem.astro";
 
@@ -18,52 +17,42 @@ export async function getStaticPaths() {
   }));
 }
 
-const { entry } = Astro.props;
-
-const markdown = await render(entry);
+const markdown = await render(Astro.props.entry);
 
 const { Content, remarkPluginFrontmatter: _ } = markdown;
+const { data } = Astro.props.entry;
 ---
 
-<Layout title={entry.data.title} description={entry.data.description}>
-  <Fence as="main" aria-labelledby="a11ty-headline">
-    <header class="doc-header">
+<Layout title={data.title} description={data.description}>
+  <main aria-labelledby="a11ty-headline">
+    <header class="header">
       <div class="breadcrumb">
-        <Link href="/problems">Problems</Link> / {entry.data.title}
+        <Link href="/problems">Problems</Link> / {data.title}
       </div>
     </header>
 
     <div class="problem-meta">
-      <span class:list={["status-badge", `status-${Math.floor(entry.data.status / 100)}xx`]}>
-        HTTP {entry.data.status}
+      <span class:list={["status-badge", `status-${Math.floor(data.status / 100)}xx`]}>
+        HTTP {data.status}
       </span>
 
-      <code class="type-uri">{entry.data.type}</code>
+      <code class="type-uri">{data.type}</code>
     </div>
 
     <article class="article">
       <Content />
     </article>
 
-    <footer class="doc-footer">
+    <footer class="footer">
       <p>
         <Link href="/problems">← Back to all problem types</Link>
       </p>
     </footer>
-  </Fence>
+  </main>
 </Layout>
 
 <style>
-  .problem-doc {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 2rem;
-    font-family: var(--font-sans);
-    line-height: 1.6;
-    color: #24292f;
-  }
-
-  .doc-header {
+  .header {
     border-bottom: 1px solid #d1d9e0;
     padding-bottom: 1.5rem;
     margin-bottom: 2rem;
@@ -113,18 +102,18 @@ const { Content, remarkPluginFrontmatter: _ } = markdown;
     margin-bottom: 3rem;
   }
 
-  .doc-footer {
+  .footer {
     border-top: 1px solid #d1d9e0;
     padding-top: 1.5rem;
     font-size: 0.875rem;
   }
 
-  .doc-footer a {
+  .footer a {
     color: #0969da;
     text-decoration: none;
   }
 
-  .doc-footer a:hover {
+  .footer a:hover {
     text-decoration: underline;
   }
 

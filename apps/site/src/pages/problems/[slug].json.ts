@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-import { omit, secs } from "@core/utils";
+import { omit, secs } from "@repo/utils";
 import type { APIRoute, InferGetStaticParamsType, InferGetStaticPropsType } from "astro";
 import { getCollection } from "astro:content";
 
@@ -15,16 +15,19 @@ export async function getStaticPaths() {
   }));
 }
 
-type Params = InferGetStaticParamsType<typeof getStaticPaths>;
 type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+type Params = InferGetStaticParamsType<typeof getStaticPaths>;
 
 export const GET: APIRoute<Props, Params> = async ({ props: { entry } }) => {
-  const body = { ...omit(entry.data, ["draft", "extensions"]), ...entry.data.extensions };
+  const body = {
+    ...omit(entry.data, ["draft", "extensions", "revisions", "date", "updated"]),
+    ...entry.data.extensions,
+  };
   return Response.json(body, {
     status: 200,
     headers: {
       "Content-Type": "application/problem+json",
-      "Cache-Control": `public, max-age=${secs({ d: 365 })}, immutable`,
+      "Cache-Control": `public, max-age=${secs({ days: 365 })}, immutable`,
     },
   });
 };

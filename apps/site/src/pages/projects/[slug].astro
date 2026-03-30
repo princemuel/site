@@ -7,9 +7,10 @@ import { developer, placeholder } from "@/assets";
 
 import Prose from "@/components/content/prose.astro";
 import Shell from "@/components/frames/shell.astro";
+import Icon from "@/components/shared/icon.astro";
 import Link from "@/components/shared/link.astro";
 import Pattern from "@/components/shared/pattern.astro";
-import { Icon } from "astro-icon/components";
+import ProseLink from "@/components/shared/prose-link.astro";
 
 export async function getStaticPaths() {
   const entries = await getCollection(
@@ -42,8 +43,8 @@ entry.data.duration ??= frontmatter.duration;
         class="flex items-center gap-2 font-mono text-base font-medium tracking-widest uppercase"
       >
         <Link href="#" class="text-black">Engineering</Link>
-        <span class="text-gray-300">&mdash;</span>
-        <time class="text-gray-500">10 May 2023</time>
+        <span class="text-zinc-300">&mdash;</span>
+        <time class="text-zinc-500">10 May 2023</time>
       </section>
 
       <h1 id="a11ty-headline" class="text-4xl font-black text-balance lg:text-6xl">
@@ -51,15 +52,15 @@ entry.data.duration ??= frontmatter.duration;
       </h1>
 
       <section
-        class="inline-grid grid-cols-[3fr_1fr_auto_1fr_3fr] items-center gap-5 text-2xl font-medium text-gray-500"
+        class="inline-grid grid-cols-[3fr_1fr_auto_1fr_3fr] items-center gap-5 text-2xl font-medium text-zinc-500"
       >
-        <hr class="border border-gray-200" />
+        <hr class="border border-zinc-200" />
         <Link
           href="https://bsky.app/profile/kettanaito.com"
           class="p-5 hover:text-black"
           aria-label="Follow me on Bluesky"
         >
-          <Icon name="bluesky" />
+          <Icon name="carbon:logo-bluesky" />
         </Link>
         <Image src={placeholder} alt="kettanaito's avatar" class="size-12 rounded-full shadow-lg" />
         <Link
@@ -67,9 +68,9 @@ entry.data.duration ??= frontmatter.duration;
           class="p-5 hover:text-black"
           aria-label='Follow me on "Twitter"'
         >
-          <Icon name="x" />
+          <Icon name="carbon:logo-twitter" />
         </Link>
-        <hr class="border border-gray-200" />
+        <hr class="border border-zinc-200" />
       </section>
     </header>
 
@@ -77,6 +78,6 @@ entry.data.duration ??= frontmatter.duration;
   </div>
 
   <Prose as="article" aria-labelledby="a11ty-headline">
-    <Content frontmatter={entry.data} />
+    <Content components={{ a: ProseLink }} frontmatter={entry.data} />
   </Prose>
 </Shell>

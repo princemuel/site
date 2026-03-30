@@ -4,7 +4,7 @@ import { getCollection, render } from "astro:content";
 
 import Prose from "@/components/content/prose.astro";
 import Shell from "@/components/frames/shell.astro";
-import { Debug } from "astro:components";
+import ProseLink from "@/components/shared/prose-link.astro";
 // import { Image } from "astro:assets";
 
 export async function getStaticPaths() {
@@ -27,15 +27,11 @@ const { Content, remarkPluginFrontmatter: frontmatter } = markdown;
 
 entry.data.words ??= frontmatter.words;
 entry.data.duration ??= frontmatter.duration;
-// const _weather = await getEntry(entry.data.weather[1]);
-
-export function getWeatherIconUrl(icon: string, size: "2x" | "4x" = "2x") {
-  return `https://openweathermap.org/img/wn/${icon}@${size}.png`;
-}
 ---
 
 <Shell>
-  <Debug {frontmatter} />
+  <!-- <div class="mx-auto">
+  </div> -->
 
   <Prose as="article" aria-labelledby="a11ty-headline">
     <h1 id="a11ty-headline">{entry.data.title}</h1>
@@ -45,6 +41,6 @@ export function getWeatherIconUrl(icon: string, size: "2x" | "4x" = "2x") {
 
       <!-- <p>{convert(`${entry.data.weather[0]}`, "K", "C")}</p> -->
     </section>
-    <Content frontmatter={entry.data} />
+    <Content components={{ a: ProseLink }} frontmatter={entry.data} />
   </Prose>
 </Shell>

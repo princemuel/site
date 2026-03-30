@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 import { getCollection } from "astro:content";
 
-import Fence from "@/components/layout/fence.astro";
 import Link from "@/components/shared/link.astro";
 import Layout from "@/components/templates/problem.astro";
 
@@ -19,7 +18,7 @@ const homeUrl = new URL("/", import.meta.env.SITE);
   title="API Problem Types"
   description="RFC 9457 compliant problem types used by the APIs on princemuel.dev"
 >
-  <Fence as="main" aria-labelledby="a11ty-headline">
+  <main aria-labelledby="a11ty-headline">
     <header class="header">
       <h1 id="a11ty-headline" style="font-weight: 400;">Problem Types</h1>
       <p class="subtitle">
@@ -30,27 +29,25 @@ const homeUrl = new URL("/", import.meta.env.SITE);
       </p>
     </header>
 
-    <section class="problem-types">
-      <h2>Available Problem Types</h2>
+    <section aria-labelledby="problem-types" class="problem-types">
+      <h2 id="problem-types">Available Problem Types</h2>
 
       <div class="problem-grid">
         {
-          entries.map((entry) => (
+          entries.map(({ id, data }) => (
             <article class="problem-card">
               <header class="problem-header">
                 <h3>
-                  <Link href={`/problems/${entry.id}/`}>{entry.data.title}</Link>
+                  <Link href={`/problems/${id}/`}>{data.title}</Link>
                 </h3>
 
-                <span
-                  class:list={["status-badge", `status-${Math.floor(entry.data.status / 100)}xx`]}
-                >
-                  {entry.data.status}
+                <span class:list={["status-badge", `status-${Math.floor(data.status / 100)}xx`]}>
+                  {data.status}
                 </span>
               </header>
-              <p class="problem-description">{entry.data.description}</p>
+              <p class="problem-description">{data.description}</p>
               <div class="problem-meta">
-                <code class="type-uri">{entry.data.type}</code>
+                <code class="type-uri">{data.type}</code>
               </div>
             </article>
           ))
@@ -58,8 +55,8 @@ const homeUrl = new URL("/", import.meta.env.SITE);
       </div>
     </section>
 
-    <section class="rfc-info">
-      <h2>About RFC 9457</h2>
+    <section aria-labelledby="rfc-info" class="rfc-info">
+      <h2 id="rfc-info">About RFC 9457</h2>
       <p>
         RFC 9457 defines a standard format for problem details in HTTP APIs. Each problem type has a
         unique URI that serves human-readable documentation (like these pages) and defines the
@@ -84,7 +81,7 @@ const homeUrl = new URL("/", import.meta.env.SITE);
         <dd>URI identifying this specific occurrence</dd>
       </dl>
     </section>
-  </Fence>
+  </main>
 </Layout>
 
 <style>
@@ -106,7 +103,7 @@ const homeUrl = new URL("/", import.meta.env.SITE);
     margin: 0;
   }
 
-  .problem-grid {
+  .problems-grid {
     display: grid;
     gap: 1.5rem;
     margin-bottom: 3rem;

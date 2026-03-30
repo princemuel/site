@@ -1,4 +1,4 @@
-import { getFontData } from "astro:assets";
+import { fontData } from "astro:assets";
 
 import { Resvg } from "@resvg/resvg-js";
 import satori from "satori";
@@ -16,46 +16,46 @@ import type { APIRoute } from "astro";
 // https://github.com/vercel/satori/blob/main/app/handler/presets.ts
 // https://vercel.com/docs/og-image-generation/examples?framework=other#dynamic-title
 
-export const GET: APIRoute = async (context) => {
-  const data = getFontData("--font-family-sans");
+export const GET: APIRoute = async (ctx) => {
+  const data = fontData["--font-family-sans"];
 
   const fontSrc = data[0]?.src?.find((src) => /^(ttf|woff)$/i.test(src?.format ?? ""));
   if (!fontSrc) return new Response(null, { status: 404 });
 
   const node = html`<div tw="flex h-full w-full flex-col bg-white p-16 font-sans">
     <div tw="flex items-start justify-between">
-      <span tw="text-sm tracking-widest text-blue-500 uppercase">${context.url.hostname}</span>
-      <span tw="text-sm font-light text-gray-400">March 2025</span>
+      <span tw="text-sm tracking-widest text-blue-500 uppercase">${ctx.url.hostname}</span>
+      <span tw="text-sm font-light text-zinc-400">March 2025</span>
     </div>
 
     <div tw="my-auto flex flex-1 flex-col items-center justify-center">
-      <h1 tw="max-w-3xl text-center text-5xl leading-tight font-light text-gray-900">Title</h1>
+      <h1 tw="max-w-3xl text-center text-5xl leading-tight font-light text-zinc-900">Title</h1>
     </div>
 
     <div tw="flex items-end justify-between">
       <p tw="flex items-center">
-        <span tw="text-base font-light text-gray-700">Author Name</span>
-        <span tw="mx-2 text-gray-300">•</span>
-        <span tw="text-base font-light text-gray-500">Tag</span>
+        <span tw="text-base font-light text-zinc-700">Author Name</span>
+        <span tw="mx-2 text-zinc-300">•</span>
+        <span tw="text-base font-light text-zinc-500">Tag</span>
       </p>
-      <span tw="text-base font-light text-gray-500">6 min read</span>
+      <span tw="text-base font-light text-zinc-500">6 min read</span>
     </div>
   </div>`;
 
-  //@ts-expect-error satori types are wrong
+  //@ts-expect-error satori-html type (VNode) does not match satori's type (React.ReactNode)
   const svg = await satori(node, {
-    width: 1200,
-    height: 630,
+    width: 600,
+    height: 400,
     fonts: [
       {
-        name: "Maven Pro",
+        name: "Sen",
         style: "normal",
-        data: await fetch(new URL(fontSrc.url, context.url)).then((res) => res.arrayBuffer()),
+        data: await fetch(new URL(fontSrc.url, ctx.url.origin)).then((res) => res.arrayBuffer()),
       },
     ],
   });
 
-  const resvg = new Resvg(svg, { fitTo: { mode: "width", value: 1200 } });
+  const resvg = new Resvg(svg, { fitTo: { mode: "width", value: 600 } });
   const buffer = resvg.render().asPng();
 
   return new Response(new Uint8Array(buffer), {
