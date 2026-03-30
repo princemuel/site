@@ -3,20 +3,23 @@
 import { getCollection } from "astro:content";
 
 import Fence from "@/components/layout/fence.astro";
+import Icon from "@/components/shared/icon.astro";
 import Link from "@/components/shared/link.astro";
 import Time from "@/components/shared/time.astro";
-import { Icon } from "astro-icon/components";
 
 // const excludedRoutes = new Set(["discord", "youtube", "website", "rss", "instagram"]);
 const excludedRoutes = new Set(["discord", "youtube", "website", "rss", ""]);
 
-const socials = await getCollection("socials", (entry) => !excludedRoutes.has(entry.id));
+let socials = await getCollection("socials", (entry) => !excludedRoutes.has(entry.id));
+socials = socials.toSorted((a, b) => a.data.order - b.data.order);
 
-const buildDate = Temporal.Now.zonedDateTimeISO();
+const buildDate = Temporal.ZonedDateTime.from(
+  `${__BUILD_TIME__}[${Temporal.Now.timeZoneId()}]`,
+).toPlainDate();
 ---
 
 <Fence as="footer" class="py-10 text-sm">
-  <section class="flex flex-col items-center gap-12">
+  <section class="flex flex-col items-center gap-8">
     <address class="flex items-center justify-center gap-4 text-3xl">
       {
         socials.map((r) => (
@@ -27,21 +30,23 @@ const buildDate = Temporal.Now.zonedDateTimeISO();
       }
     </address>
 
-    <p class="flex flex-wrap items-center justify-center gap-2">
-      <span>&copy;</span>
-      <Time datetime={buildDate.toString()}>{buildDate.year}</Time>
-      <span>Prince Muel</span>
+    <div class="flex flex-wrap items-center justify-center gap-2">
+      <Link href={new URL("/sitemap-index.xml", Astro.site)}>Sitemap</Link>
+      <Link href={new URL("/policies", Astro.site)}>Policies</Link>
+    </div>
 
-      <span class="before:mx-1 before:content-['::'] max-sm:hidden">
-        Powered by
-        <Link href="https://docs.astro.build/en/getting-started/">
+    <div class="flex items-center gap-2">
+      <Link href="https://docs.astro.build/en/getting-started/">
+        <Icon name="devicon:astro" title={`Powered by ${Astro.generator}`} />
+        <span class="sr-only">
           {Astro.generator}
-        </Link>
-      </span>
-
-      <span class="before:mx-1 before:content-['::'] max-sm:hidden">
-        <Link href={new URL("/sitemap-index.xml", import.meta.env.SITE)}>Sitemap</Link>
-      </span>
-    </p>
+        </span>
+      </Link>
+      <p>
+        &copy;
+        <Time datetime={buildDate.toString()}>{buildDate.year}</Time>
+        Prince Muel
+      </p>
+    </div>
   </section>
 </Fence>

@@ -3,11 +3,11 @@
 import Prose from "@/components/content/prose.astro";
 import Shell from "@/components/frames/shell.astro";
 
-import type { MarkdownLayoutProps } from "astro";
+import type { MDXLayoutProps } from "astro";
 
 type PageProps = { title: string; description: string };
 
-type Props = MarkdownLayoutProps<PageProps>;
+type Props = MDXLayoutProps<PageProps>;
 
 const { frontmatter } = Astro.props;
 

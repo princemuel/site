@@ -9,14 +9,16 @@ const { as: As = "div", class: clsx, ...attrs } = Astro.props;
 
 <As {...attrs} class:list={["content", clsx]}><slot /></As>
 <style is:global>
+  @reference "#app.css";
+
   .content {
     /** Test these out and choose the one most optimal across screen sizes */
     --gutter: clamp(1rem, 3vw, 2rem);
     --spacer: clamp(1.5rem, 4vw, 2.5rem);
 
     --content-bounds: var(--container-4xl);
-    --popout-bounds: var(--container-6xl);
-    --feature-bounds: var(--container-7xl);
+    --popout-bounds: var(--container-5xl);
+    --feature-bounds: var(--container-6xl);
 
     /* the size extends content by half the difference between relevant bounds and the content bounds */
     --popout-size: calc((var(--popout-bounds) - var(--content-bounds)) / 2);
@@ -39,6 +41,15 @@ const { as: As = "div", class: clsx, ...attrs } = Astro.props;
     /* grid-template-rows: min-content; */
 
     row-gap: var(--spacer);
+
+    @media (width >= 168em /* 2688px */) {
+      --gutter: clamp(2rem, 4vw, 4rem);
+      --spacer: clamp(3rem, 5vw, 5rem);
+
+      --content-bounds: var(--container-5xl);
+      --popout-bounds: var(--container-6xl);
+      --feature-bounds: var(--container-7xl);
+    }
   }
 
   [data-debug] > * {

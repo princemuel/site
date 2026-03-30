@@ -1,8 +1,8 @@
 ---
 // SPDX-License-Identifier: Apache-2.0
 import { excluded } from "@/assets/include";
+import Icon from "@/components/shared/icon.astro";
 import Navlink from "@/components/shared/navlink.astro";
-import { Icon } from "astro-icon/components";
 import { getCollection } from "astro:content";
 
 import type { HTMLAttributes } from "astro/types";
@@ -10,7 +10,8 @@ import type { HTMLAttributes } from "astro/types";
 type Props = HTMLAttributes<"nav">;
 
 const excludedRoutes = new Set(excluded);
-const routes = await getCollection("routes", (data) => !excludedRoutes.has(data.id));
+let routes = await getCollection("routes", (data) => !excludedRoutes.has(data.id));
+routes = routes.toSorted((a, b) => a.data.order - b.data.order);
 ---
 
 <nav
@@ -23,13 +24,13 @@ const routes = await getCollection("routes", (data) => !excludedRoutes.has(data.
         href={r.data.href}
         class:list={[
           "p-3 text-base",
-          "text-gray-900 dark:text-gray-200",
-          "hover:text-gray-200 dark:hover:text-gray-900",
-          "hover:bg-gray-900 dark:hover:bg-gray-200",
-          "focus:text-gray-200 dark:focus:text-gray-900",
-          "focus:bg-gray-900 dark:focus:bg-gray-200",
-          "aria-[current=page]:text-gray-200 dark:aria-[current=page]:text-gray-900",
-          "aria-[current=page]:bg-gray-900 dark:aria-[current=page]:bg-gray-200",
+          "text-zinc-900 dark:text-zinc-200",
+          "hover:text-zinc-200 dark:hover:text-zinc-900",
+          "hover:bg-zinc-900 dark:hover:bg-zinc-200",
+          "focus:text-zinc-200 dark:focus:text-zinc-900",
+          "focus:bg-zinc-900 dark:focus:bg-zinc-200",
+          "aria-[current=page]:text-zinc-200 dark:aria-[current=page]:text-zinc-900",
+          "aria-[current=page]:bg-zinc-900 dark:aria-[current=page]:bg-zinc-200",
         ]}
       >
         <Icon name={r.data.icon} class="text-2xl md:hidden" />
