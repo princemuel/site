@@ -1,0 +1,16 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type Props = HTMLAttributes<"input">;
+
+const { name } = Astro.props;
+---
+
+<input
+  type="text"
+  name={name}
+  tabindex="-1"
+  autocomplete="off"
+  aria-hidden="true"
+  class="absolute top-auto -left-2500 size-px overflow-hidden"
+/>

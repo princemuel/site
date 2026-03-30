@@ -5,8 +5,6 @@ import getReadingTime from "reading-time";
 // import { toString as hastUtilToString } from "hast-util-to-string";
 // import { h } from "hastscript";
 // import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import rehypeExternalLinks from "rehype-external-links";
-import remarkCollapse from "remark-collapse";
 import remarkEmoji from "remark-emoji";
 import remarkToc from "remark-toc";
 
@@ -73,7 +71,6 @@ export const markdown = {
   smartypants: true,
   remarkPlugins: [
     remarkToc,
-    [remarkCollapse, { test: "Table of contents" }],
     remarkDeruntify,
     remarkReadingTime,
     remarkModifiedTime,
@@ -81,10 +78,6 @@ export const markdown = {
   ],
   rehypePlugins: [
     rehypeHeadingIds,
-    [
-      rehypeExternalLinks,
-      { rel: ["nofollow", "noopener", "noreferrer", "external"], target: "_blank" },
-    ],
     // [
     //   rehypeAutolinkHeadings,
     //   {

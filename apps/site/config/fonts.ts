@@ -7,7 +7,7 @@ type Config = AstroUserConfig["fonts"];
 
 export const fonts = [
   {
-    name: "Sen",
+    name: "Geist",
     provider: fontProviders.fontsource(),
     cssVariable: "--font-family-sans",
     subsets: ["latin"],
@@ -23,16 +23,18 @@ export const fonts = [
     formats: ["woff2", "ttf"],
   },
   {
-    name: "Mono Lisa",
-    provider: fontProviders.local(),
+    name: "Geist Mono",
+    provider: fontProviders.fontsource(),
     cssVariable: "--font-family-mono",
-    //@ts-expect-error -- types are missing here
-    options: {
-      variants: [
-        { weight: "100 900", style: "normal", src: ["./src/assets/fonts/MonoLisa-normal.woff2"] },
-        { weight: "100 900", style: "italic", src: ["./src/assets/fonts/MonoLisa-italic.woff2"] },
-      ],
-    },
-    fallbacks: ["ui-monospace", "monospace"],
+    fallbacks: [
+      "ui-monospace",
+      "SFMono-Regular",
+      "Menlo",
+      "Monaco",
+      "Consolas",
+      "Liberation Mono",
+      "Courier New",
+      "monospace",
+    ],
   },
 ] satisfies Config;

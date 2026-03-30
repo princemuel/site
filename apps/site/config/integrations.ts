@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
 import markdown from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
-// import svelte from "@astrojs/svelte";
 // import pwa from "@vite-pwa/astro";
 import codeblock from "astro-expressive-code";
 
@@ -55,6 +54,4 @@ export const integrations = [
   markdown(options.markdown),
   sitemap(options.sitemap),
   // pwa(options.pwa),
-  // database({ mode: 'web' }),
-  // svelte(),
 ] satisfies Config;
