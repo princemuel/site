@@ -3,7 +3,7 @@ packages:
   - apps/*
 
 catalog:
-  '@astrojs/netlify': ^6.6.0
+  '@astrojs/netlify': ^7.0.0
   '@emnapi/core': ^1.6.0
   '@emnapi/runtime': ^1.6.0
   '@napi-rs/cli': ^3.4.1
