@@ -8,7 +8,7 @@ import { capitalize } from "@repo/utils";
 export default defineAction({
   accept: "form",
   input: z.object({
-    fruity: z.literal("").optional(),
+    token: z.literal("").optional(),
     firstName: z.string("This field is required").max(32).trim(),
     lastName: z.string("This field is required").max(32).trim(),
     email: z.email("Please enter a valid email address").trim(),
@@ -22,7 +22,7 @@ export default defineAction({
     consent: z.stringbool({ message: "To submit this form, please consent to being contacted" }),
   }),
   handler: async (body, { locals }) => {
-    if (body.fruity) {
+    if (body.token) {
       throw new ActionError({
         code: "BAD_REQUEST",
         message: "Invalid submission detected.",

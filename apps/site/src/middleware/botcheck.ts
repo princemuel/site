@@ -3,7 +3,7 @@ import { isbot } from "isbot";
 import type { MiddlewareHandler } from "astro";
 
 export const botcheck: MiddlewareHandler = async ({ request, locals }, next) => {
-  if (!request.url.includes("/api")) return next();
+  if (!(request.url.includes("/api") || request.url.includes("_action"))) return next();
 
   const userAgent = request.headers.get("User-Agent");
 

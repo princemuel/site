@@ -97,5 +97,6 @@
   "[powershell]": {
     "editor.defaultFormatter": "ms-vscode.powershell"
   },
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "editorconfig.template": "/home/maia/.editorconfig"
 }
