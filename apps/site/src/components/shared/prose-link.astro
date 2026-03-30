@@ -20,9 +20,12 @@ const attrs = is_internal
 <a
   {...attrs}
   class:list={[
-    "text-blue-500 visited:text-purple-500",
+    "text-blue-600 dark:text-blue-500",
+    "visited:text-violet-600 dark:visited:text-violet-600",
     "underline decoration-1 underline-offset-2",
     "hover:brightness-75 active:brightness-50",
     "transition ease-out",
-  ]}><slot /></a
+  ]}
 >
+  <slot />
+</a>

@@ -13,7 +13,7 @@ const href = Astro.props.href.toString();
 const is_internal = ["/", "#"].some((s) => href.startsWith(s));
 
 const attrs = is_internal
-  ? { ...Astro.props, href: new URL(href, import.meta.env.SITE), "data-astro-prefetch": true }
+  ? { ...Astro.props, href: new URL(href, Astro.site), "data-astro-prefetch": true }
   : { ...Astro.props, target: "_blank", rel: "noopener noreferrer" };
 ---
 
