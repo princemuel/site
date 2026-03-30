@@ -151,7 +151,7 @@ export type ReactionGroupByOutputType = {
   _max: ReactionMaxAggregateOutputType | null
 }
 
-type GetReactionGroupByPayload<T extends ReactionGroupByArgs> = Prisma.PrismaPromise<
+export type GetReactionGroupByPayload<T extends ReactionGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<ReactionGroupByOutputType, T['by']> &
       {

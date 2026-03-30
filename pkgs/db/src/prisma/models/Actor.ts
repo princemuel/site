@@ -158,7 +158,7 @@ export type ActorGroupByOutputType = {
   _max: ActorMaxAggregateOutputType | null
 }
 
-type GetActorGroupByPayload<T extends ActorGroupByArgs> = Prisma.PrismaPromise<
+export type GetActorGroupByPayload<T extends ActorGroupByArgs> = Prisma.PrismaPromise<
   Array<
     Prisma.PickEnumerable<ActorGroupByOutputType, T['by']> &
       {
