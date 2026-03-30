@@ -7,7 +7,7 @@ import {
   UPSTASH_REDIS_REST_URL,
 } from "astro:env/server";
 
-import { remember } from "@core/utils";
+import { remember } from "@repo/utils";
 
 const tokens = UPSTASH_LIMIT_TOKEN;
 const window = UPSTASH_LIMIT_WINDOW as Parameters<typeof Ratelimit.slidingWindow>["1"];
@@ -24,3 +24,5 @@ export const ratelimiter = new Ratelimit({
   prefix: "@upstash/ratelimit",
   ephemeralCache: remember("__rl_cache__", () => new Map()),
 });
+
+export const cache = new WeakMap<Request, Map<string, number>>();
