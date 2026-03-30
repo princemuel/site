@@ -39,3 +39,6 @@ overrides:
   vite: ^6.4.1
 
 verifyDepsBeforeRun: install
+minimumReleaseAgeExclude:
+  # Renovate security update: @sentry/astro@10.27.0
+  - "@sentry/astro@10.27.0"
