@@ -21,7 +21,7 @@
     "prettier-plugin-organize-attributes": "^1.0.0",
     "prettier-plugin-organize-imports": "^4.3.0",
     "prettier-plugin-tailwindcss": "^0.7.2",
-    "typescript": "catalog:",
-    "turbo": "^2.8.20"
+    "turbo": "^2.9.3",
+    "typescript": "catalog:"
   }
 }
