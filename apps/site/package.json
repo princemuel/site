@@ -22,14 +22,14 @@
     "http-errors-enhanced": "^3.0.2",
     "isbot": "^5.1.32",
     "outvariant": "^1.4.3",
-    "satori": "^0.18.3",
+    "satori": "^0.26.0",
     "satori-html": "^0.3.2",
     "tailwind-variants": "^3.1.1",
     "temporal-polyfill": "^0.3.0"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.5",
-    "@astrojs/db": "^0.18.2",
+    "@astrojs/db": "^0.20.0",
     "@astrojs/mdx": "^4.3.10",
     "@astrojs/node": "^9.5.0",
     "@astrojs/rss": "^4.0.13",
