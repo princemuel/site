@@ -8,10 +8,4 @@
  *
  * 🟢 You can import this file directly.
  */
-export type * from './models/Post.ts'
-export type * from './models/Actor.ts'
-export type * from './models/Comment.ts'
-export type * from './models/Session.ts'
-export type * from './models/Event.ts'
-export type * from './models/Reaction.ts'
 export type * from './commonInputTypes.ts'
