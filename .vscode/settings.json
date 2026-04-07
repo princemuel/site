@@ -24,37 +24,7 @@
   "[astro]": {
     "editor.defaultFormatter": "astro-build.astro-vscode"
   },
-  // Rust Analyzer settings
-  "rust-analyzer.rustc.source": "discover",
-  "rust-analyzer.assist.preferSelf": true,
-  "rust-analyzer.assist.emitMustUse": true,
-  "rust-analyzer.linkedProjects": ["scripts/migrate.rs", "scripts/changelog.rs"],
-  // Cargo
-  "rust-analyzer.cargo.features": "all",
-  "rust-analyzer.cargo.targetDir": true,
-  "rust-analyzer.check.command": "clippy",
-  "rust-analyzer.checkOnSave": true,
-  // Auto import and organize imports
-  "rust-analyzer.completion.autoimport.enable": true,
-  "rust-analyzer.imports.group.enable": true,
-  "rust-analyzer.imports.granularity.enforce": true,
-  "rust-analyzer.imports.granularity.group": "module",
-  "rust-analyzer.imports.prefix": "crate",
-  "rust-analyzer.imports.merge.glob": true,
-  "rust-analyzer.imports.prefixExternPrelude": false,
-  "rust-analyzer.imports.preferNoStd": true,
-  "rust-analyzer.imports.preferPrelude": true,
-  // Inlay Hints
-  "rust-analyzer.inlayHints.typeHints.enable": false,
-  "rust-analyzer.inlayHints.chainingHints.enable": false,
-  // Formatting with rustfmt
-  "rust-analyzer.rustfmt.extraArgs": ["+nightly"],
-  "[rust]": {
-    "editor.defaultFormatter": "rust-lang.rust-analyzer",
-    "editor.formatOnSave": true
-  },
-  "rust-analyzer.testExplorer": true,
-  "rust-analyzer.semanticHighlighting.punctuation.enable": true,
+
   "workbench.editor.customLabels.patterns": {
     "**/mod.rs": "${dirname}.rs"
   },
@@ -83,7 +53,7 @@
     "https://json.schemastore.org/github-issue-config.json": "file:///home/nyx/Lab/Projects/Repos/website/.github/ISSUE_TEMPLATE/config.yml"
   },
   "[toml]": {
-    "editor.defaultFormatter": "tamasfe.even-better-toml"
+    "editor.defaultFormatter": "tombi-toml.tombi"
   },
   "template-string-converter.enabled": true,
   "template-string-converter.convertWithinTemplateString": true,
@@ -97,7 +67,5 @@
   "[powershell]": {
     "editor.defaultFormatter": "ms-vscode.powershell"
   },
-  "editorconfig.template": "/home/maia/.editorconfig",
-  "turbo.useLocalTurbo": true,
-  "turbo.path": "node_modules/turbo/bin/turbo"
+  "editorconfig.template": "/home/maia/.editorconfig"
 }
