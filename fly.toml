@@ -1,0 +1,56 @@
+# Fly.io app configuration for Astro + Node.js SSR site
+# https://fly.io/docs/reference/configuration/
+
+app = 'site-icy-sun-2396'
+primary_region = 'lhr'
+
+# Observability and monitoring
+console_command = '/bin/bash'
+
+[build]
+  # Use the Dockerfile in the root directory
+  dockerfile = 'Dockerfile'
+  builder = 'docker'
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = 'stop'
+  auto_start_machines = true
+  min_machines_running = 1
+  protocols = ['http', 'https']
+  processes = ['app']
+
+  [http_service.concurrency]
+    type = 'connections'
+    hard_limit = 100
+    soft_limit = 75
+
+  [[http_service.checks]]
+    grace_period = '10s'
+    interval = '30s'
+    method = 'GET'
+    path = '/'
+    protocol = 'http'
+    timeout = '5s'
+    type = 'http'
+
+# Machine configuration
+[[vm]]
+  memory = '1gb'
+  cpu_kind = 'shared'
+  cpus = 1
+  memory_mb = 1024
+
+# Environment variables (non-secrets)
+[env]
+  NODE_ENV = 'production'
+
+# Deploy hooks
+[deploy]
+  release_command = 'pnpm --filter db db:migrate-deploy'
+  strategy = 'rolling'
+
+# Metrics settings
+[metrics]
+  port = 9090
