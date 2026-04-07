@@ -3,7 +3,6 @@ import { GOOGLE_DRIVE_FILE_ID, GOOGLE_DRIVE_TOKEN } from "astro:env/server";
 
 import { secs } from "@repo/utils";
 import type { APIRoute } from "astro";
-import { NotFoundError } from "http-errors-enhanced";
 
 export const GET: APIRoute = async () => {
   try {
@@ -15,8 +14,7 @@ export const GET: APIRoute = async () => {
     url.searchParams.set("key", GOOGLE_DRIVE_TOKEN);
 
     const response = await fetch(url, { signal: AbortSignal.timeout(20_000) });
-
-    if (!response.ok) throw new NotFoundError("Failed to fetch resource");
+    if (!response.ok) return new Response(null, { status: 404 });
 
     const body = await response.arrayBuffer();
     return new Response(body, {
@@ -28,9 +26,10 @@ export const GET: APIRoute = async () => {
         "Content-Length": body.byteLength.toString(),
       },
     });
-  } catch (error) {
-    console.error("Resume fetch error:", error);
-    return new Response(null, { status: 500 });
+  } catch (e) {
+    const error = e as Error;
+    const status = error.name === "TimeoutError" ? 504 : error.name === "AbortError" ? 499 : 500;
+    return new Response(null, { status });
   }
   // https://docs.google.com/document/d/1GzPJTAng3bG25ZX8OMnt7A_OlsNxAXIYXwQM5QrJTlg/edit?usp=drive_link
 };

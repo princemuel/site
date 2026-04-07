@@ -2,6 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 import { getCollection } from "astro:content";
 
+import { buildDate } from "@/lib/built";
+
 import Fence from "@/components/layout/fence.astro";
 import Icon from "@/components/shared/icon.astro";
 import Link from "@/components/shared/link.astro";
@@ -12,10 +14,6 @@ const excludedRoutes = new Set(["discord", "youtube", "website", "rss", ""]);
 
 let socials = await getCollection("socials", (entry) => !excludedRoutes.has(entry.id));
 socials = socials.toSorted((a, b) => a.data.order - b.data.order);
-
-const buildDate = Temporal.ZonedDateTime.from(
-  `${__BUILD_TIME__}[${Temporal.Now.timeZoneId()}]`,
-).toPlainDate();
 ---
 
 <Fence as="footer" class="py-10 text-sm">
@@ -44,7 +42,7 @@ const buildDate = Temporal.ZonedDateTime.from(
       </Link>
       <p>
         &copy;
-        <Time datetime={buildDate.toString()}>{buildDate.year}</Time>
+        <Time datetime={buildDate.toJSON()}>{buildDate.year}</Time>
         Prince Muel
       </p>
     </div>

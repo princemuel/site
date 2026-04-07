@@ -9,10 +9,10 @@ export const experimental = {
   clientPrerender: true,
   contentIntellisense: true,
   chromeDevtoolsWorkspace: true,
-  // rustCompiler: true,
+  rustCompiler: true,
   queuedRendering: {
     enabled: true,
-    poolSize: 1024, // store up to 1k nodes to be reused across renderers
-    contentCache: true, // enable re-use of node values
+    poolSize: 1024,
+    contentCache: true,
   },
 } satisfies Config;

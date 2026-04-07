@@ -21,7 +21,6 @@ export default defineConfig({
   site: envVars.PUBLIC_SITE_URL,
   env: { validateSecrets: true, schema: envSchema },
   experimental: flags,
-  //@ts-expect-error
   fonts: fonts,
   integrations: integrations,
   server: ({ command }) => ({ host: command === "dev" }),
