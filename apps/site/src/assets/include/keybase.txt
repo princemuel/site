@@ -1,0 +1,16 @@
+==================================================================
+https://keybase.io/princemuel
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an independent entity on the internet.
+  * I am princemuel on keybase.io (https://keybase.io/princemuel).
+  * I have a public key with fingerprint 7E75 7E6D 4BB7 6C0E B595
+    8711 C34C 73C0 9C8F 19B9
+
+To verify:
+
+  * I put this statement here: {{url}}
+
+==================================================================
