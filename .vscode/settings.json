@@ -97,6 +97,7 @@
   "[powershell]": {
     "editor.defaultFormatter": "ms-vscode.powershell"
   },
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "editorconfig.template": "/home/maia/.editorconfig"
+  "editorconfig.template": "/home/maia/.editorconfig",
+  "turbo.useLocalTurbo": true,
+  "turbo.path": "node_modules/turbo/bin/turbo"
 }

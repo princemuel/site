@@ -10,8 +10,7 @@
     "rust-lang.rust-analyzer",
     "Vercel.turbo-vsc",
     "dotenv.dotenv-vscode",
-    "EditorConfig.EditorConfig",
-    "TypeScriptTeam.native-preview"
+    "EditorConfig.EditorConfig"
   ],
   "unwantedRecommendations": []
 }
