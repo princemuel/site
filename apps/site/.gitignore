@@ -1,6 +1,0 @@
-# Local Netlify folder
-.netlify
-
-# Astro generated
-.astro/*
-!.astro/icon.d.ts

@@ -1,0 +1,88 @@
+#:schema ../../.astro/collections/labels.schema.json
+[demo]
+icon = "lucide:house"
+text = "Demo"
+
+[docs]
+icon = "lucide:house"
+text = "Docs"
+
+[website]
+icon = "lucide:house"
+text = "Website"
+
+[repo]
+icon = "lucide:house"
+text = "Repository"
+
+[tweet]
+icon = "lucide:house"
+text = "Tweet"
+
+[meeting]
+icon = "lucide:house"
+text = "Meeting Notes"
+
+[game]
+icon = "lucide:gamepad-2"
+text = "Game"
+
+[app]
+icon = "ri:app-store-fill"
+text = "Web App"
+
+[template]
+icon = "lucide:house"
+text = "Template"
+
+[plugin]
+icon = "lucide:house"
+text = "Plugin"
+
+[library]
+icon = "lucide:house"
+text = "Library"
+
+[tool]
+icon = "lucide:house"
+text = "Tool"
+
+[resource]
+icon = "lucide:house"
+text = "Resource"
+
+[design]
+icon = "lucide:house"
+text = "Design"
+
+[service]
+icon = "lucide:house"
+text = "Service"
+
+[script]
+icon = "lucide:house"
+text = "Script"
+
+[theme]
+icon = "lucide:house"
+text = "Theme"
+
+[widget]
+icon = "lucide:house"
+text = "Widget"
+
+[component]
+icon = "lucide:house"
+text = "Component"
+
+[hardware]
+icon = "lucide:house"
+text = "Hardware"
+
+[cli]
+icon = "lucide:house"
+text = "Cli"
+
+[tutorial]
+icon = "lucide:house"
+text = "Tutorial"

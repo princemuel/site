@@ -1,0 +1,112 @@
+---
+/**
+ * Icon.astro
+ *
+ * A thin wrapper that resolves an "collection:name" string to the matching
+ * Astro SVG component (imported from the generated index.ts).
+ *
+ * Astro treats imported .svg files as components, so each one already
+ * accepts standard SVG attributes.  We layer a small set of convenience props
+ * on top (size, class) and forward everything else via `...rest`.
+ *
+ * Usage:
+ *   <Icon name="lucide:house" />
+ *   <Icon name="arrow-right" />
+ *   <Icon name="ion:logo-github" size={20} class="text-zinc-400" />
+ *   <Icon name="lucide:cloud-moon" aria-hidden="true" />
+ */
+
+import { icons } from "@/assets/icons";
+import { cache } from "@/lib/cache";
+import { getIconData, iconToSVG } from "@iconify/utils";
+
+import type { iconNames } from "@/assets/icons";
+import type { HTMLAttributes } from "astro/types";
+type IconName = (typeof iconNames)[number];
+
+type SVGAttributes = HTMLAttributes<"svg">;
+
+interface Props extends SVGAttributes {
+  name: IconName;
+  title?: string;
+  desc?: string;
+  size?: number | string;
+  width?: number | string;
+  height?: number | string;
+  "is:inline"?: boolean;
+}
+
+const {
+  name,
+  title,
+  desc,
+  size,
+  "is:inline": inlined = false,
+  width,
+  height,
+  ...rest
+} = Astro.props;
+
+const raw = name as string;
+const colonIdx = raw.indexOf(":");
+
+const [iconSet, iconName] =
+  colonIdx === -1
+    ? (["local", raw] as const)
+    : ([raw.slice(0, colonIdx), raw.slice(colonIdx + 1)] as const);
+
+const collection = icons[iconSet];
+if (!collection) {
+  throw new Error(`[Icon] Unknown icon set "${iconSet}". Did you run the generate script?`);
+}
+
+const iconData = getIconData(collection, iconName);
+if (!iconData) {
+  throw new Error(`[Icon] "${iconName}" not found in "${iconSet}". Is it listed in icons.json?`);
+}
+
+// In SSR mode, each unique icon is rendered as a <symbol> once per request.
+// Every subsequent use emits only a <use href="#id"> — avoids repeating
+// the full SVG body (which can be 1–3 KB) for common icons like "home".
+const id = `ai:${iconSet}:${iconName}`;
+
+let isFirstRender = true;
+if (!inlined && !Astro.isPrerendered) {
+  const req = Astro.request;
+  const map = cache.get(req) ?? new Map<string, number>();
+  const renderCount = map.get(id) ?? 0;
+  map.set(id, renderCount + 1);
+  cache.set(req, map);
+  isFirstRender = renderCount === 0;
+}
+
+const useSymbol = !inlined && isFirstRender;
+
+const { attributes, body } = iconToSVG(iconData);
+const resolvedWidth = size ?? width ?? attributes.width;
+const resolvedHeight = size ?? height ?? attributes.height;
+
+const attrs = {
+  ...attributes,
+  ...rest,
+  width: resolvedWidth?.toString(),
+  height: resolvedHeight?.toString(),
+  ...(useSymbol ? { viewBox: undefined } : {}),
+};
+---
+
+<svg {...attrs}>
+  {title && <title>{title}</title>}
+  {desc && <desc>{desc}</desc>}
+
+  {
+    inlined ? (
+      <Fragment id={id} set:html={body} />
+    ) : (
+      <Fragment>
+        {useSymbol && <symbol id={id} viewBox={attributes.viewBox} set:html={body} />}
+        <use href={`#${id}`} />
+      </Fragment>
+    )
+  }
+</svg>

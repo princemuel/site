@@ -1,46 +1,17 @@
 {
-  "search.exclude": {
-    "**/.node_modules": true,
-    "**/pnpm.*": true,
-    "**/.yarn": true,
-    "**/.pnp.*": true
-  },
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "typescript.enablePromptUseWorkspaceTsdk": true,
-  "dotenv.enableAutocloaking": false,
-  "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
+  "js/ts.implicitProjectConfig.target": "ESNext",
+  "js/ts.experimental.useTsgo": false,
+  "js/ts.updateImportsOnFileMove.enabled": "always",
+  "js/ts.suggest.autoImports": true,
+  "js/ts.tsdk.promptToUseWorkspaceVersion": true,
+  "js/ts.tsdk.path": "node_modules/typescript/lib",
   "editor.wordWrap": "bounded",
-  "editor.wordWrapColumn": 96,
+  "editor.wordWrapColumn": 108,
   "editor.inlineSuggest.enabled": true,
-  "editor.formatOnSave": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.codeActionsOnSave": {
-    "source.fixAll": "explicit",
-    "source.organizeImports": "explicit",
-    "source.addMissingImports": "explicit"
-  },
-  "files.autoSave": "off",
-  "files.associations": {
-    "*.css": "tailwindcss"
-  },
-  "editor.quickSuggestions": {
-    "strings": "on"
-  },
-  "emmet.preferences": {
-    "output.selfClosingStyle": "xhtml"
-  },
-  // "emmet.includeLanguages": {
-  //   "typescriptreact": "html"
-  // },
+  "dotenv.enableAutocloaking": false,
   "oxc.enable": true,
-  "oxc.fmt.experimental": true,
-  "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "json.validate.enable": true,
-  "css.validate": false,
-  "less.validate": false,
-  "scss.validate": false,
+  "oxc.typeAware": true,
+  "oxc.fixKind": "safe_fix_or_suggestion",
   "mdx.server.enable": true,
   "mdx.validate.validateDuplicateLinkDefinitions": "warning",
   "mdx.validate.validateFileLinks": "warning",
@@ -48,75 +19,47 @@
   "mdx.validate.validateMarkdownFileLinkFragments": "warning",
   "mdx.validate.validateReferences": "warning",
   "mdx.validate.validateUnusedLinkDefinitions": "warning",
-  "astro.content-intellisense": true,
-  "npm-intellisense.packageSubfoldersIntellisense": true,
   "prettier.documentSelectors": ["**/*.astro"],
-  "auto-close-tag.activationOnLanguage": ["*"],
+  "astro.content-intellisense": true,
+  "editor.defaultFormatter": "oxc.oxc-vscode",
   "[astro]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "astro-build.astro-vscode"
   },
-  "[svelte]": {
-    "editor.defaultFormatter": "svelte.svelte-vscode"
-  },
-  "tailwindCSS.emmetCompletions": true,
-  "tailwindCSS.classAttributes": ["class", "class:list", "tw"],
-  "tailwindCSS.experimental.configFile": "apps/site/app/global.css",
-  "tailwindCSS.includeLanguages": {
-    "xslt": "html"
-  },
-  "tailwindCSS.experimental.classRegex": [
-    ["([\"'`][^\"'`]*.*?[\"'`])", "[\"'`]([^\"'`]*).*?[\"'`]"]
-  ],
-  "workbench.tree.indent": 12,
-  // Rust Analyzer settings
-  "rust-analyzer.assist.preferSelf": true,
-  "rust-analyzer.assist.emitMustUse": true,
-  // Cargo
-  "rust-analyzer.cargo.features": "all",
-  "rust-analyzer.cargo.targetDir": true,
-  "rust-analyzer.check.command": "clippy",
-  "rust-analyzer.checkOnSave": true,
-  // Auto import and organize imports
-  "rust-analyzer.completion.autoimport.enable": true,
-  "rust-analyzer.imports.group.enable": true,
-  "rust-analyzer.imports.granularity.enforce": true,
-  "rust-analyzer.imports.granularity.group": "module",
-  "rust-analyzer.imports.prefix": "crate",
-  "rust-analyzer.imports.merge.glob": true,
-  "rust-analyzer.imports.prefixExternPrelude": false,
-  "rust-analyzer.imports.preferNoStd": true,
-  "rust-analyzer.imports.preferPrelude": true,
-  // Inlay Hints
-  "rust-analyzer.inlayHints.typeHints.enable": false,
-  "rust-analyzer.inlayHints.chainingHints.enable": false,
-  // Formatting with rustfmt
-  "rust-analyzer.rustfmt.extraArgs": ["+nightly"],
-  "[rust]": {
-    "editor.defaultFormatter": "rust-lang.rust-analyzer",
-    "editor.formatOnSave": true
-  },
-  "rust-analyzer.testExplorer": true,
-  "rust-analyzer.semanticHighlighting.punctuation.enable": true,
+  "workbench.editor.customLabels.patterns": { "**/mod.rs": "${dirname}.rs" },
+  "material-icon-theme.activeIconPack": "react_redux",
   "material-icon-theme.folders.associations": {
+    ".cargo": "rust",
     "journal": "dump",
-    "crates": "tools",
+    "crates": "rust",
     "films": "video",
+    "frames": "template",
     "series": "television",
     "games": "shader",
-    "problems": "error"
+    "problems": "error",
+    "studio": "client"
   },
+  // "files.associations": {
+  //   "*.agent.md": "chatagent",
+  //   "*.instructions.md": "instructions",
+  //   "*.prompt.md": "prompt"
+  // },
   "[shellscript]": {
     "editor.defaultFormatter": "mads-hartmann.bash-ide-vscode"
   },
   "yaml.schemas": {
-    "https://json.schemastore.org/github-issue-config.json": "file:///home/nyx/Lab/Projects/Repos/site/.github/ISSUE_TEMPLATE/config.yml"
+    "./.schemas/collection.schema.json": "*.collection.yml",
+    "https://json.schemastore.org/github-issue-config.json": "file:///home/nyx/Lab/Projects/Repos/website/.github/ISSUE_TEMPLATE/config.yml"
   },
   "[toml]": {
-    "editor.defaultFormatter": "tamasfe.even-better-toml"
+    "editor.defaultFormatter": "tombi-toml.tombi"
   },
   "template-string-converter.enabled": true,
   "template-string-converter.convertWithinTemplateString": true,
   "template-string-converter.convertOutermostQuotes": true,
   "template-string-converter.autoRemoveTemplateString": true,
-  "template-string-converter.addBracketsToProps": true
+  "template-string-converter.addBracketsToProps": true,
+  "markdown.validate.enabled": true,
+  "[powershell]": {
+    "editor.defaultFormatter": "ms-vscode.powershell"
+  }
 }

@@ -1,0 +1,72 @@
+#:schema ../../.astro/collections/genres.schema.json
+[game]
+icon = "lucide:gamepad-2"
+text = "Game"
+
+[website]
+icon = "lucide:house"
+text = "Website"
+
+[app]
+icon = "ri:app-store-fill"
+text = "Web App"
+
+[template]
+icon = "lucide:house"
+text = "Template"
+
+[plugin]
+icon = "lucide:house"
+text = "Plugin"
+
+[library]
+icon = "lucide:house"
+text = "Library"
+
+[docs]
+icon = "lucide:house"
+text = "Docs"
+
+[tool]
+icon = "lucide:house"
+text = "Tool"
+
+[resource]
+icon = "lucide:house"
+text = "Resource"
+
+[design]
+icon = "lucide:house"
+text = "Design"
+
+[service]
+icon = "lucide:house"
+text = "Service"
+
+[script]
+icon = "lucide:house"
+text = "Script"
+
+[theme]
+icon = "lucide:house"
+text = "Theme"
+
+[widget]
+icon = "lucide:house"
+text = "Widget"
+
+[component]
+icon = "lucide:house"
+text = "Component"
+
+[hardware]
+icon = "lucide:house"
+text = "Hardware"
+
+[cli]
+icon = "lucide:house"
+text = "Cli"
+
+[tutorial]
+icon = "lucide:house"
+text = "Tutorial"

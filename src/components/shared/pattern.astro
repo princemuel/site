@@ -1,0 +1,16 @@
+---
+import { pattern } from "@/assets";
+import type { HTMLAttributes } from "astro/types";
+
+type Props = HTMLAttributes<"div">;
+
+const { class: clsx, ...attrs } = Astro.props;
+---
+
+<div
+  {...attrs}
+  class:list={["bg-(image:--image) bg-size-[1.5rem] bg-repeat opacity-50 dark:opacity-100", clsx]}
+>
+</div>
+
+<style define:vars={{ image: `url(${pattern.src})` }}></style>

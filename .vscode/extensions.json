@@ -4,11 +4,13 @@
     "dbaeumer.vscode-eslint",
     "esbenp.prettier-vscode",
     "bradlc.vscode-tailwindcss",
-    "editorconfig.editorconfig",
     "unifiedjs.vscode-mdx",
-    "tamasfe.even-better-toml",
     "oxc.oxc-vscode",
-    "rust-lang.rust-analyzer"
+    "tombi-toml.tombi",
+    "rust-lang.rust-analyzer",
+    "Vercel.turbo-vsc",
+    "dotenv.dotenv-vscode",
+    "EditorConfig.EditorConfig"
   ],
   "unwantedRecommendations": []
 }

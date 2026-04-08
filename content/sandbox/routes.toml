@@ -1,0 +1,42 @@
+#:schema ../../.astro/collections/routes.schema.json
+[home]
+href  = "/"
+icon  = "lucide:house"
+order = 0
+text  = "home"
+
+[about]
+href  = "/about"
+icon  = "lucide:user-round-pen"
+order = 2
+text  = "about me"
+
+[projects]
+href  = "/projects"
+icon  = "lucide:flask-conical"
+order = 3
+text  = "projects"
+
+[posts]
+href  = "/posts"
+icon  = "lucide:file-text"
+order = 4
+text  = "posts"
+
+[wiki]
+href  = "/wiki"
+icon  = "lucide:library"
+order = 5
+text  = "wiki"
+
+[journal]
+href  = "/journal"
+icon  = "lucide:files"
+order = 6
+text  = "journal"
+
+[contact]
+href  = "/hello"
+icon  = "lucide:mail-plus"
+order = 7
+text  = "contact me"

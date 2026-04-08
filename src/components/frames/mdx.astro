@@ -1,0 +1,23 @@
+---
+import Prose from "@/components/content/prose.astro";
+import Shell from "@/components/frames/shell.astro";
+
+import type { MDXLayoutProps } from "astro";
+
+type PageProps = { title: string; description: string };
+
+type Props = MDXLayoutProps<PageProps>;
+
+const { frontmatter } = Astro.props;
+
+// const { title, description } = frontmatter;
+---
+
+<Shell>
+  <Prose>
+    <h1 id="a11ty-headline">
+      {frontmatter.title}
+    </h1>
+    <slot />
+  </Prose>
+</Shell>

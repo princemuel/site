@@ -1,0 +1,41 @@
+---
+import { Code as ExpressiveCode } from "astro-expressive-code/components";
+// import { decode } from "tiny-decode";
+import type { ExpressiveCodeBlockProps } from "astro-expressive-code";
+
+interface Props extends ExpressiveCodeBlockProps {
+  /**
+   * @desc Markdoc places the parsed fence language in the `language` property.
+   * @example: `typescript`
+   */
+  ["data-language"]?: string;
+  /**
+   * @desc title is a custom Markdoc schema addition to pass a title to the code fence.
+   * @summary `title` is not required.
+   * If using Expressive Code's commented file name, it will populate that.
+   * If both are specified, it will follow Expressive Code's default behavior.
+   */
+  title: string;
+  /**
+   *  The CSS class name(s) to apply to the code block's container element.
+   */
+  class?: string;
+}
+
+/**
+ * @description The plaintext contents of the code block.
+ */
+let code = "";
+if (Astro.slots.has("default")) code = (await Astro.slots.render("default")).trim();
+---
+
+<ExpressiveCode
+  code={code}
+  title={Astro.props.title}
+  class={Astro.props.class}
+  mark={Astro.props.mark}
+  ins={Astro.props.ins}
+  del={Astro.props.del}
+  frame={Astro.props.frame ?? "auto"}
+  lang={Astro.props["data-language"]}
+/>

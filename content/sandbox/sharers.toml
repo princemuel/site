@@ -1,0 +1,31 @@
+#:schema ../../.astro/collections/sharers.schema.json
+
+[whatsapp]
+href  = "https://wa.me/?text="
+icon  = "whatsapp"
+order = 0
+text  = "Share this post via WhatsApp"
+
+[facebook]
+href  = "https://www.facebook.com/sharer.php?u="
+icon  = "carbon:logo-facebook"
+order = 1
+text  = "Share this post on Facebook"
+
+[twitter]
+href  = "https://x.com/intent/tweet?url="
+icon  = "carbon:logo-twitter"
+order = 2
+text  = "Tweet this post"
+
+[pinterest]
+href  = "https://pinterest.com/pin/create/button/?url="
+icon  = "carbon:logo-pinterest"
+order = 4
+text  = "Share this post on Pinterest"
+
+[mail]
+href  = "mailto:?subject=See%20this%20post&body="
+icon  = "lucide:mail"
+order = 5
+text  = "Share this post via email"

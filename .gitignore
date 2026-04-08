@@ -57,6 +57,7 @@ tmp-*
 .dynamodb/
 .nx/cache
 .nx/workspace-data
+.turbo
 
 # Coverage
 coverage
@@ -168,3 +169,11 @@ local
 *.pem
 styled-system
 prisma.rs
+
+# Local Netlify folder
+.netlify
+
+# Astro generated
+.astro/*
+
+/generated/prisma

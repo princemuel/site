@@ -1,0 +1,36 @@
+---
+import Fence from "@/components/layout/fence.astro";
+import Routes from "@/components/layout/routes.astro";
+import Link from "@/components/shared/link.astro";
+import ThemePicker from "@/components/widgets/theme-picker.astro";
+
+import Icon from "@/components/shared/icon.astro";
+---
+
+<Fence as="header" class="bg-inherit">
+  <section class="flex items-center justify-between">
+    <Link href="/" class="self-center font-mono text-4xl">princemuel</Link>
+    <ThemePicker />
+  </section>
+
+  <section class="flex items-center gap-4 border-y border-zinc-200 dark:border-zinc-700">
+    <Routes class="mr-auto" />
+
+    <section class="flex items-center">
+      <Link
+        href="/rss.xml"
+        class:list={[
+          "p-3 text-2xl",
+          "text-zinc-900 dark:text-zinc-200",
+          "hover:text-zinc-200 dark:hover:text-zinc-900",
+          "hover:bg-zinc-900 dark:hover:bg-zinc-200",
+          "focus:text-zinc-200 dark:focus:text-zinc-900",
+          "focus:bg-zinc-900 dark:focus:bg-zinc-200",
+        ]}
+      >
+        <Icon name="lucide:rss" class="text-inherit" />
+        <span class="sr-only">RSS</span>
+      </Link>
+    </section>
+  </section>
+</Fence>

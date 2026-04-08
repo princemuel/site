@@ -1,0 +1,27 @@
+---
+import { invariant } from "outvariant";
+
+import type { HTMLAttributes } from "astro/types";
+
+type Props = HTMLAttributes<"a">;
+
+invariant(Astro.props.href, "Expected `href` to be set but got `%s`", typeof Astro.props.href);
+
+const thatPathname = Astro.props.href.toString().toLocaleLowerCase();
+const thisPathname = Astro.url.pathname.toLocaleLowerCase();
+
+// Determine if link is active
+// If `href` has a trailing slash, match exact position, otherwise look for slash after
+const endSlashPosition =
+  thatPathname !== "/" && thatPathname.endsWith("/")
+    ? thatPathname.length - 1
+    : thatPathname.length;
+
+const isActive =
+  thisPathname === thatPathname ||
+  (thisPathname.startsWith(thatPathname) && thisPathname.charAt(endSlashPosition) === "/");
+---
+
+<a {...Astro.props} aria-current={isActive ? "page" : "false"} data-astro-prefetch>
+  <slot />
+</a>

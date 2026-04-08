@@ -1,0 +1,78 @@
+#:schema ../../.astro/collections/socials.schema.json
+
+[discord]
+color = "text-indigo-600"
+href  = "https://discord.gg/vW7dnUVGP9"
+icon  = "carbon:logo-discord"
+order = 0
+text  = "Join our Discord server"
+
+[twitter]
+color = "text-blue-500"
+href  = "https://x.com/intent/follow?screen_name=iamprincemuel"
+icon  = "carbon:logo-twitter"
+order = 1
+text  = "Follow Me on Twitter/X"
+
+[instagram]
+color = "text-pink-500"
+href  = "https://instagram.gg/vW7dnUVGP9"
+icon  = "carbon:logo-instagram"
+order = 2
+text  = "Follow me on Instagram"
+
+[youtube]
+color = "text-red-600"
+href  = "https://youtube.com/@iamprincemuel"
+icon  = "carbon:logo-youtube"
+order = 3
+text  = "Subscribe to my YouTube Channel"
+
+[linkedin]
+color = "text-blue-700"
+href  = "https://www.linkedin.com/in/princemuel"
+icon  = "carbon:logo-linkedin"
+order = 4
+text  = "Connect with me on LinkedIn"
+
+[website]
+color = "text-green-700"
+href  = "https://princemuel.netlify.app/about"
+icon  = "lucide:globe"
+order = 5
+text  = "Connect with me on LinkedIn"
+
+[github]
+color = "text-zinc-900 dark:text-zinc-100"
+href  = "https://github.com/princemuel"
+icon  = "carbon:logo-github"
+order = 6
+text  = "Check out my projects on GitHub"
+
+[email]
+color = "text-red-500"
+href  = "mail:to:vansomecsam@gmail.com"
+icon  = "lucide:mail-plus"
+order = 7
+text  = "Send me a message"
+
+[rss]
+color = "text-zinc-500"
+href  = "/rss.xml"
+icon  = "lucide:rss"
+order = 8
+text  = "Subscribe to my rss feed"
+
+[mastodon]
+color = "text-indigo-600"
+href  = "https://mastodon.social/@princemuel"
+icon  = "carbon:logo-mastodon"
+order = 9
+text  = "Follow me on Mastodon"
+
+[keyoxide]
+color = "text-indigo-400"
+href  = "https://keyoxide.org/u/princemuel"
+icon  = "keyoxide"
+order = 10
+text  = "Verify my identity on Keyoxide"

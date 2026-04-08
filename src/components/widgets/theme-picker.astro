@@ -1,0 +1,173 @@
+---
+import Icon from "@/components/shared/icon.astro";
+
+import type { HTMLAttributes } from "astro/types";
+
+type Props = HTMLAttributes<"button">;
+---
+
+<x-theme-picker class="contents">
+  <button
+    type="button"
+    title="Toggle Theme"
+    class:list={[
+      "group relative flex items-center p-3 text-2xl",
+      "text-zinc-900 dark:text-zinc-200",
+      "hover:text-zinc-200 dark:hover:text-zinc-900",
+      "hover:bg-zinc-900 dark:hover:bg-zinc-200",
+      "focus:text-zinc-200 dark:focus:text-zinc-900",
+      "focus:bg-zinc-900 dark:focus:bg-zinc-200",
+      Astro.props.class,
+    ]}
+  >
+    <span class="sr-only">Toggle theme</span>
+    <Icon
+      data-id="x-light"
+      name="lucide:cloud-moon"
+      role="presentation"
+      class="text-inherit data-[hidden=true]:hidden"
+      data-hidden="false"
+    />
+    <Icon
+      data-id="x-dark"
+      name="lucide:sun"
+      role="presentation"
+      class="text-inherit data-[hidden=true]:hidden"
+      data-hidden="false"
+    />
+    <Icon
+      data-id="x-system"
+      name="lucide:monitor-cog"
+      role="presentation"
+      class="text-inherit data-[hidden=true]:hidden"
+      data-hidden="false"
+    />
+  </button>
+</x-theme-picker>
+
+{/* Inlined to avoid FOUC. Uses global scope from `theme-provider.astro` */}
+<script is:inline>
+  Theme.selectThemeIcon();
+</script>
+
+<script>
+  import { createElement } from "@/helpers/dom";
+
+  type Theme = (typeof themes)[number];
+  type ColorScheme = Exclude<Theme, "system">;
+
+  const STORAGE_KEY = "x-theme";
+  const CHANNEL_NAME = "x-theme";
+
+  // ============================================================================
+  // State Management
+  // ============================================================================
+  const mql = matchMedia("(prefers-color-scheme: light)");
+  const channel = new BroadcastChannel(CHANNEL_NAME);
+
+  const themes = ["system", "light", "dark"] as const;
+  /** Yields the next theme value, looping back to the first after reaching the end. */
+  const themeCycler = (function* infinite() {
+    let index = 0;
+    while (true) {
+      yield themes[index];
+      index = (index + 1) % themes.length;
+    }
+  })();
+
+  const getSystemScheme = (): ColorScheme => (mql.matches ? "light" : "dark");
+
+  const parseTheme = (value: unknown): Theme =>
+    value === "light" || value === "dark" ? value : "system";
+
+  const loadTheme = (): Theme => parseTheme(localStorage?.getItem(STORAGE_KEY));
+
+  const storeTheme = (theme: Theme) => {
+    localStorage?.setItem(STORAGE_KEY, theme === "light" || theme === "dark" ? theme : "");
+  };
+
+  const resolveScheme = (theme: Theme): ColorScheme =>
+    theme === "system" ? getSystemScheme() : theme;
+
+  // ============================================================================
+  // Theme Application
+  // ============================================================================
+
+  /** Update theme widget, document theme, and local storage state. */
+
+  const setTheme = (theme: Theme) => {
+    Theme.selectThemeIcon(theme);
+
+    const $ = document.documentElement;
+    const scheme = resolveScheme(theme);
+
+    $.dataset.theme = scheme;
+    $.dataset.codeTheme = `github-${scheme}-default`;
+
+    storeTheme(theme);
+  };
+
+  const onThemeChange = (theme: Theme) => {
+    setTheme(theme);
+    channel.postMessage({ theme, timestamp: Date.now() });
+  };
+
+  // ============================================================================
+  // Cross-tab Synchronization
+  // ============================================================================
+
+  let lastBroadcast = 0;
+
+  type ChannelEvent = MessageEvent<{ theme: Theme; timestamp: number }>;
+
+  channel.addEventListener("message", (event: ChannelEvent) => {
+    const { theme, timestamp } = event.data;
+
+    // Prevent echo/loop and out-of-order messages
+    if (timestamp <= lastBroadcast) return;
+
+    lastBroadcast = timestamp;
+    onThemeChange(parseTheme(theme));
+  });
+
+  // React to changes in system color scheme.
+  mql.addEventListener("change", () => {
+    if (loadTheme() === "system") onThemeChange("system");
+  });
+
+  // Fallback for browsers without BroadcastChannel (rare but defensive)
+  if (!("BroadcastChannel" in globalThis)) {
+    window.addEventListener("storage", (e) => {
+      if (e.key === STORAGE_KEY && e.newValue !== null) {
+        onThemeChange(parseTheme(e.newValue));
+      }
+    });
+  }
+
+  createElement(
+    "x-theme-picker",
+    class ThemePicker extends HTMLElement {
+      #controller?: AbortController;
+      connectedCallback() {
+        onThemeChange(loadTheme());
+        this.#controller = new AbortController();
+        this.addEventListener("click", this, { signal: this.#controller.signal });
+      }
+
+      disconnectedCallback() {
+        this.#controller?.abort();
+      }
+
+      handleEvent<E extends Event>(event: E) {
+        // @ts-expect-error
+        this[`on${event.type}` as keyof this](event);
+      }
+
+      //@ts-expect-error
+      // oxlint-disable-next-line no-unused-private-class-members
+      onclick(_e) {
+        onThemeChange(parseTheme(themeCycler.next().value));
+      }
+    },
+  );
+</script>
