@@ -1,15 +1,8 @@
-import adapter from "@astrojs/netlify";
+import adapter from "@astrojs/vercel";
 export default adapter({
-  cacheOnDemandPages: true,
-  imageCDN: true,
+  imageService: true,
+  devImageService: "sharp",
   staticHeaders: true,
-  devFeatures: false,
+  isr: true,
+  middlewareMode: "edge",
 });
-// import adapter from "@astrojs/vercel";
-// export default adapter({
-//   imageService: true,
-//   devImageService: "sharp",
-//   staticHeaders: true,
-//   isr: true,
-//   middlewareMode: "edge",
-// });

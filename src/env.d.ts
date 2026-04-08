@@ -10,10 +10,8 @@ const __BUILD_TIME__: string;
 const __DEPLOY_CHANNEL__: string;
 const __GIT_COMMIT__: string;
 
-type RuntimeLocals = import("@astrojs/netlify").NetlifyLocals;
-
 declare namespace App {
-  interface Locals extends RuntimeLocals {
+  interface Locals {
     content: { title: string; description: string };
     auth: { start_time: number };
     ratelimit: { limit: number; remaining: number; reset: number; throttle: boolean };
