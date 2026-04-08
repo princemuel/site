@@ -8,3 +8,4 @@ wasi-worker.mjs
 .yarnrc.yml
 *.geojson
 *.rs
+*.mdx

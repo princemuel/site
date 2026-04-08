@@ -1,24 +1,5 @@
-packages:
-  - apps/*
-  - pkgs/*
 allowBuilds:
   "@prisma/engines": true
   esbuild: true
   prisma: true
   sharp: true
-catalog:
-  "@dotenvx/dotenvx": ^1.51.1
-  "@total-typescript/ts-reset": ^0.6.1
-  "@types/node": ^25.3.5
-  oxfmt: ^0.41.0
-  oxlint: ^1.58.0
-  oxlint-tsgolint: ^0.17.4
-  prettier: ^3.8.1
-  tsx: 4.21.0
-  typescript: ^6.0.2
-catalogMode: manual
-ignoreWorkspaceRootCheck: true
-overrides:
-  vite: "^7"
-shellEmulator: true
-strictPeerDependencies: false

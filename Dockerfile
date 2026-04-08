@@ -1,99 +1,64 @@
 # syntax = docker/dockerfile:1
 
-# Multi-stage build for Astro + Prisma Node.js SSR deployment on Fly.io
-
-ARG NODE_VERSION=24.12.0
+# Adjust NODE_VERSION as desired
+ARG NODE_VERSION=24
 FROM node:${NODE_VERSION}-slim AS base
 
-# Enable pnpm
+LABEL fly_launch_runtime="Astro/Prisma"
+
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
-RUN coreutils enable
+RUN corepack enable
 
+# Astro/Prisma app lives here
 WORKDIR /app
 
-# Install system dependencies required for building native modules
-FROM base AS deps-installer
+# Set production environment
+ENV NODE_ENV="production"
+
+# Throw-away build stage to reduce size of final image
+FROM base AS build
+
+# Install packages needed to build node modules
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y \
-    build-essential \
-    openssl \
-    pkg-config \
-    python-is-python3 \
-    ca-certificates && \
-    rm -rf /var/lib/apt/lists/*
+    apt-get install --no-install-recommends -y build-essential node-gyp openssl pkg-config python-is-python3 ca-certificates && rm -rf /var/lib/apt/lists/*
 
-# Install node_modules with pnpm
-FROM deps-installer AS deps
+# Install node modules
+COPY .npmrc package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+RUN pnpm install --frozen-lockfile --prod=false
 
-# Copy workspace configuration
-COPY pnpm-workspace.yaml pnpm-lock.yaml package.json .npmrc* ./
-
-# Copy all package.json files for proper monorepo resolution
-COPY apps/site/package.json ./apps/site/
-COPY pkgs/db/package.json ./pkgs/db/
-COPY pkgs/utils/package.json ./pkgs/utils/
-
-# Install all dependencies (frozen lockfile for reproducibility)
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
-    pnpm install --frozen-lockfile
+COPY env.build .env
 
 # Generate Prisma Client
-COPY pkgs/db/prisma ./pkgs/db/prisma
-COPY pkgs/db/src ./pkgs/db/src
-RUN pnpm --filter db db:generate
+COPY prisma .
+RUN pnpx prisma generate
 
-# Build stage - produce optimized application artifacts
-FROM deps AS build
+# Copy application code
+COPY . .
 
-# Copy all source code
-COPY apps/site ./apps/site
-COPY pkgs/db ./pkgs/db
-COPY pkgs/utils ./pkgs/utils
+# Build application
+RUN pnpm run build
 
-# Build the Astro site with static + SSR
-RUN pnpm --filter site build
+# Remove development dependencies
+RUN pnpm prune --prod
 
-# Runtime stage - minimal production image
-FROM base AS runtime
 
-# Install runtime dependencies (much smaller than build stage)
+# Final stage for app image
+FROM node:${NODE_VERSION}-slim AS runtime
+
+# Install packages needed for deployment
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y \
-    ca-certificates && \
-    rm -rf /var/lib/apt/lists/*
+    apt-get install --no-install-recommends -y git ca-certificates openssl wget && \
+    rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
-# Set environment variables for production
-ENV NODE_ENV=production
+# Copy built application
+COPY --from=build /app/node_modules ./node_modules
+COPY --from=build /app/dist ./dist
+COPY --from=build /app/package.json ./package.json
+COPY --from=build /app/prisma ./prisma
 
-# Copy node_modules from deps stage
-COPY --from=deps /app/node_modules ./node_modules
-COPY --from=deps /app/pnpm-lock.yaml ./pnpm-lock.yaml
+EXPOSE 80
 
-# Copy database schema and Prisma Client
-COPY --from=build /app/pkgs/db/node_modules ./pkgs/db/node_modules
-COPY --from=build /app/pkgs/db/src ./pkgs/db/src
-COPY --from=build /app/pkgs/db/prisma ./pkgs/db/prisma
+HEALTHCHECK CMD node -e "fetch('http://localhost:8080').then(r=>{if(!r.ok)process.exit(1)})"
 
-# Copy utilities package
-COPY --from=build /app/pkgs/utils ./pkgs/utils
-
-# Copy built Astro app (.astro, .output, etc.)
-COPY --from=build /app/apps/site/dist ./apps/site/dist
-COPY --from=build /app/apps/site/.output ./apps/site/.output
-
-# Copy package.json files needed at runtime
-COPY apps/site/package.json ./apps/site/
-COPY pkgs/db/package.json ./pkgs/db/
-COPY pkgs/utils/package.json ./pkgs/utils/
-COPY package.json pnpm-workspace.yaml ./
-
-# Expose port for Fly.io (must match fly.toml internal_port)
-EXPOSE 8080
-
-# Health check for Fly.io
-HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
-    CMD node -e "require('http').get('http://localhost:8080/', (r) => {if (r.statusCode !== 200) throw new Error(r.statusCode)})"
-
-# Start the application
-CMD ["node", "--import=tsx", "./apps/site/.output/server/entry.mjs"]
+CMD ["node", "dist/server/entry.mjs"]
