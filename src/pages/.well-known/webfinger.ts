@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: Apache-2.0
-import { secs } from "@/utils";
 import { webfinger as buffer } from "../../assets/include";
+import { secs } from "../../utils";
 
 export const GET = () => {
   return Response.json(buffer, {

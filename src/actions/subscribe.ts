@@ -1,9 +1,5 @@
-import { ActionError, defineAction } from "astro:actions";
-import { RESEND_AUDIENCE } from "astro:env/server";
-
 import { z } from "astro/zod";
-
-import { resend } from "@/lib/api";
+import { ActionError, defineAction } from "astro:actions";
 
 export default defineAction({
   accept: "form",
@@ -27,13 +23,13 @@ export default defineAction({
       });
     }
 
-    const { error, data } = await resend.contacts.create({
-      audienceId: RESEND_AUDIENCE,
-      email: body.email,
-      unsubscribed: false,
-    });
+    // const { error, data } = await resend.contacts.create({
+    //   audienceId: RESEND_AUDIENCE,
+    //   email: body.email,
+    //   unsubscribed: false,
+    // });
 
-    if (error) throw new ActionError({ code: "BAD_REQUEST", message: error.message });
-    return data;
+    // if (error) throw new ActionError({ code: "BAD_REQUEST", message: error.message });
+    return {};
   },
 });

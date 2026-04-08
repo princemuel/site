@@ -1,9 +1,5 @@
 import { z } from "astro/zod";
 import { ActionError, defineAction } from "astro:actions";
-import { RESEND_ADDRESS } from "astro:env/server";
-
-import { resend } from "@/lib/api";
-import { capitalize } from "@/utils";
 
 export default defineAction({
   accept: "form",
@@ -29,22 +25,22 @@ export default defineAction({
       });
     }
 
-    if (locals?.ratelimit?.throttle) {
+    if (locals.ratelimit.throttle) {
       throw new ActionError({
         code: "TOO_MANY_REQUESTS",
         message: "You have reached your request limit for today",
       });
     }
 
-    const { data, error } = await resend.emails.send({
-      from: `${body.firstName} <${RESEND_ADDRESS}>`,
-      to: [RESEND_ADDRESS],
-      subject: `${capitalize(body.queryType)} email from ${body.firstName} ${body.lastName}`,
-      text: body.message,
-      replyTo: [RESEND_ADDRESS],
-    });
+    // const { data, error } = await resend.emails.send({
+    //   from: `${body.firstName} <${RESEND_ADDRESS}>`,
+    //   to: [RESEND_ADDRESS],
+    //   subject: `${capitalize(body.queryType)} email from ${body.firstName} ${body.lastName}`,
+    //   text: body.message,
+    //   replyTo: [RESEND_ADDRESS],
+    // });
 
-    if (error) throw new ActionError({ code: "BAD_REQUEST", message: error.message });
-    return data;
+    // if (error) throw new ActionError({ code: "BAD_REQUEST", message: error.message });
+    return {};
   },
 });
