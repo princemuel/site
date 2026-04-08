@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: Apache-2.0
 import { GOOGLE_DRIVE_FILE_ID, GOOGLE_DRIVE_TOKEN } from "astro:env/server";
 
-import { secs } from "@repo/utils";
+import { secs } from "@/utils";
 import type { APIRoute } from "astro";
 
 export const GET: APIRoute = async () => {

@@ -1,31 +1,16 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
     "target": "esnext",
     "module": "esnext",
-    "types": ["node"],
-    "skipLibCheck": true,
-
-    /* Bundler mode */
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "verbatimModuleSyntax": true,
-    "moduleDetection": "force",
     "noEmit": true,
+    "moduleResolution": "bundler",
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "rewriteRelativeImportExtensions": true,
-    "ignoreDeprecations": "6.0",
-
-    /* Linting */
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
+    "verbatimModuleSyntax": true,
     "erasableSyntaxOnly": true,
-    "noUncheckedSideEffectImports": true
-  },
-  "include": ["prisma.config.ts"]
+    "rewriteRelativeImportExtensions": true,
+    "allowImportingTsExtensions": true
+  }
 }

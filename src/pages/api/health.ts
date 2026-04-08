@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-import { db } from "@repo/db";
+import { db } from "@/lib/db";
 
 import type { APIRoute } from "astro";
 

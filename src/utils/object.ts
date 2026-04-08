@@ -1,5 +1,3 @@
-// oxlint-disable no-ternary
-// oxlint-disable no-unsafe-type-assertion
 // SPDX-License-Identifier: Apache-2.0
 export const serialize = <T>(data: T, options?: StructuredSerializeOptions) =>
   structuredClone(data, options);
@@ -8,13 +6,14 @@ type Key = string | number | symbol;
 export function omit<T extends Record<Key, unknown>, K extends keyof T>(obj: T, key: K): Omit<T, K>;
 export function omit<T extends Record<Key, unknown>, K extends keyof T>(
   obj: T,
-  keys: readonly K[],
+  keys: readonly K[]
 ): Omit<T, K>;
 export function omit<T extends Record<Key, unknown>, K extends keyof T>(
   obj: T,
-  keyOrKeys: K | readonly K[],
+  keyOrKeys: K | readonly K[]
 ): Omit<T, K> {
-  const keys = new Set<K>(Array.isArray(keyOrKeys) ? keyOrKeys : [keyOrKeys]);
+  const keyArray = (Array.isArray(keyOrKeys) ? keyOrKeys : [keyOrKeys]) as K[];
+  const keys = new Set(keyArray);
   const result: T = {} as T;
 
   // oxlint-disable-next-line no-unsafe-type-assertion
@@ -31,7 +30,7 @@ export function omit<T extends Record<Key, unknown>, K extends keyof T>(
  * @param {() => T} getValue - The function that generates the value to remember.
  * @returns {NonNullable<T>} - The remembered value.
  */
-export const remember = <T>(key: string, getValue: () => T) => {
+export const remember = <T>(key: string, getValue: () => T): NonNullable<T> => {
   const g = globalThis as typeof globalThis & { __singletons__?: Map<string, T> | undefined };
   g.__singletons__ ??= new Map();
   if (!g.__singletons__.has(key)) g.__singletons__.set(key, getValue());
@@ -44,7 +43,7 @@ export const remember = <T>(key: string, getValue: () => T) => {
  * @param {string} key - The key under which the value was remembered.
  * @return {boolean} - A remembered value existed and has been forgotten.
  */
-export const forget = (key: string) => {
+export const forget = (key: string): boolean => {
   const g = globalThis as typeof globalThis & { __singletons__?: Map<string, unknown> | undefined };
   g.__singletons__ ??= new Map();
   return g.__singletons__.delete(key);

@@ -21,13 +21,11 @@
   "mdx.validate.validateUnusedLinkDefinitions": "warning",
   "prettier.documentSelectors": ["**/*.astro"],
   "astro.content-intellisense": true,
+  "editor.defaultFormatter": "oxc.oxc-vscode",
   "[astro]": {
     "editor.defaultFormatter": "astro-build.astro-vscode"
   },
-
-  "workbench.editor.customLabels.patterns": {
-    "**/mod.rs": "${dirname}.rs"
-  },
+  "workbench.editor.customLabels.patterns": { "**/mod.rs": "${dirname}.rs" },
   "material-icon-theme.activeIconPack": "react_redux",
   "material-icon-theme.folders.associations": {
     ".cargo": "rust",
@@ -61,11 +59,7 @@
   "template-string-converter.autoRemoveTemplateString": true,
   "template-string-converter.addBracketsToProps": true,
   "markdown.validate.enabled": true,
-  "[jsonc]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
   "[powershell]": {
     "editor.defaultFormatter": "ms-vscode.powershell"
-  },
-  "editorconfig.template": "/home/maia/.editorconfig"
+  }
 }
