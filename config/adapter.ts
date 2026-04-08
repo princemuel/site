@@ -11,4 +11,5 @@ export default adapter({
   devImageService: "sharp",
   staticHeaders: true,
   isr: true,
+  middlewareMode: "edge",
 });
