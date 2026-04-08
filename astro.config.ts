@@ -1,6 +1,6 @@
-import "./src/polyfills/temporal";
 import { defineConfig } from "astro/config";
 
+import "./src/polyfills/temporal";
 import {
   adapter,
   envSchema,
