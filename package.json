@@ -10,7 +10,8 @@
   },
   "scripts": {
     "astro": "astro",
-    "build": "astro check && astro build",
+    "build": "astro build",
+    "build:sh": "astro check && astro build",
     "cf:generate": "wrangler types",
     "check": "oxlint --type-aware --type-check && astro build",
     "db:generate": "prisma generate",
