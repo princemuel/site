@@ -15,5 +15,4 @@ var g = globalThis as typeof globalThis & { __db__?: typeof DatabaseClient };
 export var db = g.__db__ ?? DatabaseClient;
 
 if (getSecret("NODE_ENV") !== "production") g.__db__ = db;
-console.log("PROCESS", JSON.stringify(process));
 process.on("beforeExit", () => void db.$disconnect());

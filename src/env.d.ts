@@ -10,7 +10,7 @@ const __BUILD_TIME__: string;
 const __DEPLOY_CHANNEL__: string;
 const __GIT_COMMIT__: string;
 
-type RuntimeLocals = import("@astrojs/cloudflare").Runtime;
+type RuntimeLocals = import("@astrojs/netlify").NetlifyLocals;
 
 declare namespace App {
   interface Locals extends RuntimeLocals {

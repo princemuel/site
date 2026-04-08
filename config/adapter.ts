@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: Apache-2.0
-import adapter from "@astrojs/node";
+import adapter from "@astrojs/netlify";
 export default adapter({
-  mode: "standalone",
+  cacheOnDemandPages: true,
+  imageCDN: true,
   staticHeaders: true,
+  devFeatures: false,
 });
