@@ -1,6 +1,5 @@
-// SPDX-License-Identifier: Apache-2.0
 import tailwindcss from "@tailwindcss/vite";
- 
+
 import { envVars } from "./dotenv";
 import { getGitCommit } from "./helpers";
 

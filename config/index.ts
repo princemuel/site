@@ -1,4 +1,3 @@
-// SPDX-License-Identifier: Apache-2.0
 export { default as adapter } from "./adapter";
 export { envSchema, envVars } from "./dotenv";
 export { experimental as flags } from "./experimental";

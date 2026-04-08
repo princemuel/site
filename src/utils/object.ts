@@ -1,4 +1,3 @@
-// SPDX-License-Identifier: Apache-2.0
 export const serialize = <T>(data: T, options?: StructuredSerializeOptions) =>
   structuredClone(data, options);
 

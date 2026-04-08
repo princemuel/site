@@ -1,4 +1,3 @@
-// SPDX-License-Identifier: Apache-2.0
 type EndsWith<W extends string, S extends string> = W extends `${string}${S}` ? W : never;
 
 export const capitalize = <S extends string>(str: S, locale?: Intl.LocalesArgument) => {
@@ -41,7 +40,7 @@ export const pluralize = <C extends number, N extends string, P extends string =
   count: C,
   noun: N,
   plural?: P,
-  locales?: Intl.LocalesArgument,
+  locales?: Intl.LocalesArgument
 ): C extends 1 ? N : P => {
   // Use Intl.PluralRules to determine singular/plural
   const pr = new Intl.PluralRules(locales);
@@ -52,7 +51,7 @@ export const pluralize = <C extends number, N extends string, P extends string =
 
 export const endsWith = <W extends string, S extends string>(
   str: W,
-  suffix: S,
+  suffix: S
 ): str is EndsWith<W, S> => str.endsWith(suffix);
 
 export const getFlagEmoji = (code?: string) => {

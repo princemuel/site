@@ -1,4 +1,3 @@
-// SPDX-License-Identifier: Apache-2.0
 import { envField } from "astro/config";
 import { loadEnv } from "vite";
 

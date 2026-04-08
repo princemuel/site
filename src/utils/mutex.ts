@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: Apache-2.0
-
 /**
  * Async, non-reentrant mutex protecting a shared object.
  *

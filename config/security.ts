@@ -1,7 +1,6 @@
-// SPDX-License-Identifier: Apache-2.0
+import { envVars } from "./dotenv";
 
 import type { AstroUserConfig } from "astro";
-import { envVars } from "./dotenv";
 
 type Config = NonNullable<AstroUserConfig["security"]>;
 

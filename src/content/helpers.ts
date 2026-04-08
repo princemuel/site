@@ -1,7 +1,7 @@
-// SPDX-License-Identifier: Apache-2.0
 import { z } from "astro/zod";
 
 import { iconNames } from "@/assets/icons";
+
 import type { ImageMetadata } from "astro";
 import type { ImageFunction } from "astro:content";
 

@@ -1,7 +1,6 @@
-// SPDX-License-Identifier: Apache-2.0
 import "./src/polyfills/temporal";
-
 import { defineConfig } from "astro/config";
+
 import {
   adapter,
   envSchema,

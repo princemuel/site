@@ -1,12 +1,13 @@
-// SPDX-License-Identifier: Apache-2.0
-import { omit, secs } from "@/utils";
-import type { APIRoute, InferGetStaticParamsType, InferGetStaticPropsType } from "astro";
 import { getCollection } from "astro:content";
+
+import { omit, secs } from "@/utils";
+
+import type { APIRoute, InferGetStaticParamsType, InferGetStaticPropsType } from "astro";
 
 export async function getStaticPaths() {
   const entries = await getCollection(
     "problems",
-    ({ data }) => !(import.meta.env.PROD && data.draft),
+    ({ data }) => !(import.meta.env.PROD && data.draft)
   );
 
   return entries.map((entry) => ({

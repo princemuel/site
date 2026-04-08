@@ -1,4 +1,3 @@
-// SPDX-License-Identifier: Apache-2.0
 import { robots as buffer } from "@/assets/include";
 import { secs } from "@/utils";
 

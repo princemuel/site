@@ -1,4 +1,3 @@
-// SPDX-License-Identifier: Apache-2.0
 import { opensearch as buffer } from "@/assets/include";
 import { secs } from "@/utils";
 

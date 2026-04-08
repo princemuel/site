@@ -1,4 +1,3 @@
-// SPDX-License-Identifier: Apache-2.0
 import { execSync, spawnSync } from "node:child_process";
 import { statSync } from "node:fs";
 
@@ -12,7 +11,7 @@ export const getGitCommit = (defaultValue?: string) => {
 
 export const getFileModifiedTime = (
   filePath: string,
-  options?: { useAuthor?: boolean },
+  options?: { useAuthor?: boolean }
 ): Temporal.Instant => {
   const { useAuthor = false } = options ?? {};
   if (!filePath || typeof filePath !== "string") return Temporal.Now.instant();

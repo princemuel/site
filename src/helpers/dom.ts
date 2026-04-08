@@ -1,4 +1,3 @@
-// SPDX-License-Identifier: Apache-2.0
 import { throwAsError } from "@/utils";
 
 /**
@@ -14,20 +13,20 @@ export function $<E extends Element>(
   selector: string,
   Constructor: new (...args: unknown[]) => E,
   parent?: ParentNode,
-  nodelist?: false,
+  nodelist?: false
 ): E;
 export function $<E extends Element>(
   selector: string,
   Constructor: new (...args: unknown[]) => E,
   parent?: ParentNode,
-  nodelist?: true,
+  nodelist?: true
 ): NodeListOf<E>;
 
 export function $<E extends Element>(
   selector: string,
   Constructor: new (...args: unknown[]) => E,
   parent: ParentNode = document,
-  nodelist = false,
+  nodelist = false
 ): E | NodeListOf<E> {
   if (nodelist) {
     const elements = parent.querySelectorAll(selector);
@@ -50,7 +49,7 @@ export function $<E extends Element>(
 export const createElement = (
   name: string,
   Constructor: CustomElementConstructor,
-  options?: ElementDefinitionOptions,
+  options?: ElementDefinitionOptions
 ) => {
   if (!customElements.get(name)) customElements.define(name, Constructor, options);
 };

@@ -1,4 +1,3 @@
-// SPDX-License-Identifier: Apache-2.0
 import { PrismaLibSql } from "@prisma/adapter-libsql";
 import { DATABASE_ENCRYPTION, DATABASE_TOKEN, DATABASE_URL, getSecret } from "astro:env/server";
 

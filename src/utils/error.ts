@@ -1,5 +1,3 @@
-// SPDX-License-Identifier: Apache-2.0
-
 import { isString } from "./guards";
 
 export const throwAsError = (exception: unknown) => {

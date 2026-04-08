@@ -1,4 +1,3 @@
-// SPDX-License-Identifier: Apache-2.0
 export { default as humans } from "./humans.txt?raw";
 export { default as keybase } from "./keybase.txt?raw";
 export { default as opensearch } from "./opensearch.xml?raw";

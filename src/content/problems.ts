@@ -1,8 +1,8 @@
-// SPDX-License-Identifier: Apache-2.0
-import { Keys, revision } from "@/content/helpers";
 import { glob } from "astro/loaders";
 import { z } from "astro/zod";
 import { defineCollection } from "astro:content";
+
+import { Keys, revision } from "@/content/helpers";
 
 export default defineCollection({
   loader: glob({ base: "content/problems", pattern: "**/[!_]*.{md,mdx}" }),

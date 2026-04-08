@@ -1,4 +1,3 @@
-// SPDX-License-Identifier: Apache-2.0
 /**
  * Hashes a value using MurmurHash3
  * @param {string} value - The value to hash

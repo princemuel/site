@@ -1,4 +1,3 @@
-// SPDX-License-Identifier: Apache-2.0
 import { fontProviders } from "astro/config";
 
 import type { AstroUserConfig } from "astro";

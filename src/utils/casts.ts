@@ -1,4 +1,3 @@
-// SPDX-License-Identifier: Apache-2.0
 export const toNull = <T>(value: T | undefined): T | null => value ?? null;
 export const toUndefined = <T>(value: T | null): T | undefined => value ?? undefined;
 /** Safely parses a value to a number and guards against NaN and negative zero. */

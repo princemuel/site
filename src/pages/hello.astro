@@ -1,5 +1,4 @@
 ---
-// SPDX-License-Identifier: Apache-2.0
 import { ACTION_QUERY_PARAMS, actions, isInputError } from "astro:actions";
 import { getEntry, render } from "astro:content";
 
@@ -7,8 +6,8 @@ import Prose from "@/components/content/prose.astro";
 import Shell from "@/components/frames/shell.astro";
 import Pot from "@/components/widgets/pot.astro";
 
-import { println$ } from "@/helpers/println";
 import ProseLink from "@/components/shared/prose-link.astro";
+import { println$ } from "@/helpers/println";
 
 export const prerender = false;
 

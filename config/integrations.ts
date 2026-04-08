@@ -1,4 +1,3 @@
-// SPDX-License-Identifier: Apache-2.0
 import markdown from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 // import pwa from "@vite-pwa/astro";

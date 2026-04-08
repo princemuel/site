@@ -1,4 +1,3 @@
-// SPDX-License-Identifier: Apache-2.0
 import { rehypeHeadingIds } from "@astrojs/markdown-remark";
 import { toString } from "mdast-util-to-string";
 import getReadingTime from "reading-time";
@@ -7,7 +6,6 @@ import getReadingTime from "reading-time";
 // import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import remarkEmoji from "remark-emoji";
 import remarkToc from "remark-toc";
-
 import { visit } from "unist-util-visit";
 
 import { getFileModifiedTime } from "./helpers";
@@ -49,7 +47,7 @@ const remarkModifiedTime: RemarkPlugin = () => (_, file) => {
     // Get the latest revision date if revisions exist
     const latestRevisionDate = frontmatter.revisions?.length
       ? Temporal.Instant.from(
-          frontmatter.revisions[frontmatter.revisions.length - 1].date,
+          frontmatter.revisions[frontmatter.revisions.length - 1].date
         ).toZonedDateTimeISO("UTC")
       : null;
 
