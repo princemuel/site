@@ -4,13 +4,53 @@ https://keybase.io/princemuel
 
 I hereby claim:
 
-  * I am an independent entity on the internet.
-  * I am princemuel on keybase.io (https://keybase.io/princemuel).
-  * I have a public key with fingerprint 7E75 7E6D 4BB7 6C0E B595
-    8711 C34C 73C0 9C8F 19B9
+* I am an admin of https://princemuel.vercel.app
+* I am princemuel (https://keybase.io/princemuel) on keybase.
+* I have a public key ASCcJkbid0G9ovX-9RX2cX4q4xGv2np72k2zvC5q1t2mYgo
 
-To verify:
+To do so, I am signing this object:
 
-  * I put this statement here: {{url}}
+{
+  "body": {
+    "key": {
+      "eldest_kid": "01209c2646e27741bda2f5fef515f6717e2ae311afda7a7bda4db3bc2e6ad6dda6620a",
+      "host": "keybase.io",
+      "kid": "01209c2646e27741bda2f5fef515f6717e2ae311afda7a7bda4db3bc2e6ad6dda6620a",
+      "uid": "e9e8ce8b181a3e3236f10d844322c619",
+      "username": "princemuel"
+    },
+    "merkle_root": {
+      "ctime": 1775691566,
+      "hash": "b4e07b3b58b2ad0ba20c3679112f82a25864fb0bccbc187edf586f0c38fe6e946e78a03e444dd851219daa35121316ba07fb7ee45b94ae7b75802bf39c4ebf91",
+      "hash_meta": "54ced733bc7f61a70d2daf880ebdab22acff06f7cc0313f0e0c0349238827888",
+      "seqno": 27517759
+    },
+    "service": {
+      "entropy": "AI+KwKOA/0Qf8TPkiHDX6Q/s",
+      "hostname": "princemuel.vercel.app",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 2
+  },
+  "client": {
+    "name": "keybase.io go client",
+    "version": "6.6.0"
+  },
+  "ctime": 1775691582,
+  "expire_in": 504576000,
+  "prev": "0ef1baa875b35057113f1505b2507cc1bfc4c3c61cad0bdabda482e99a299b52",
+  "seqno": 12,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEgnCZG4ndBvaL1/vUV9nF+KuMRr9p6e9pNs7wuatbdpmIKp3BheWxvYWTESpcCDMQgDvG6qHWzUFcRPxUFslB8wb/Ew8YcrQvavaSC6Zopm1LEIBbfsbKBsGsfsWdxzYLmLOwKm1UeyneXxMJK1yNfPIOLAgHCo3NpZ8RAhrAWwjkTu2lpKeAEZhqFglmpO5C6Pas6QMbGomQDO6f88SHIQIl5B3CkjcJxrGluiYtVkHXlRpuwOESFpT5DCahzaWdfdHlwZSCkaGFzaIKkdHlwZQildmFsdWXEIB1SSvuuTehqLQ/uGDlZitoqjwd9rhM94oGPxZkh/K0Qo3RhZ80CAqd2ZXJzaW9uAQ==
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/princemuel
 
 ==================================================================

@@ -7,10 +7,7 @@ import ProseLink from "@/components/shared/prose-link.astro";
 // import { Image } from "astro:assets";
 
 export async function getStaticPaths() {
-  const entries = await getCollection(
-    "journal",
-    ({ data }) => !(import.meta.env.PROD && data.draft),
-  );
+  const entries = await getCollection("journal", ({ data }) => import.meta.env.PROD === data.draft);
 
   return entries.map((entry) => ({
     props: { entry },

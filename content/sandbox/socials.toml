@@ -37,7 +37,7 @@ text  = "Connect with me on LinkedIn"
 
 [website]
 color = "text-green-700"
-href  = "https://princemuel.netlify.app/about"
+href  = "https://princemuel.vercel.app/about"
 icon  = "lucide:globe"
 order = 5
 text  = "Connect with me on LinkedIn"

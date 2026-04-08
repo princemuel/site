@@ -1,5 +1,5 @@
-import { keybase as buffer } from "@/assets/include";
-import { secs } from "@/utils";
+import { keybase as buffer } from "../../assets/include";
+import { secs } from "../../utils";
 
 import type { APIRoute } from "astro";
 
