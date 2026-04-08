@@ -27,8 +27,6 @@ RUN apt-get update -qq && \
 COPY .npmrc package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 RUN pnpm install --frozen-lockfile --prod=false
 
-COPY env.build .env
-
 # Generate Prisma Client
 COPY prisma .
 RUN pnpx prisma generate
