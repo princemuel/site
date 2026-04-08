@@ -12,7 +12,7 @@ export const baseSchema = z.object({
   description: z.string().min(2),
   headline: z.string().default(""),
   summary: z.string().default(""),
-  draft: z.boolean().default(true),
+  draft: z.boolean().default(false),
   comments: z.boolean().default(false),
   tags: z.array(z.string()).default([]),
   date: z.iso.datetime({ offset: true }),
