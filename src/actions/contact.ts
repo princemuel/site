@@ -3,7 +3,7 @@ import { ActionError, defineAction } from "astro:actions";
 import { RESEND_ADDRESS } from "astro:env/server";
 
 import { resend } from "@/lib/api";
-import { capitalize } from "@repo/utils";
+import { capitalize } from "@/utils";
 
 export default defineAction({
   accept: "form",

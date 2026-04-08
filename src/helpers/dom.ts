@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: Apache-2.0
-import { throwAsError } from "@repo/utils";
+import { throwAsError } from "@/utils";
 
 /**
  * Find a DOM element or elements and validate their types.

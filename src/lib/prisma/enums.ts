@@ -9,7 +9,22 @@
 * 🟢 You can import this file directly.
 */
 
+export const EventType = {
+  PAGE_VIEW: 'PAGE_VIEW',
+  CLICK: 'CLICK',
+  SCROLL: 'SCROLL',
+  KEYDOWN: 'KEYDOWN',
+  PAGE_EXIT: 'PAGE_EXIT'
+} as const
+
+export type EventType = (typeof EventType)[keyof typeof EventType]
 
 
-// This file is empty because there are no enums in the schema.
-export {}
+export const ReactionType = {
+  LIKE: 'LIKE',
+  LOVE: 'LOVE',
+  CLAP: 'CLAP',
+  INSIGHTFUL: 'INSIGHTFUL'
+} as const
+
+export type ReactionType = (typeof ReactionType)[keyof typeof ReactionType]

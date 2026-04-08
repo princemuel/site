@@ -51,7 +51,12 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-
+  Post: 'Post',
+  Actor: 'Actor',
+  Comment: 'Comment',
+  Session: 'Session',
+  Event: 'Event',
+  Reaction: 'Reaction'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -61,11 +66,106 @@ export type ModelName = (typeof ModelName)[keyof typeof ModelName]
  */
 
 export const TransactionIsolationLevel = runtime.makeStrictEnum({
-  ReadUncommitted: 'ReadUncommitted',
-  ReadCommitted: 'ReadCommitted',
-  RepeatableRead: 'RepeatableRead',
   Serializable: 'Serializable'
 } as const)
 
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
+
+
+export const PostScalarFieldEnum = {
+  id: 'id',
+  slug: 'slug',
+  title: 'title',
+  impressions: 'impressions',
+  reactions: 'reactions',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type PostScalarFieldEnum = (typeof PostScalarFieldEnum)[keyof typeof PostScalarFieldEnum]
+
+
+export const ActorScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  handle: 'handle',
+  image: 'image',
+  created_at: 'created_at'
+} as const
+
+export type ActorScalarFieldEnum = (typeof ActorScalarFieldEnum)[keyof typeof ActorScalarFieldEnum]
+
+
+export const CommentScalarFieldEnum = {
+  id: 'id',
+  content: 'content',
+  post_id: 'post_id',
+  actor_id: 'actor_id',
+  parent_id: 'parent_id',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type CommentScalarFieldEnum = (typeof CommentScalarFieldEnum)[keyof typeof CommentScalarFieldEnum]
+
+
+export const SessionScalarFieldEnum = {
+  id: 'id',
+  session_start: 'session_start',
+  session_end: 'session_end',
+  page_url: 'page_url',
+  source_url: 'source_url',
+  title: 'title',
+  user_agent: 'user_agent',
+  country: 'country',
+  city: 'city',
+  latitude: 'latitude',
+  longitude: 'longitude',
+  flag: 'flag',
+  duration_ms: 'duration_ms',
+  duration_human: 'duration_human',
+  interactions: 'interactions',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+} as const
+
+export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
+
+
+export const EventScalarFieldEnum = {
+  id: 'id',
+  timestamp: 'timestamp',
+  slug: 'slug',
+  event: 'event',
+  metadata: 'metadata',
+  session_id: 'session_id'
+} as const
+
+export type EventScalarFieldEnum = (typeof EventScalarFieldEnum)[keyof typeof EventScalarFieldEnum]
+
+
+export const ReactionScalarFieldEnum = {
+  id: 'id',
+  occurred_at: 'occurred_at',
+  slug: 'slug',
+  reaction: 'reaction'
+} as const
+
+export type ReactionScalarFieldEnum = (typeof ReactionScalarFieldEnum)[keyof typeof ReactionScalarFieldEnum]
+
+
+export const SortOrder = {
+  asc: 'asc',
+  desc: 'desc'
+} as const
+
+export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
