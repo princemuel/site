@@ -11,9 +11,7 @@ export const trackPageView = defineAction({
   }),
   handler: async (body, { request, locals }) => {
     const user_agent = request.headers.get("user-agent");
-    //@ts-expect-error some type
-    const { city, country, latitude, longitude } = locals.vercel.edge.geo;
-    //@ts-expect-error some type
+    const { city, country, latitude, longitude } = locals.netlify.context.geo;
     const codePoints = (country?.code ?? "US").split("").map((c) => c.charCodeAt(0) + 127397);
 
     const session = await db.session.create({
