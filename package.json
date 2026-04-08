@@ -22,7 +22,6 @@
     "dev": "astro dev",
     "iconify": "tsx --tsconfig ./tsconfig.node.json ./scripts/iconify.ts",
     "lint": "oxlint --type-aware --type-check",
-    "prebuild": "pnpm iconify",
     "predev": "pnpm iconify",
     "preview": "astro preview",
     "seed": "tsx --tsconfig ./tsconfig.node.json ./prisma/seed.ts",
