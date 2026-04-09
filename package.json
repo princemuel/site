@@ -30,7 +30,6 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@astrojs/compiler-rs": "^0.1.6",
     "@prisma/client": "^7.7.0",
     "@upstash/ratelimit": "^2.0.8",
     "@upstash/redis": "^1.37.0",

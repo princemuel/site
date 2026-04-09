@@ -7,7 +7,7 @@ export const experimental = {
   clientPrerender: true,
   contentIntellisense: true,
   chromeDevtoolsWorkspace: true,
-  rustCompiler: true,
+  // rustCompiler: true,
   queuedRendering: {
     enabled: true,
     poolSize: 1024,
