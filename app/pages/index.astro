@@ -1,0 +1,51 @@
+---
+import { excluded } from "@/assets/include";
+import Prose from "@/components/content/prose.astro";
+import Shell from "@/components/frames/shell.astro";
+import Icon from "@/components/shared/icon.astro";
+import Link from "@/components/shared/link.astro";
+import ProseLink from "@/components/shared/prose-link.astro";
+import { hasValues } from "@/utils";
+import { getCollection, getEntry, render } from "astro:content";
+
+const entry = await getEntry("pages", "home");
+if (!entry) throw new Response(null, { status: 404 });
+
+const excludedRoutes = new Set(excluded);
+
+const [{ Content }, routes] = await Promise.all([
+  render(entry),
+  getCollection("routes", (data) => !excludedRoutes.has(data.id)),
+]);
+---
+
+<Shell>
+  <header class="flex flex-col gap-6 border border-zinc-200 p-5 dark:border-zinc-700">
+    <h1 id="a11ty-headline" class="text-2xl">
+      <span lang="he" dir="rtl">אַהְלָן! 👋🏼 </span>
+    </h1>
+
+    <p class="text-base">
+      I’m a software engineer with a passion for safe programming languages, distributed systems,
+      computer graphics, and cryptography. I build open source software and love to draw.
+      <Link href="/about">Learn about me here</Link>
+      or <Link href="https://github.com/princemuel">check out my GitHub</Link>.
+    </p>
+  </header>
+
+  <Prose as="article" aria-labelledby="a11ty-headline" class="">
+    <Content components={{ a: ProseLink }} frontmatter={entry.data} />
+    {
+      hasValues(routes) ? (
+        <ul class="not-prose flex flex-col gap-3">
+          {routes.map((r) => (
+            <li class="flex items-center gap-2">
+              <Icon name={r.data.icon} />
+              <Link href={r.data.href}>{r.data.text}</Link>
+            </li>
+          ))}
+        </ul>
+      ) : null
+    }
+  </Prose>
+</Shell>

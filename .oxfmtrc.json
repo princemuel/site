@@ -19,7 +19,7 @@
     ]
   },
   "sortTailwindcss": {
-    "stylesheet": "./src/global.css",
+    "stylesheet": "./app/global.css",
     "functions": ["tw", "tv"],
     "attributes": ["tw"]
   },

@@ -1,10 +1,9 @@
-import { mkdir, readFile, writeFile } from "node:fs/promises";
-import { dirname, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
-
 import { cleanupSVG, importDirectory, isEmptyColor, parseColors, runSVGO } from "@iconify/tools";
 import { getIcons } from "@iconify/utils";
 import { loadCollectionFromFS } from "@iconify/utils/lib/loader/fs";
+import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 
 import type { SVG } from "@iconify/tools";
 import type { IconifyJSON } from "@iconify/types";
@@ -14,9 +13,9 @@ type SVGOOptions = Omit<NonNullable<Parameters<typeof runSVGO>[1]>, "keepShapes"
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, "..");
 
-const ICONS_CONFIG = resolve(root, "src/assets/icons/icons.json");
-const LOCAL_ICON_DIR = resolve(root, "src/assets/icons");
-const OUTPUT_FILE = resolve(root, "src/assets/icons/index.ts");
+const ICONS_CONFIG = resolve(root, "app/assets/icons/icons.json");
+const LOCAL_ICON_DIR = resolve(root, "app/assets/icons");
+const OUTPUT_FILE = resolve(root, "app/assets/icons/index.ts");
 
 type IconConfig = Record<string, string[]>;
 
@@ -61,7 +60,7 @@ main().catch((err) => {
 function buildIconNames(collections: Record<string, IconifyJSON>, defaultPack = "local") {
   return Object.entries(collections).flatMap(([prefix, col]) => {
     return [...Object.keys(col.icons), ...Object.keys(col.aliases ?? {})].map((name) =>
-      prefix === defaultPack ? name : `${prefix}:${name}`,
+      prefix === defaultPack ? name : `${prefix}:${name}`
     );
   });
 }
@@ -91,14 +90,14 @@ async function loadIconifyCollections(config: IconConfig) {
       }
 
       return [setName, collection] as const;
-    }),
+    })
   );
   return Object.fromEntries(entries.filter(Boolean) as [string, IconifyJSON][]);
 }
 
 async function loadLocalCollection(
   path: string,
-  options: SVGOOptions = { plugins: ["preset-default"] },
+  options: SVGOOptions = { plugins: ["preset-default"] }
 ) {
   const iconSet = await importDirectory(path, {
     prefix: "local",

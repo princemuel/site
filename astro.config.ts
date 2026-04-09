@@ -1,6 +1,6 @@
 import { defineConfig } from "astro/config";
 
-import "./src/polyfills/temporal";
+import "./app/polyfills/temporal";
 import {
   adapter,
   envSchema,
@@ -18,6 +18,7 @@ import {
 // https://astro.build/config
 export default defineConfig({
   output: "static",
+  srcDir: "./app",
   site: envVars.PUBLIC_SITE_URL,
   env: { validateSecrets: true, schema: envSchema },
   experimental: flags,

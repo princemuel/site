@@ -7,6 +7,6 @@
     "noErrorTruncation": true,
     // "erasableSyntaxOnly": true,
     "exactOptionalPropertyTypes": false,
-    "paths": { "@/*": ["./src/*"] }
+    "paths": { "@/*": ["./app/*"] }
   }
 }

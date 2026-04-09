@@ -1,0 +1,24 @@
+{/* SPDX-License-Identifier: Apache-2.0 */}
+{/* This is intentionally inlined to avoid FOUC. */}
+<script is:inline>
+  if (!globalThis.Theme) {
+    const T = (() => {
+      const s = typeof localStorage !== "undefined" && localStorage.getItem("ui-theme");
+      const mql = matchMedia("(prefers-color-scheme: light)");
+      const t = s || (mql.matches ? "light" : "dark");
+      const $ = document.documentElement;
+      $.dataset.theme = t;
+      $.dataset.codeTheme = `github-${t}-default`;
+      return {
+        value: t,
+        selectThemeIcon(t = s) {
+          const v = t === "light" || t === "dark" ? t : "system";
+          const es = document.querySelectorAll("ui-theme svg");
+          for (const e of es) e.dataset.hidden = e.dataset.id !== `ui-${v}`;
+        },
+      };
+    })();
+
+    globalThis.Theme = T;
+  }
+</script>

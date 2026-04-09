@@ -1,0 +1,47 @@
+---
+import Fence from "@/components/layout/fence.astro";
+import Icon from "@/components/shared/icon.astro";
+import Link from "@/components/shared/link.astro";
+import Time from "@/components/shared/time.astro";
+import { buildDate } from "@/lib/built";
+import { getCollection } from "astro:content";
+
+// const excludedRoutes = new Set(["discord", "youtube", "website", "rss", "instagram"]);
+const excludedRoutes = new Set(["discord", "youtube", "website", "rss", ""]);
+
+let socials = await getCollection("socials", (entry) => !excludedRoutes.has(entry.id));
+socials = socials.toSorted((a, b) => a.data.order - b.data.order);
+---
+
+<Fence as="footer" class="py-10 text-sm">
+  <section class="flex flex-col items-center gap-8">
+    <address class="flex items-center justify-center gap-4 text-3xl">
+      {
+        socials.map((r) => (
+          <Link href={r.data.href} class:list={["transition", r.data.color ?? "text-current"]}>
+            <Icon name={r.data.icon} title={r.data.text} class="text-current" />
+          </Link>
+        ))
+      }
+    </address>
+
+    <div class="flex flex-wrap items-center justify-center gap-2">
+      <Link href={new URL("/sitemap-index.xml", Astro.site)}>Sitemap</Link>
+      <Link href={new URL("/policies", Astro.site)}>Policies</Link>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <Link href="https://docs.astro.build/en/getting-started/">
+        <Icon name="devicon:astro" title={`Powered by ${Astro.generator}`} />
+        <span class="sr-only">
+          {Astro.generator}
+        </span>
+      </Link>
+      <p>
+        &copy;
+        <Time datetime={buildDate.toJSON()}>{buildDate.year}</Time>
+        Prince Muel
+      </p>
+    </div>
+  </section>
+</Fence>
