@@ -13,7 +13,8 @@ WORKDIR /app
 ENV NODE_ENV="production"
 
 # Install pnpm
-RUN corepack enable pnpm
+ARG PNPM_VERSION=10.33.0
+RUN npm install -g pnpm@${PNPM_VERSION}
 
 # Throw-away build stage to reduce size of final image
 FROM base AS build
