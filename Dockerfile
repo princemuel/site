@@ -13,8 +13,7 @@ WORKDIR /app
 ENV NODE_ENV="production"
 
 # Install pnpm
-ARG PNPM_VERSION=10.33.0
-RUN npm install -g pnpm@${PNPM_VERSION}
+RUN corepack enable pnpm
 
 # Throw-away build stage to reduce size of final image
 FROM base AS build
@@ -37,8 +36,8 @@ RUN pnpm prisma generate
 COPY . .
 
 # Build application using all secrets from the build context
-RUN --mount=type=secret,id=ALL_SECRETS \
-    eval "$(base64 -d /run/secrets/ALL_SECRETS)" && \
+RUN --mount=type=secret,id=SECRETS \
+    eval "$(base64 -d /run/secrets/SECRETS)" && \
     echo "Using secrets during build!" && \
     pnpm run build
 

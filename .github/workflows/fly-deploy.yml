@@ -6,14 +6,42 @@ on:
     branches:
       - beta
       - main
+
 jobs:
   deploy:
     name: Deploy app
     runs-on: ubuntu-latest
-    concurrency: deploy-group # optional: ensure only one action runs at a time
+    concurrency: deploy-group
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: superfly/flyctl-actions/setup-flyctl@master
-      - run: flyctl deploy --remote-only
+
+      - name: Deploy to Fly.io
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+        run: |
+          SECRETS=$(printf '%s\n' \
+            "export PUBLIC_SITE_URL=${{ secrets.PUBLIC_SITE_URL }}" \
+            "export UPSTASH_LIMIT_WINDOW=${{ secrets.UPSTASH_LIMIT_WINDOW }}" \
+            "export ASTRO_KEY=${{ secrets.ASTRO_KEY }}" \
+            "export DATABASE_ENCRYPTION=${{ secrets.DATABASE_ENCRYPTION }}" \
+            "export RESEND_ADDRESS=${{ secrets.RESEND_ADDRESS }}" \
+            "export RESEND_AUDIENCE=${{ secrets.RESEND_AUDIENCE }}" \
+            "export USE_PARTIALS=${{ secrets.USE_PARTIALS }}" \
+            "export RESEND_TOKEN=${{ secrets.RESEND_TOKEN }}" \
+            "export UPSTASH_REDIS_REST_TOKEN=${{ secrets.UPSTASH_REDIS_REST_TOKEN }}" \
+            "export OCTOKIT_VERSION=${{ secrets.OCTOKIT_VERSION }}" \
+            "export UPSTASH_LIMIT_TOKEN=${{ secrets.UPSTASH_LIMIT_TOKEN }}" \
+            "export GOOGLE_DRIVE_TOKEN=${{ secrets.GOOGLE_DRIVE_TOKEN }}" \
+            "export UPSTASH_REDIS_REST_URL=${{ secrets.UPSTASH_REDIS_REST_URL }}" \
+            "export OCTOKIT_REPO_BRANCH=${{ secrets.OCTOKIT_REPO_BRANCH }}" \
+            "export OCTOKIT_TOKEN=${{ secrets.OCTOKIT_TOKEN }}" \
+            "export OCTOKIT_REPO_NAME=${{ secrets.OCTOKIT_REPO_NAME }}" \
+            "export GOOGLE_DRIVE_FILE_ID=${{ secrets.GOOGLE_DRIVE_FILE_ID }}" \
+            "export OCTOKIT_REPO_OWNER=${{ secrets.OCTOKIT_REPO_OWNER }}" \
+            "export OCTOKIT_URL=${{ secrets.OCTOKIT_URL }}" \
+            "export DATABASE_URL=${{ secrets.DATABASE_URL }}" \
+            "export DATABASE_TOKEN=${{ secrets.DATABASE_TOKEN }}" \
+          | base64 -w0)
+
+          flyctl deploy --build-secret SECRETS=$SECRETS
