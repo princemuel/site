@@ -23,5 +23,5 @@ RUN chmod +x /srv/deploy.sh
 
 COPY --from=flyio /flyctl /usr/bin
 
-# Remove WORKDIR — copy directly to /build with absolute destination
-COPY . /build
+WORKDIR /build
+COPY . .
