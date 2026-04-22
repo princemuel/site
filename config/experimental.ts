@@ -1,4 +1,5 @@
 import type { AstroUserConfig } from "astro";
+import { memoryCache } from "astro/config";
 
 type Config = NonNullable<AstroUserConfig["experimental"]>;
 
@@ -7,7 +8,8 @@ export const experimental = {
   clientPrerender: true,
   contentIntellisense: true,
   chromeDevtoolsWorkspace: true,
-  // rustCompiler: true,
+  rustCompiler: true,
+  cache: { provider: memoryCache() },
   queuedRendering: {
     enabled: true,
     poolSize: 1024,

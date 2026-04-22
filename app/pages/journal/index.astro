@@ -46,10 +46,10 @@ const { Content } = await render(entry);
             aria-setsize={entries.length}
             class:list={[
               "group flex flex-col gap-4 py-6 text-sm sm:text-base",
-              "border-zinc-200 not-last-of-type:border-b dark:border-zinc-700",
+              "border-slate-200 not-last-of-type:border-b dark:border-slate-700",
             ]}
           >
-            <header class="flex flex-col gap-4 text-zinc-700 dark:text-zinc-400">
+            <header class="flex flex-col gap-4 text-slate-700 dark:text-slate-400">
               <h2
                 id={`${uuid}-headline`}
                 class:list={[
@@ -65,7 +65,7 @@ const { Content } = await render(entry);
               <ul
                 id={`${uuid}-metadata`}
                 aria-label="this article's metadata"
-                class="flex flex-wrap items-center gap-3 text-zinc-500 dark:text-zinc-400"
+                class="flex flex-wrap items-center gap-3 text-slate-500 dark:text-slate-400"
               >
                 {/* <li title={`Started on ${item.date.toString()}`}>
                       <time datetime={item.date.toString()}>2025.07.05</time>
@@ -101,7 +101,7 @@ const { Content } = await render(entry);
             <Link
               href={item.permalink}
               aria-label={`Read more about ${item.title}`}
-              class="text-zinc-700 dark:text-zinc-400"
+              class="text-slate-700 dark:text-slate-400"
             >
               read more →
             </Link>

@@ -7,26 +7,26 @@ import { throwAsError } from "@/utils";
  * const button = $("button", HTMLButtonElement)
  *
  * // Multiple elements
- * const buttons = $("button", HTMLButtonElement, document, true)
+ * const buttons = $("button", HTMLButtonElement, true, document)
  */
 export function $<E extends Element>(
   selector: string,
   Constructor: new (...args: unknown[]) => E,
-  parent?: ParentNode,
-  nodelist?: false
+  nodelist?: false,
+  parent?: ParentNode
 ): E;
 export function $<E extends Element>(
   selector: string,
   Constructor: new (...args: unknown[]) => E,
-  parent?: ParentNode,
-  nodelist?: true
+  nodelist?: true,
+  parent?: ParentNode
 ): NodeListOf<E>;
 
 export function $<E extends Element>(
   selector: string,
   Constructor: new (...args: unknown[]) => E,
-  parent: ParentNode = document,
-  nodelist = false
+  nodelist = false,
+  parent: ParentNode = document
 ): E | NodeListOf<E> {
   if (nodelist) {
     const elements = parent.querySelectorAll(selector);
@@ -42,7 +42,6 @@ export function $<E extends Element>(
   if (!(element instanceof Constructor)) {
     throwAsError(`Element is not of type ${Constructor.name}: ${selector}`);
   }
-
   return element as E;
 }
 

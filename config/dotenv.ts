@@ -1,7 +1,6 @@
+import type { AstroUserConfig } from "astro";
 import { envField } from "astro/config";
 import { loadEnv } from "vite";
-
-import type { AstroUserConfig } from "astro";
 
 type Config = NonNullable<NonNullable<AstroUserConfig["env"]>["schema"]>;
 
@@ -9,7 +8,7 @@ const mode = process.env.NODE_ENV ?? "production";
 
 const z = envField;
 const s_str = z.string({ context: "server", access: "secret" });
-const p_str = z.string({ context: "server", access: "public" });
+const p_url = z.string({ context: "server", access: "public", url: true });
 const s_url = z.string({ context: "server", access: "secret", url: true });
 const s_int = z.number({ context: "server", access: "secret", int: true });
 const s_bool = z.boolean({ context: "server", access: "secret", default: false });
@@ -27,7 +26,7 @@ export const envSchema = {
   OCTOKIT_REPO_OWNER: s_str,
   OCTOKIT_REPO_NAME: s_str,
   OCTOKIT_REPO_BRANCH: s_str,
-  PUBLIC_SITE_URL: p_str,
+  PUBLIC_SITE_URL: p_url,
   RESEND_ADDRESS: s_str,
   RESEND_AUDIENCE: s_str,
   RESEND_TOKEN: s_str,

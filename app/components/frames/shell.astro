@@ -20,7 +20,6 @@ import Header from "@/components/layout/header.astro";
     <meta name="generator" content={Astro.generator} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="me" href="https://mastodon.social/@princemuel" />
-    <link rel="expect" href="#the_unexpected" blocking="render" />
     <meta name="fediverse:creator" content="@princemuel@mastodon.social" />
     <slot name="title">
       <title>Astro</title>
@@ -34,7 +33,7 @@ import Header from "@/components/layout/header.astro";
     class:list={[
       "relative grid min-h-svh grid-rows-[auto_1fr_auto]",
       "overflow-auto font-sans text-base font-normal antialiased",
-      "bg-white text-zinc-900 dark:bg-zinc-950 dark:text-white",
+      "bg-white text-slate-900 dark:bg-slate-950 dark:text-white",
     ]}
   >
     <Header />

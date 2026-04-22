@@ -1,5 +1,5 @@
 /**
- * Generates a numeric sequence (like Python's `range()`).
+ * Generates a numeric sequence (similar to Python's `range()`).
  *
  * Supports multiple call signatures:
  *
@@ -16,7 +16,7 @@
  * range(start, stop, options)
  * @param start - The first value in the sequence (inclusive).
  * @param stop - The end value (exclusive).
- * @param options.step - Step size (default: 1).
+ * @param options.step - Step size. The increment (or decrement, if negative) between consecutive values. (default: 1).
  * @param options.inclusive - Whether to include the stop value (default: false).
  *
  * @yields {number} Each value in the sequence.
@@ -47,23 +47,23 @@
  * // → [0, 1, 2, 3, 4, 5]
  *
  * @example
- * // lazy evaluation
+ * // Lazy evaluation - only computes what you need
  * for (const n of range(1_000_000)) {
- *   if (n > 5) break;
+ *   if (n > 5) break; // Only generates 0-6, not all million numbers
  *   console.log(n);
  * }
  *
  * @example
- * // A–Z via Unicode
- * [...range("A".charCodeAt(0), "Z".charCodeAt(0) + 1)]
- *   .map(c => String.fromCharCode(c));
+ * // Generate letters A–Z using Unicode codes.
+ * [...range("A".charCodeAt(0), "Z".charCodeAt(0) + 1)].map(x => String.fromCharCode(x));
+ * // → ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
  */
 export function range(stop: number): Generator<number>;
 export function range(start: number, stop: number): Generator<number>;
 export function range(
   start: number,
   stop: number,
-  options: { step?: number; inclusive?: boolean }
+  options: { step?: number; inclusive?: boolean },
 ): Generator<number>;
 export function* range(
   ...args: [number] | [number, number] | [number, number, { step?: number; inclusive?: boolean }]
@@ -87,9 +87,8 @@ export function* range(
 
   const forward = step > 0;
 
-  // Prevent infinite loops
-  if (forward && start > stop) return;
-  if (!forward && start < stop) return;
+  // Prevent infinite loops by skip ping iteration setup if range is impossible
+  if ((forward && start > stop) || (!forward && start < stop)) return;
 
   if (forward) {
     const end = inclusive ? stop + 1 : stop;

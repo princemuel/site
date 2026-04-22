@@ -3,6 +3,7 @@ import Fence from "@/components/layout/fence.astro";
 import Icon from "@/components/shared/icon.astro";
 import Link from "@/components/shared/link.astro";
 import Time from "@/components/shared/time.astro";
+import Clock from "@/components/widgets/clock.astro";
 import { buildDate } from "@/lib/built";
 import { getCollection } from "astro:content";
 
@@ -24,6 +25,8 @@ socials = socials.toSorted((a, b) => a.data.order - b.data.order);
         ))
       }
     </address>
+
+    <Clock />
 
     <div class="flex flex-wrap items-center justify-center gap-2">
       <Link href={new URL("/sitemap-index.xml", Astro.site)}>Sitemap</Link>

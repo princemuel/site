@@ -43,7 +43,7 @@ order = 5
 text  = "Connect with me on LinkedIn"
 
 [github]
-color = "text-zinc-900 dark:text-zinc-100"
+color = "text-slate-900 dark:text-slate-100"
 href  = "https://github.com/princemuel"
 icon  = "carbon:logo-github"
 order = 6
@@ -57,7 +57,7 @@ order = 7
 text  = "Send me a message"
 
 [rss]
-color = "text-zinc-500"
+color = "text-slate-500"
 href  = "/rss.xml"
 icon  = "lucide:rss"
 order = 8

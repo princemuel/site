@@ -6,7 +6,7 @@ type Config = AstroUserConfig["fonts"];
 
 export const fonts = [
   {
-    name: "Geist",
+    name: "Uncut Sans",
     provider: fontProviders.fontsource(),
     cssVariable: "--font-family-sans",
     subsets: ["latin"],

@@ -4,37 +4,14 @@
   "singleQuote": false,
   "printWidth": 100,
   "tabWidth": 2,
-  "trailingComma": "es5",
+  "trailingComma": "all",
   "attributeGroups": ["^class$", "^(id|name)$", "$DEFAULT", "^aria-"],
-  "sortImports": {
-    "groups": [
-      ["value-builtin", "value-external"],
-      "value-internal",
-      { "newlinesBetween": true },
-      ["value-parent", "value-sibling", "value-index"],
-      "type-internal",
-      "type-import",
-      ["type-parent", "type-sibling", "type-index"],
-      "unknown"
-    ]
-  },
+  "sortImports": true,
   "sortTailwindcss": {
     "stylesheet": "./app/global.css",
-    "functions": ["tw", "tv"],
+    "functions": ["clsx", "cn", "cva", "tw", "tv"],
     "attributes": ["tw"]
   },
   "sortPackageJson": { "sortScripts": true },
-  "ignorePatterns": [
-    "target",
-    ".yarn",
-    "index.js",
-    "*.wasi-browser.js",
-    "*.wasi.cjs",
-    "wasi-worker-browser.mjs",
-    "wasi-worker.mjs",
-    ".yarnrc.yml",
-    "*.geojson",
-    "*.rs",
-    "*.mdx"
-  ]
+  "ignorePatterns": ["target", ".yarn", "index.js", "*.geojson", "*.rs"]
 }

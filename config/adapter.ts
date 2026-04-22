@@ -1,8 +1,5 @@
-import adapter from "@astrojs/vercel";
+import adapter from "@astrojs/node";
 export default adapter({
-  imageService: true,
-  devImageService: "sharp",
+  mode: "standalone",
   staticHeaders: true,
-  isr: true,
-  middlewareMode: "edge",
 });

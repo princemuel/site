@@ -20,5 +20,6 @@
   },
   "env": { "builtin": true, "shared-node-browser": true },
   "extends": [],
-  "globals": {}
+  "globals": {},
+  "options": { "typeAware": true }
 }

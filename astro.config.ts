@@ -20,7 +20,7 @@ export default defineConfig({
   output: "static",
   srcDir: "./app",
   site: envVars.PUBLIC_SITE_URL,
-  env: { validateSecrets: true, schema: envSchema },
+  env: { validateSecrets: false, schema: envSchema },
   experimental: flags,
   fonts: fonts,
   integrations: integrations,
