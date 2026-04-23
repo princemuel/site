@@ -1,3 +1,5 @@
+#:tombi schema.strict = false
+#:schema https://www.schemastore.org/fly.json
 # fly.toml app configuration file generated for princemuel on 2026-04-22T03:35:46+01:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
@@ -9,13 +11,28 @@ primary_region = "lhr"
 [build]
 dockerfile = "Dockerfile"
 
-[http_service]
+[[services]]
 internal_port        = 8080
 force_https          = true
-auto_stop_machines   = "stop"
+auto_stop_machines   = "suspend"
 auto_start_machines  = true
-min_machines_running = 0
+min_machines_running = 1
 processes            = ["app"]
+
+[[services.ports]]
+handlers    = ["http"]
+port        = 80
+force_https = true
+
+[services.ports.http_options.response.headers]
+X-Process-Group = "app"
+
+[[services.ports]]
+handlers = ["tls", "http"]
+port     = 443
+
+[services.ports.http_options.response.headers]
+X-Process-Group = "app"
 
 [[vm]]
 cpu_kind = "shared"

@@ -4,7 +4,7 @@
 ARG NODE_VERSION=24.15.0
 FROM node:${NODE_VERSION}-slim AS base
 
-LABEL fly_launch_runtime="Astro/Prisma"
+LABEL fly_launch_runtime="Astro"
 
 # Astro/Prisma app lives here
 WORKDIR /app
@@ -28,17 +28,15 @@ RUN apt-get update -qq && \
 COPY .npmrc package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 RUN pnpm install --frozen-lockfile --prod=false --ignore-scripts
 
-# Generate Prisma Client
-COPY prisma .
-RUN pnpm prisma generate
-
 # Copy application code
 COPY . .
 
 # Build application using all secrets from the build context
 RUN --mount=type=secret,id=SECRETS \
+    if [ ! -f /run/secrets/SECRETS ]; then \
+      echo "ERROR: SECRETS build secret is missing" && exit 1; \
+    fi && \
     eval "$(base64 -d /run/secrets/SECRETS)" && \
-    echo "Using secrets during build!" && \
     pnpm run build
 
 # Prune development dependencies for the final image
@@ -56,14 +54,9 @@ RUN apt-get update -qq && \
 COPY --from=build /app/dist ./dist
 COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/package.json ./package.json
-COPY --from=build /app/prisma ./prisma
 COPY docker-entrypoint.js ./docker-entrypoint.js
 
 RUN chmod +x ./docker-entrypoint.js
-
-# Persistent volume for SQLite
-RUN mkdir -p /data
-VOLUME /data
 
 ENV HOST="0.0.0.0"
 ENV PORT="8080"
