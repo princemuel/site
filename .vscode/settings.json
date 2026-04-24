@@ -1,6 +1,4 @@
 {
-  "js/ts.implicitProjectConfig.target": "ESNext",
-  "js/ts.experimental.useTsgo": false,
   "js/ts.updateImportsOnFileMove.enabled": "always",
   "js/ts.suggest.autoImports": true,
   "js/ts.tsdk.path": "node_modules/typescript/lib",
@@ -19,7 +17,6 @@
   "mdx.validate.validateReferences": "warning",
   "mdx.validate.validateUnusedLinkDefinitions": "warning",
   "prettier.documentSelectors": ["**/*.astro"],
-  "astro.content-intellisense": true,
   "editor.defaultFormatter": "oxc.oxc-vscode",
   "[astro]": {
     "editor.defaultFormatter": "astro-build.astro-vscode"
@@ -63,5 +60,12 @@
   },
   "[tailwindcss]": {
     "editor.defaultFormatter": "oxc.oxc-vscode"
-  }
+  },
+  "astro.content-intellisense": true,
+  "tailwindCSS.classAttributes": ["class", "className", "ngClass", "class:list", "tw"],
+  "tailwindCSS.classFunctions": ["tw"],
+  "tailwindCSS.emmetCompletions": true,
+  "jsts-chat-features.skills.enabled": true,
+  "js/ts.preferences.preferTypeOnlyAutoImports": true,
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
