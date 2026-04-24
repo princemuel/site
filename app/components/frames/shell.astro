@@ -2,10 +2,15 @@
 import "@/global.css";
 import { Font } from "astro:assets";
 
+import Meta from "@/components/content/meta.astro";
 import Fence from "@/components/layout/fence.astro";
 import Footer from "@/components/layout/footer.astro";
 import Header from "@/components/layout/header.astro";
-// import Analytics from "@/components/widgets/analytics.astro";
+import type { ComponentProps } from "astro/types";
+
+interface Props extends ComponentProps<typeof Meta> {}
+
+const { meta, og, twitter } = Astro.props;
 ---
 
 <!doctype html>
@@ -21,9 +26,7 @@ import Header from "@/components/layout/header.astro";
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="me" href="https://mastodon.social/@princemuel" />
     <meta name="fediverse:creator" content="@princemuel@mastodon.social" />
-    <slot name="title">
-      <title>Astro</title>
-    </slot>
+    <Meta meta={meta} og={og} twitter={twitter} />
     <Font cssVariable="--font-family-sans" preload />
     <Font cssVariable="--font-family-mono" />
     <script is:inline src="/assets/theme.js"></script>

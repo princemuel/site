@@ -12,6 +12,7 @@ export default defineCollection({
       featured: z.boolean().default(false),
       image: image().optional(),
       author: reference("authors"),
+      comments: z.boolean().default(false),
       tools: z.array(z.string()).default([]),
       contributors: z.array(reference("authors")).default([]),
       status: z

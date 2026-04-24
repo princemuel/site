@@ -1,22 +1,46 @@
 ---
 import Prose from "@/components/content/prose.astro";
 import Shell from "@/components/frames/shell.astro";
-
+import { toRobotsObject } from "@/helpers/robots";
 import type { MDXLayoutProps } from "astro";
 
-type PageProps = { title: string; description: string };
+type PageProps = {
+  title: string;
+  description: string;
+  headline: string;
+  summary: string;
+  draft: boolean;
+  tags: string[];
+  date: string;
+  duration: string;
+  words: number;
+  language: "en" | "es" | "fr";
+  permalink: string;
+  robots: ("noindex" | "nofollow" | "nosnippet" | "noarchive" | "noimageindex")[];
+  updated?: string | undefined;
+};
 
 type Props = MDXLayoutProps<PageProps>;
 
 const { frontmatter } = Astro.props;
 
-// const { title, description } = frontmatter;
+const { title, description, headline, date, robots, updated, language, permalink } = frontmatter;
 ---
 
-<Shell>
-  <Prose>
+<Shell
+  meta={{
+    title: [title, true],
+    description,
+    date,
+    updated,
+    robots: toRobotsObject(robots),
+    language,
+    canonical: permalink,
+  }}
+>
+  <Prose as="article" aria-labelledby="a11ty-headline">
     <h1 id="a11ty-headline">
-      {frontmatter.title}
+      {headline}
     </h1>
     <slot />
   </Prose>

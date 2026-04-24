@@ -1,11 +1,15 @@
+import type { ImageMetadata } from "astro";
 import { z } from "astro/zod";
+import type { ImageFunction } from "astro:content";
 
 import { iconNames } from "@/assets/icons";
 
-import type { ImageMetadata } from "astro";
-import type { ImageFunction } from "astro:content";
+export const revision = z.object({
+  date: z.iso.datetime({ offset: true, local: true }),
+  note: z.string(),
+});
 
-export const revision = z.object({ date: z.iso.datetime({ offset: true }), note: z.string() });
+export const robots = z.enum(["noindex", "nofollow", "nosnippet", "noarchive", "noimageindex"]);
 
 export const baseSchema = z.object({
   title: z.string().min(2),
@@ -13,15 +17,15 @@ export const baseSchema = z.object({
   headline: z.string().default(""),
   summary: z.string().default(""),
   draft: z.boolean().default(false),
-  comments: z.boolean().default(false),
   tags: z.array(z.string()).default([]),
-  date: z.iso.datetime({ offset: true }),
-  updated: z.iso.datetime({ offset: true }).optional(),
+  date: z.iso.datetime({ offset: true, local: true }),
+  updated: z.iso.datetime({ offset: true, local: true }).optional(),
   revisions: z.array(revision).default([]),
   duration: z.string().default("1 min read"),
   words: z.uint32().lte(65_535).default(0),
   language: z.enum(["en", "es", "fr"]).default("en"),
   permalink: z.string().default("/"),
+  robots: z.array(robots).default([]),
 });
 
 export const Keys = z.union([z.string(), z.number(), z.symbol()]);

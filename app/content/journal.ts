@@ -9,6 +9,7 @@ export default defineCollection({
   schema: baseSchema.safeExtend({
     category: z.string().min(2),
     mood: z.string().min(1),
+    comments: z.boolean().default(false),
     links: z.array(z.object({ label: reference("labels"), url: z.url() })).default([]),
   }),
 });

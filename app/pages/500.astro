@@ -1,0 +1,36 @@
+---
+import Prose from "@/components/content/prose.astro";
+import Shell from "@/components/frames/shell.astro";
+import ProseLink from "@/components/shared/prose-link.astro";
+import { toRobotsObject } from "@/helpers/robots";
+import { getEntry, render } from "astro:content";
+
+type Props = { error: unknown };
+
+const entry = await getEntry("pages", "error");
+if (!entry) throw new Response(null, { status: 404 });
+
+const { Content } = await render(entry);
+
+const { error: _ } = Astro.props;
+const { title, description, headline, date, robots, updated, language, permalink } = entry.data;
+---
+
+<Shell
+  meta={{
+    title: [title, true],
+    description,
+    date,
+    updated,
+    robots: toRobotsObject(robots),
+    language,
+    canonical: permalink,
+  }}
+>
+  <Prose as="article" aria-labelledby="a11ty-headline">
+    <h1 id="a11ty-headline">
+      {headline}
+    </h1>
+    <Content components={{ a: ProseLink }} frontmatter={entry.data} />
+  </Prose>
+</Shell>

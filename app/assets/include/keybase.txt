@@ -4,9 +4,9 @@ https://keybase.io/princemuel
 
 I hereby claim:
 
-* I am an admin of https://princemuel.vercel.app
-* I am princemuel (https://keybase.io/princemuel) on keybase.
-* I have a public key ASCcJkbid0G9ovX-9RX2cX4q4xGv2np72k2zvC5q1t2mYgo
+  * I am an admin of https://princemuel.fly.dev
+  * I am princemuel (https://keybase.io/princemuel) on keybase.
+  * I have a public key with fingerprint 7E75 7E6D 4BB7 6C0E B595  8711 C34C 73C0 9C8F 19B9
 
 To do so, I am signing this object:
 
@@ -14,39 +14,57 @@ To do so, I am signing this object:
   "body": {
     "key": {
       "eldest_kid": "01209c2646e27741bda2f5fef515f6717e2ae311afda7a7bda4db3bc2e6ad6dda6620a",
+      "fingerprint": "7e757e6d4bb76c0eb5958711c34c73c09c8f19b9",
       "host": "keybase.io",
-      "kid": "01209c2646e27741bda2f5fef515f6717e2ae311afda7a7bda4db3bc2e6ad6dda6620a",
+      "key_id": "c34c73c09c8f19b9",
+      "kid": "0116b2798b46c1fcf4808b4db1e4239902cadb229e643381ff9f2d981bede7f265fc0a",
       "uid": "e9e8ce8b181a3e3236f10d844322c619",
       "username": "princemuel"
     },
     "merkle_root": {
-      "ctime": 1775691566,
-      "hash": "b4e07b3b58b2ad0ba20c3679112f82a25864fb0bccbc187edf586f0c38fe6e946e78a03e444dd851219daa35121316ba07fb7ee45b94ae7b75802bf39c4ebf91",
-      "hash_meta": "54ced733bc7f61a70d2daf880ebdab22acff06f7cc0313f0e0c0349238827888",
-      "seqno": 27517759
+      "ctime": 1776987389,
+      "hash_meta": "722a501e09fbeff597e80727f48072646fb4266197e4429aa0ed6c69128111dd",
+      "seqno": 27545613
+    },
+    "revoke": {
+      "sig_ids": ["06eda89ee9293e4aa530f3a0578deba13b2b49b2ab8d8d640859c7c506875d130f"]
     },
     "service": {
-      "entropy": "AI+KwKOA/0Qf8TPkiHDX6Q/s",
-      "hostname": "princemuel.vercel.app",
+      "hostname": "princemuel.fly.dev",
       "protocol": "https:"
     },
     "type": "web_service_binding",
-    "version": 2
+    "version": 1
   },
-  "client": {
-    "name": "keybase.io go client",
-    "version": "6.6.0"
-  },
-  "ctime": 1775691582,
-  "expire_in": 504576000,
-  "prev": "0ef1baa875b35057113f1505b2507cc1bfc4c3c61cad0bdabda482e99a299b52",
-  "seqno": 12,
+  "ctime": 1776987455,
+  "expire_in": 157680000,
+  "prev": "732934e9c6344a633a6f905596dfc7f351629b7d61e9afb933a2061821cfd765",
+  "seqno": 13,
   "tag": "signature"
 }
 
+
 which yields the signature:
 
-hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEgnCZG4ndBvaL1/vUV9nF+KuMRr9p6e9pNs7wuatbdpmIKp3BheWxvYWTESpcCDMQgDvG6qHWzUFcRPxUFslB8wb/Ew8YcrQvavaSC6Zopm1LEIBbfsbKBsGsfsWdxzYLmLOwKm1UeyneXxMJK1yNfPIOLAgHCo3NpZ8RAhrAWwjkTu2lpKeAEZhqFglmpO5C6Pas6QMbGomQDO6f88SHIQIl5B3CkjcJxrGluiYtVkHXlRpuwOESFpT5DCahzaWdfdHlwZSCkaGFzaIKkdHlwZQildmFsdWXEIB1SSvuuTehqLQ/uGDlZitoqjwd9rhM94oGPxZkh/K0Qo3RhZ80CAqd2ZXJzaW9uAQ==
+-----BEGIN PGP MESSAGE-----
+
+owFtUztrVEEY3WgUXIioRcAioFdSiDHM+7E22lioWNmIhGUe3ySX7O7d3Hs3GsIm
+sdI0Kkg6/QOijSAiiIQEtBAEBfUHBEEt7XyAzl0MInqbuTNzvnPOd2bm1sjOWn10
+81yxfufmwSdDLz/ZWvr5gV1MbOYXksZiMguDAVoeirI5m/qkkSBMkHZEMAFESoat
+NyTwAIFjHoTEEogBirEJ3kgj4zbzllpHQBgvvDdCEGSSiSSknWnIu3naKSOtBMkl
+CM+slcIhsFxzJTF2lDlJXZRUAWurY+FMVlQV0Zw1BUymWVyLk+bA3n/w276xsERq
+ZZlwOLjAFIr/3mJghGqNiDPeEqJBMEoVDkEH4rXCFjzIQAQPbuC7N6ADDcqBslhh
+Q4ESKgJGXjFGCXECV7q9AvKOaUNEV106aPeglfQnkjbksy1o5llWVvG6Mq1AWEqh
+laRKxxZNMdNsQ2mqZAgxHGFAOlgIgWsJCkkiqwZkdQ7BMiKipATGiDYGgRdOaEwU
+xtj76KSAuU6WNIjkjAtMo4Uc5rNZqNSLdDomVySNSwlaXxHgjdIAmmgKzBhOUaAG
+cak8WIOpJZZpS4xVXnnBkOLaSceRUJJ7HMHJVL/Sy+dTN6CvDuufECZDa2HSw3y0
+1s2zMnNZK+7PlGW3aFQBlQvdquAy2OZvqqZNOz5emFgxD3mRZp0YWET+nR3jfCKB
+K900h2ZaIbgUCsWv0olyMUwaG2OgnaCMGUGpEUEjzrXwwclAORZEW+kFBm2C1RFA
+kMCKYBe8FPxPmJhGn2Y6csYEO6bs5ZD069d7w7XRem1s9PDwUm+pffZxa++jtWv7
+t9/Yrh3VA6vV9+zbXlk+PVT7sjp+bO5dffrb7bXXS29Wd2+8/Xni4vjWjUP3L2w+
+PH/g1FBt6+vTpR/3+sdfjK08X7568tnHI2c+fD/66v3U3f7y5saBkV8=
+=5WJY
+-----END PGP MESSAGE-----
 
 And finally, I am proving ownership of this host by posting or
 appending to this document.

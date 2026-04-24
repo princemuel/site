@@ -1,0 +1,11 @@
+---
+type Props = { condition: any };
+
+const { condition } = Astro.props;
+const { default: defaultSlot, true: trueSlot, false: falseSlot, else: elseSlot } = Astro.slots;
+---
+
+{condition && trueSlot && <slot name="true" />}
+{condition && !trueSlot && defaultSlot && <slot />}
+{!condition && falseSlot && <slot name="false" />}
+{!condition && !falseSlot && elseSlot && <slot name="else" />}
