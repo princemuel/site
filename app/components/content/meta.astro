@@ -1,0 +1,132 @@
+---
+import If from "@/components/helpers/if.astro";
+import { hasValue, hasValues } from "@/utils";
+
+interface Robots {
+  noindex?: boolean;
+  nofollow?: boolean;
+  nosnippet?: boolean;
+  noarchive?: boolean;
+  noimageindex?: boolean;
+}
+
+interface Meta {
+  title?: [value: string, absolute?: boolean];
+  description: string;
+  keywords?: string[];
+  canonical?: string | URL;
+  medium?: OpenGraph["kind"];
+  date: Parameters<Temporal.InstantConstructor["from"]>[0];
+  updated?: Parameters<Temporal.InstantConstructor["from"]>[0];
+  robots?: Robots;
+  language?: "en" | "fr" | "es" | "de" | "pt";
+  includeOg?: boolean;
+}
+
+interface OpenGraph {
+  kind?: "website" | "article" | "book" | "profile";
+  image?: string | URL;
+  imageAlt?: string;
+  name?: string;
+  locale?: string;
+}
+
+interface Twitter {
+  handle?: `@${string}`;
+  card?: "summary" | "summary_large_image" | "app" | "player";
+  creator?: `@${string}`;
+  image?: string | URL;
+  imageAlt?: string;
+}
+
+interface Props {
+  meta?: Meta;
+  og?: OpenGraph;
+  twitter?: Twitter;
+}
+
+const SITE_NAME = "Prince Muel";
+const SITE_URL = new URL("/", Astro.site);
+const TITLE_SUFFIX = ` – ${SITE_NAME}`;
+
+const { meta, og, twitter } = Astro.props;
+
+const [titleValue, titleAbsolute] = meta?.title ?? [SITE_NAME, true];
+const title = titleAbsolute ? titleValue : `${titleValue}${TITLE_SUFFIX}`;
+
+const canonical = meta?.canonical
+  ? new URL(meta?.canonical, SITE_URL).href
+  : new URL(Astro.url.pathname, SITE_URL).href;
+
+const robotsDirective = ((defaultValue) => {
+  if (!meta?.robots) return defaultValue;
+  const directives = (
+    ["noindex", "nofollow", "nosnippet", "noarchive", "noimageindex"] as const
+  ).filter((key) => meta?.robots?.[key]);
+  return directives?.join() || defaultValue;
+})("index,follow");
+
+const publishedAt = Temporal.Instant.from(meta?.date ?? __BUILD_TIME__).toJSON();
+const updatedAt = meta?.updated ? Temporal.Instant.from(meta?.updated).toJSON() : null;
+const ogImage = og?.image
+  ? new URL(og.image, SITE_URL).href
+  : new URL("/og-default.png", SITE_URL).href;
+
+const twitterImage = twitter?.image ? new URL(twitter.image, SITE_URL).href : ogImage;
+const ogType = og?.kind ?? meta?.medium ?? "website";
+---
+
+<title>{title}</title>
+<meta name="description" content={meta?.description} />
+<meta name="generator" content={Astro.generator} />
+<link rel="canonical" href={canonical} />
+<meta name="robots" content={robotsDirective} />
+
+<If condition={hasValue(meta?.language)}>
+  <meta http-equiv="content-language" content={meta?.language} />
+</If>
+<If condition={hasValues(meta?.keywords)}>
+  <meta name="keywords" content={meta?.keywords?.join()} />
+</If>
+
+<meta name="datePublished" content={publishedAt} />
+<If condition={updatedAt}>
+  <meta name="dateModified" content={updatedAt} />
+</If>
+
+<If condition={meta?.includeOg}>
+  <!-- Facebook Meta Tags -->
+  <meta property="og:type" content={ogType} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={meta?.description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:site_name" content={og?.name ?? SITE_NAME} />
+  <meta property="og:image" content={ogImage} />
+  <If condition={og?.imageAlt}>
+    <meta name="og:image:alt" content={og?.imageAlt} />
+  </If>
+  <If condition={og?.locale}>
+    <meta property="og:locale" content={og?.locale} />
+  </If>
+  <If condition={ogType === "article"}>
+    <meta property="article:published_time" content={publishedAt} />
+    <meta property="article:modified_time" content={updatedAt} />
+  </If>
+</If>
+
+<If condition={twitter}>
+  <!-- Twitter Meta Tags -->
+  <meta name="twitter:card" content={twitter?.card ?? "summary"} />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={meta?.description} />
+  <meta name="twitter:image" content={twitterImage} />
+  <If condition={twitter?.imageAlt}>
+    <meta name="twitter:image:alt" content={twitter?.imageAlt} />
+  </If>
+  <If condition={twitter?.handle}>
+    <meta name="twitter:site" content={twitter?.handle} />
+  </If>
+  <If condition={twitter?.creator}>
+    <meta name="twitter:creator" content={twitter?.creator} />
+  </If>
+</If>
