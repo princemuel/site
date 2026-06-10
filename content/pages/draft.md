@@ -9,18 +9,23 @@ tags:
   - personal
 permalink: /thoughts
 ---
-import ProseLink from "@/components/shared/prose-link.astro";
-
-export const components = { a: ProseLink }
-
 
 Who is Tyler Fisher?
-I’m a journalist and software engineer who has worked with prominent national news organizations and solo operations just getting off the ground. I own and operate Euphonos, my personal software studio that makes Sill, a link aggregation app for Bluesky and Mastodon. You can also hire me for consulting: email [my-email].
-[my-email]: tyler@euphonos.studio
+I’m a journalist and software engineer who has worked with prominent national news organizations
+and solo operations just getting off the ground. I own and operate Euphonos, my personal software
+studio that makes Sill, a link aggregation app for Bluesky and Mastodon. You can also hire me
+for consulting: email [my-email].
+[my-email]: <tyler@euphonos.studio>
 
-Most recently, I was the Chief Technology Officer at The 19th, an independent, nonprofit newsroom reporting on gender, politics and policy. Previously, I was a software engineer at the Washington Post, where I worked on election results infrastructure. I was deputy director at News Catalyst and the director of technology at the Tiny News Collective. I also used to work at Politico and NPR, building election results reporting systems, bespoke visual stories, and newsroom tooling.
+Most recently, I was the Chief Technology Officer at The 19th, an independent, nonprofit newsroom
+reporting on gender, politics and policy. Previously, I was a software engineer at the Washington
+Post, where I worked on election results infrastructure. I was deputy director at News Catalyst
+and the director of technology at the Tiny News Collective. I also used to work at Politico and
+NPR, building election results reporting systems, bespoke visual stories, and newsroom tooling.
 
-But work isn’t my life, and I never talk about things I enjoy aside from the errant tweet. I’ve let my digital life only express the work over the past few years. I want to talk more about the play.
+But work isn’t my life, and I never talk about things I enjoy aside from the errant tweet.
+
+I’ve let my digital life only express the work over the past few years. I want to talk more about the play.
 
 This site is my playground, a personal space to write and explore new ideas. Sometimes it’ll be about work. Sometimes it’ll be about nu metal. It’s free-form and liable to change at any moment. I don’t have a publishing schedule. I don’t have subscriber goals. I’m not tracking engagement.
 

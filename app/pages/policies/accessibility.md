@@ -7,9 +7,6 @@ author: princemuel
 date: "2024-04-23T14:25:32Z"
 permalink: /policies/accessibility
 ---
-import ProseLink from "@/components/shared/prose-link.astro";
-
-export const components = { a: ProseLink }
 
 This site is made for people.
 
@@ -21,7 +18,7 @@ I'm doing my best to make it easy for users to navigate this site and find exact
 
 I've set my web accessibility standards high and work hard to achieve them. As such,
 I'm dedicated to ensuring this site meets all current laws and guidelines -
-including the [Web Content Accessibility Guidelines (WCAG)][wcag-link]
+including the [Web Content Accessibility Guidelines (WCAG)][wcag]
 and I try to be AA compliant as much as possible.
 
 In doing so, I hope to make the web more inclusive and accessible, creating a useable
@@ -31,15 +28,13 @@ That being said, I'm not perfect and I'm always learning and improving the websi
 I run automated testing for accessibility issues regularly, as well as
 testing on desktop and mobile browsers with different zoom levels.
 
-{/* me@princemuel.vercel.app */}
-
 Although this site's testing and evaluation is ongoing, if at any time you experience
 any issues using the site, or have specific questions or concerns about the
-accessibility of any particular page, please contact me via **[email][my-email]**
-or if you have the technical know-how, you can open an issue [on GitHub][gh-issues].
+accessibility of any particular page, please contact me via **[email][email]**
+or if you have the technical know-how, you can open an issue [on GitHub][issues].
 
 _Happy Surfing_ :wave:
 
-[wcag-link]: https://www.w3.org/WAI/standards-guidelines/wcag
-[my-email]: mailto:vansomecsam@gmail.com
-[gh-issues]: https://github.com/princemuel/site/issues/new
+[wcag]: https://www.w3.org/WAI/standards-guidelines/wcag
+[email]: mailto:vansomecsam@gmail.com
+[issues]: https://github.com/princemuel/site/issues/new

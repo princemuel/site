@@ -7,9 +7,6 @@ author: princemuel
 date: "2024-04-23T14:25:32Z"
 permalink: /policies/terms-of-service
 ---
-import ProseLink from "@/components/shared/prose-link.astro";
-
-export const components = { a: ProseLink }
 
 ## Liability
 

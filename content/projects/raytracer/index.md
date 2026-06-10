@@ -19,13 +19,12 @@ language: en
 permalink: /projects/raytracer
 links:
   - label: demo
-    url: https://princemuel.vercel.app/raytracer
+    url: https://princemuel.fly.dev/raytracer
   - label: repo
     url: https://github.com/princemuel/raytracer
   - label: docs
     url: https://docs.rs/raytracer
 ---
-
 
 ## Problem & Context
 
@@ -41,10 +40,10 @@ Business goals & success criteria**.**
 
 Walk through wireframes, flows, and the reasoning behind major decisions. Use visuals sparingly and caption them to explain the choice.
 
-{/* Gallery Image Carousel  */}
-{/* _* Wireframe — early sketch & notes *_  */}
-{/* Prototype screenshot  */}
-{/* Design exploration and options considered  */}
+{/_ Gallery Image Carousel _/}
+{/_ \__ Wireframe — early sketch & notes _\_ _/}
+{/_ Prototype screenshot _/}
+{/_ Design exploration and options considered _/}
 
 Tip: use the gallery above to show process artifacts; they don't have to be pretty — they must be explanatory.
 
@@ -79,10 +78,10 @@ async function fetchData(url) {
 
 ## Outcome & Metrics
 
-{/* what's below: Box  */}
-{/* Performance —35% load  */}
-{/* Engagement +18%  */}
-{/* TTM 3 weeks to MVP  */}
+{/_ what's below: Box _/}
+{/_ Performance —35% load _/}
+{/_ Engagement +18% _/}
+{/_ TTM 3 weeks to MVP _/}
 
 Short storytelling: what changed, and how you measured it. Be honest about measurement quality and confidence intervals.
 
@@ -92,24 +91,24 @@ Summarize what you'd change, experiments you'd run next, and how you measure con
 
 ## Extras
 
-{/* https://www.theodinproject.com/lessons/ruby-how-this-course-will-work#okay-enough-talk-lets-learn-ruby  */}
+{/_ https://www.theodinproject.com/lessons/ruby-how-this-course-will-work#okay-enough-talk-lets-learn-ruby _/}
 
-{/* Improve on github  */}
+{/_ Improve on github _/}
 
-{/* Report issue(s)  */}
+{/_ Report issue(s) _/}
 
-{/* See page changelog  */}
+{/_ See page changelog _/}
 
-{/*   */}
+{/\* \*/}
 
-{/* Previous Project  */}
-{/* Next Project  */}
+{/_ Previous Project _/}
+{/_ Next Project _/}
 
 ## Related Projects?
 
-{/* A short list (2 items?) of related projects with short one-liner tagline each  */}
+{/_ A short list (2 items?) of related projects with short one-liner tagline each _/}
 
 ## Talk about this project / Contact Me
 
 If you'd like to discuss this project or hire me, send a short message below.
-{/* This section could instead be a cta leading to the contact page  */}
+{/_ This section could instead be a cta leading to the contact page _/}

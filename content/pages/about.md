@@ -9,9 +9,6 @@ tags:
   - personal
 permalink: /about
 ---
-import ProseLink from "@/components/shared/prose-link.astro";
-
-export const components = { a: ProseLink }
 
 ## This is me…
 
@@ -37,7 +34,6 @@ me via one of the communication channels below. I’m usually down for a cup of 
 - [Keybase princemuel](https://keybase.io/princemuel)
 - [Say hello via email](mailto:ebkalderon@gmail.com?subject=hi)
 - PGP: [7E757E6D4BB76C0EB5958711C34C73C09C8F19B9](/pubkey.asc)
-
 
 I'm [@princemuel](https://x.com/iamprincemuel), a frontend developer
 **(mostly)**, educator, musician, and relentless problem-solver.

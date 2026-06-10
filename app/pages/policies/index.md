@@ -7,10 +7,6 @@ author: princemuel
 date: "2026-03-30T17:25:11Z"
 permalink: /policies
 ---
-import ProseLink from "@/components/shared/prose-link.astro";
-
-export const components = { a: ProseLink }
-
 
 This page provides an overview of the policies that govern the use of this
 site. Please read each one carefully.

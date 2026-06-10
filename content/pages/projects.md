@@ -9,8 +9,5 @@ tags:
   - personal
 permalink: /about
 ---
-import ProseLink from "@/components/shared/prose-link.astro";
-
-export const components = { a: ProseLink }
 
 Below is a sampling of some interesting things I’ve built. 🔨 These are projects that I am permitted to publicly discuss.
