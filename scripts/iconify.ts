@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 import { createHash } from "node:crypto";
+import { createReadStream } from "node:fs";
 import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
 import { dirname, join, relative, resolve } from "node:path";
+import { pipeline } from "node:stream/promises";
 
 import {
   cleanupSVG,
@@ -30,6 +32,7 @@ type IconConfig = Record<string, string[]>;
 
 interface Manifest {
   hash: string;
+  parts?: Record<string, string>;
 }
 
 /**
@@ -41,24 +44,35 @@ interface Manifest {
  * reliably across `git clone`/CI checkouts/package installs, whereas
  * content is always correct regardless of how the files got there.
  */
-async function computeInputsHash(iconConfig: IconConfig): Promise<string> {
-  const hash = createHash("sha256");
-
+async function computeInputsHash(
+  iconConfig: IconConfig,
+): Promise<{ combined: string; parts: Record<string, string> }> {
   // 1. icons.json — hash the raw text so any whitespace-only diff
   // doesn't trigger a pointless rebuild, but any real change does.
-  hash.update(JSON.stringify(iconConfig));
+  const configHash = createHash("sha256").update(JSON.stringify(iconConfig)).digest("hex");
 
   // 2. @iconify-json/* dependency versions, sorted so key order in
   // package.json never changes the hash.
   const depVersions = await getIconifyDepVersions(Object.keys(iconConfig));
-  for (const [name, version] of depVersions) hash.update(`${name}@${version}`);
+  const depsHash = createHash("sha256")
+    .update(depVersions.map(([name, version]) => `${name}@${version}`).join("\n"))
+    .digest("hex");
 
   // 3. Local icon files — sorted by path, hash relative path + content
-  // so a rename or content edit both register as changes.
-  const localFiles = await hashLocalIconFiles(iconsDir);
-  for (const [path, fileHash] of localFiles) hash.update(`${path}:${fileHash}`);
+  // so a rename or content edit both register as changes. Excludes
+  // this script's own generated artifacts (see hashLocalIconFiles).
+  const localFiles = await hashLocalIconFiles(iconsDir, new Set([outfile, manifestFile]));
+  const filesHash = createHash("sha256")
+    .update(localFiles.map(([path, fileHash]) => `${path}:${fileHash}`).join("\n"))
+    .digest("hex");
 
-  return hash.digest("hex");
+  const combined = createHash("sha256")
+    .update(configHash)
+    .update(depsHash)
+    .update(filesHash)
+    .digest("hex");
+
+  return { combined, parts: { config: configHash, deps: depsHash, files: filesHash } };
 }
 
 /**
@@ -83,26 +97,101 @@ async function getIconifyDepVersions(setNames: string[]): Promise<[string, strin
     .map((pkgName) => [pkgName, allDeps[pkgName]] as [string, string]);
 }
 
-/** Recursively hashes every file under `dir`, returning sorted [relativePath, hash] pairs. */
-async function hashLocalIconFiles(dir: string): Promise<[string, string][]> {
-  const results: [string, string][] = [];
+/**
+ * Runs `worker` over `items` with at most `limit` calls in flight at
+ * once — i.e. a fixed-size pool draining a shared queue, not a naive
+ * `Promise.all(items.map(worker))`.
+ *
+ * Unbounded fan-out is the wrong default once `items` can be large:
+ * Node's libuv thread pool (used for fs operations) defaults to 4
+ * threads, so firing off thousands of concurrent readFile calls just
+ * means thousands of promises queuing behind the same 4 workers, plus
+ * the overhead of having them all in flight (open file descriptors,
+ * V8 promise bookkeeping) with zero extra throughput to show for it.
+ * A small bounded pool gets the overlap that actually helps — disk
+ * seek/read latency on one file hiding behind another's — without
+ * the overhead of pretending concurrency is free.
+ */
+async function runPooled<T, R>(
+  items: T[],
+  limit: number,
+  worker: (item: T) => Promise<R>,
+): Promise<R[]> {
+  const results: R[] = Array.from({ length: items.length });
+  let next = 0;
 
-  async function walk(current: string) {
+  async function runWorker() {
+    while (next < items.length) {
+      const index = next++;
+      results[index] = await worker(items[index]!);
+    }
+  }
+
+  await Promise.all(Array.from({ length: Math.min(limit, items.length) }, runWorker));
+  return results;
+}
+
+/** SHA-256 of a file's contents via streaming, so memory use stays flat regardless of file size. */
+async function hashFile(path: string): Promise<string> {
+  const hash = createHash("sha256");
+  await pipeline(createReadStream(path), hash);
+  return hash.digest("hex");
+}
+
+/**
+ * Walks `dir` and returns sorted [relativePath, hash] pairs for every
+ * file found, excluding paths in `exclude`.
+ *
+ * Iterative and concurrent rather than recursive-and-sequential:
+ * - Directory discovery fans out as soon as each `readdir` resolves
+ *   instead of waiting for one subtree to finish before starting the
+ *   next (the recursive `await walk(full)` version serializes sibling
+ *   subtrees for no reason — they don't depend on each other).
+ * - File hashing runs through a bounded pool (see `runPooled`) once
+ *   every file in the tree has been discovered, so hashing overlaps
+ *   across files instead of one-at-a-time.
+ *
+ * This trades a bit of readability for real wall-clock wins on
+ * directories with many files or any non-trivial nesting — the
+ * sequential recursive version pays disk latency once per file in
+ * series, this pays it roughly once per `limit`-sized batch.
+ */
+async function hashLocalIconFiles(dir: string, exclude: Set<string>): Promise<[string, string][]> {
+  const filePaths: string[] = [];
+  const pendingDirs: Promise<void>[] = [];
+
+  async function exploreDir(current: string): Promise<void> {
     const entries = await readdir(current, { withFileTypes: true });
     for (const entry of entries) {
       const full = join(current, entry.name);
+      if (exclude.has(full)) continue;
+
       if (entry.isDirectory()) {
-        await walk(full);
+        // Fire-and-collect: kick off this subtree's readdir immediately,
+        // don't await it inline (that would serialize sibling subtrees).
+        pendingDirs.push(exploreDir(full));
       } else if (entry.isFile()) {
-        const content = await readFile(full);
-        const fileHash = createHash("sha256").update(content).digest("hex");
-        results.push([relative(dir, full), fileHash]);
+        filePaths.push(full);
       }
     }
   }
 
-  await walk(dir);
-  return results.sort(([a], [b]) => a.localeCompare(b));
+  await exploreDir(dir);
+  // exploreDir keeps queuing into pendingDirs as it discovers more
+  // subdirectories, so drain repeatedly until nothing new appears —
+  // a single Promise.all(pendingDirs) would miss subtrees discovered
+  // by the directories it's currently waiting on.
+  while (pendingDirs.length > 0) {
+    const batch = pendingDirs.splice(0, pendingDirs.length);
+    await Promise.all(batch);
+  }
+
+  const hashes = await runPooled(filePaths, 8, async (path) => {
+    const fileHash = await hashFile(path);
+    return [relative(dir, path), fileHash] as [string, string];
+  });
+
+  return hashes.sort(([a], [b]) => a.localeCompare(b));
 }
 
 async function readManifest(): Promise<Manifest | null> {
@@ -115,22 +204,40 @@ async function readManifest(): Promise<Manifest | null> {
   }
 }
 
-async function writeManifest(hash: string): Promise<void> {
+async function writeManifest(hash: string, parts: Record<string, string>): Promise<void> {
   await mkdir(dirname(manifestFile), { recursive: true });
-  await writeFile(manifestFile, JSON.stringify({ hash } satisfies Manifest, null, 2), "utf8");
+  await writeFile(manifestFile, JSON.stringify({ hash, parts } satisfies Manifest), "utf8");
 }
 
-async function hasUpdates(iconConfig: IconConfig): Promise<{ changed: boolean; hash: string }> {
-  const currentHash = await computeInputsHash(iconConfig);
+async function hasUpdates(
+  iconConfig: IconConfig,
+): Promise<{ changed: boolean; hash: string; parts: Record<string, string> }> {
+  const { combined, parts } = await computeInputsHash(iconConfig);
   const previous = await readManifest();
-  return { changed: previous?.hash !== currentHash, hash: currentHash };
+
+  if (process.env.ICONS_DEBUG) {
+    console.log("[icons:debug] previous:", previous);
+    console.log("[icons:debug] current parts:", parts);
+    console.log("[icons:debug] current combined:", combined);
+  }
+
+  if (previous && previous.hash !== combined) {
+    const prevParts = previous.parts ?? {};
+    for (const key of Object.keys(parts)) {
+      if (prevParts[key] !== parts[key]) {
+        console.log(`[icons] change detected in: ${key}`);
+      }
+    }
+  }
+
+  return { changed: previous?.hash !== combined, hash: combined, parts };
 }
 
 async function main() {
   const raw = await readFile(iconsJson, "utf8");
   const iconConfig = JSON.parse(raw) as IconConfig;
 
-  const { changed, hash } = await hasUpdates(iconConfig);
+  const { changed, hash, parts } = await hasUpdates(iconConfig);
   if (!changed) {
     console.log("[icons] No changes to icons.json, dependencies, or local icons. Skipping...");
     return;
@@ -157,12 +264,12 @@ type IconifyJSON = Parameters<typeof getIcons>[0];
 export const iconNames = [${iconNames.map((name) => `\n\t"${name}"`).join(",")}
 ] as const;
 
-export const icons: Record<string, IconifyJSON> = ${JSON.stringify(all, null, 2)};
+export const icons: Record<string, IconifyJSON> = ${JSON.stringify(all)};
  `;
 
   await mkdir(dirname(outfile), { recursive: true });
   await writeFile(outfile, output, "utf8");
-  await writeManifest(hash);
+  await writeManifest(hash, parts);
 
   console.log("[icons] icon collections generated successfully");
 }
