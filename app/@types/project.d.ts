@@ -9,8 +9,8 @@ interface Robots {
   noindex?: boolean;
   nofollow?: boolean;
   nosnippet?: boolean;
-  noarchive?: boolean; // prevent caching of the page
-  noimageindex?: boolean; // exclude images on the page from search
+  noarchive?: boolean; // Prevent caching of the page
+  noimageindex?: boolean; // Exclude images on the page from search
 }
 
 interface Meta {
@@ -27,10 +27,10 @@ interface Meta {
 }
 interface OpenGraph {
   kind?: "website" | "article" | "book" | "profile";
-  image?: string | URL; // og:image — the preview image URL
-  imageAlt?: string; // og:image:alt — important for a11y
-  name?: string; // og:site_name
-  locale?: string; // og:locale e.g. "en_US"
+  image?: string | URL; // Og:image — the preview image URL
+  imageAlt?: string; // Og:image:alt — important for a11y
+  name?: string; // Og:site_name
+  locale?: string; // Og:locale e.g. "en_US"
 }
 interface Twitter {
   handle?: `@${string}`;
