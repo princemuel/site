@@ -1,7 +1,3 @@
-/**
- * Adapted from: https://github.com/jsxtools/typed-custom-elements
- */
-
 /** Base class for a custom element. */
 declare class CustomElement extends HTMLElement {
   /** List of attributes to observe for changes, invoking `attributeChangedCallback`. */
@@ -34,7 +30,7 @@ declare class CustomElement extends HTMLElement {
 
   /** Called when the browser automatically fills out the element. */
   formStateRestoreCallback?(
-    state: File | FormData | string,
+    state: string | File | FormData,
     reason: "autocomplete" | "restore",
   ): Promise<void> | void;
 
@@ -45,7 +41,6 @@ declare class CustomElement extends HTMLElement {
 /** Constructor interface for custom elements. */
 interface CustomElementConstructor<T = CustomElement> {
   /** Creates a new instance of the custom element. */
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   new (...args: any[]): HTMLElement & T;
 
   /** List of attributes to observe for changes, invoking `attributeChangedCallback`. */

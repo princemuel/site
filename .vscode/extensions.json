@@ -8,7 +8,6 @@
     "oxc.oxc-vscode",
     "tombi-toml.tombi",
     "rust-lang.rust-analyzer",
-    "Vercel.turbo-vsc",
     "dotenv.dotenv-vscode",
     "EditorConfig.EditorConfig"
   ],
