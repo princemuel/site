@@ -25,7 +25,7 @@ const root = resolve(import.meta.dirname, "..");
 const iconsJson = resolve(root, "app/assets/icons/icons.json");
 const iconsDir = resolve(root, "app/assets/icons");
 const outfile = resolve(root, "app/assets/icons/index.ts");
-const manifestFile = resolve(root, "app/assets/icons/.icons-manifest.json");
+const manifestFile = resolve(root, "app/assets/icons/manifest.json");
 const packageJson = resolve(root, "package.json");
 
 type IconConfig = Record<string, string[]>;
@@ -47,7 +47,7 @@ interface Manifest {
 async function computeInputsHash(
   iconConfig: IconConfig,
 ): Promise<{ combined: string; parts: Record<string, string> }> {
-  // 1. icons.json — hash the raw text so any whitespace-only diff
+  // 1. icons.json  hash the raw text so any whitespace-only diff
   // doesn't trigger a pointless rebuild, but any real change does.
   const configHash = createHash("sha256").update(JSON.stringify(iconConfig)).digest("hex");
 
@@ -58,7 +58,7 @@ async function computeInputsHash(
     .update(depVersions.map(([name, version]) => `${name}@${version}`).join("\n"))
     .digest("hex");
 
-  // 3. Local icon files — sorted by path, hash relative path + content
+  // 3. Local icon files  sorted by path, hash relative path + content
   // so a rename or content edit both register as changes. Excludes
   // this script's own generated artifacts (see hashLocalIconFiles).
   const localFiles = await hashLocalIconFiles(iconsDir, new Set([outfile, manifestFile]));
@@ -78,7 +78,7 @@ async function computeInputsHash(
 /**
  * Reads dependency version ranges for the requested @iconify-json/*
  * packages straight out of package.json. This assumes your declared
- * range (or exact version) is a faithful proxy for "did this change" —
+ * range (or exact version) is a faithful proxy for "did this change"
  * true as long as you don't have a stale lockfile resolving to a
  * different version than what package.json declares.
  */
@@ -99,7 +99,7 @@ async function getIconifyDepVersions(setNames: string[]): Promise<[string, strin
 
 /**
  * Runs `worker` over `items` with at most `limit` calls in flight at
- * once — i.e. a fixed-size pool draining a shared queue, not a naive
+ * once  i.e. a fixed-size pool draining a shared queue, not a naive
  * `Promise.all(items.map(worker))`.
  *
  * Unbounded fan-out is the wrong default once `items` can be large:
@@ -108,8 +108,8 @@ async function getIconifyDepVersions(setNames: string[]): Promise<[string, strin
  * means thousands of promises queuing behind the same 4 workers, plus
  * the overhead of having them all in flight (open file descriptors,
  * V8 promise bookkeeping) with zero extra throughput to show for it.
- * A small bounded pool gets the overlap that actually helps — disk
- * seek/read latency on one file hiding behind another's — without
+ * A small bounded pool gets the overlap that actually helps  disk
+ * seek/read latency on one file hiding behind another's  without
  * the overhead of pretending concurrency is free.
  */
 async function runPooled<T, R>(
@@ -146,13 +146,13 @@ async function hashFile(path: string): Promise<string> {
  * - Directory discovery fans out as soon as each `readdir` resolves
  *   instead of waiting for one subtree to finish before starting the
  *   next (the recursive `await walk(full)` version serializes sibling
- *   subtrees for no reason — they don't depend on each other).
+ *   subtrees for no reason  they don't depend on each other).
  * - File hashing runs through a bounded pool (see `runPooled`) once
  *   every file in the tree has been discovered, so hashing overlaps
  *   across files instead of one-at-a-time.
  *
  * This trades a bit of readability for real wall-clock wins on
- * directories with many files or any non-trivial nesting — the
+ * directories with many files or any non-trivial nesting  the
  * sequential recursive version pays disk latency once per file in
  * series, this pays it roughly once per `limit`-sized batch.
  */
@@ -178,7 +178,7 @@ async function hashLocalIconFiles(dir: string, exclude: Set<string>): Promise<[s
 
   await exploreDir(dir);
   // exploreDir keeps queuing into pendingDirs as it discovers more
-  // subdirectories, so drain repeatedly until nothing new appears —
+  // subdirectories, so drain repeatedly until nothing new appears
   // a single Promise.all(pendingDirs) would miss subtrees discovered
   // by the directories it's currently waiting on.
   while (pendingDirs.length > 0) {
@@ -256,14 +256,11 @@ async function main() {
   const iconNames = buildIconNames(all);
 
   const output = `\
-// AUTO-GENERATED — do not edit manually
+// AUTO-GENERATED  do not edit manually
 import type { getIcons } from "@iconify/utils";
-
 type IconifyJSON = Parameters<typeof getIcons>[0];
-
-export const iconNames = [${iconNames.map((name) => `\n\t"${name}"`).join(",")}
+export const iconNames = [${iconNames.map((name) => `"${name}"`).join(",")}
 ] as const;
-
 export const icons: Record<string, IconifyJSON> = ${JSON.stringify(all)};
  `;
 
@@ -362,7 +359,7 @@ async function loadLocalCollection(
   return iconSet.export(true);
 }
 
-function convertToCurrentColor(svg: SVG): void {
+function convertToCurrentColor(svg: SVG) {
   parseColors(svg, {
     defaultColor: "currentColor",
     callback: (_, colorStr, color) =>
@@ -370,7 +367,7 @@ function convertToCurrentColor(svg: SVG): void {
   });
 }
 
-function isMonochrome(svg: SVG): boolean {
+function isMonochrome(svg: SVG) {
   let monochrome = true;
   parseColors(svg, {
     defaultColor: "currentColor",
@@ -383,7 +380,7 @@ function isMonochrome(svg: SVG): boolean {
   return monochrome;
 }
 
-function isBlack(color: Color): boolean {
+function isBlack(color: Color) {
   switch (color.type) {
     case "rgb":
       return color.r === 0 && color.r === color.g && color.g === color.b;
@@ -396,7 +393,7 @@ function isBlack(color: Color): boolean {
   return false;
 }
 
-function isWhite(color: Color): boolean {
+function isWhite(color: Color) {
   switch (color.type) {
     case "rgb":
       return color.r === 255 && color.r === color.g && color.g === color.b;
