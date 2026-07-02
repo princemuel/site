@@ -33,11 +33,12 @@ export class InvariantError extends Error {
     stripInternalStackFrames(this);
   }
 }
-export type CustomErrorConstructor = new (message: string) => Error;
 
-export type CustomErrorFactory = (message: string) => Error;
+type CustomErrorConstructor = new (message: string) => Error;
 
-export type CustomError = CustomErrorConstructor | CustomErrorFactory;
+type CustomErrorFactory = (message: string) => Error;
+
+type CustomError = CustomErrorConstructor | CustomErrorFactory;
 
 interface Invariant {
   (condition: unknown, message: string, ...positionals: unknown[]): asserts condition;
@@ -55,21 +56,19 @@ export const invariant: Invariant = (condition, message, ...positionals): assert
 };
 
 invariant.as = (ErrorClass, condition, message, ...positionals): asserts condition => {
-  if (condition) {
-    return;
-  }
+  if (condition) return;
 
-  const formattedMessage = positionals.length === 0 ? message : format(message, ...positionals);
+  const msg = positionals.length === 0 ? message : format(message, ...positionals);
 
   // oxlint-disable-next-line init-declarations
   let error: Error;
   try {
     // Prefer treating it as a class (`new ErrorClass(...)`).
-    error = Reflect.construct(ErrorClass as CustomErrorConstructor, [formattedMessage]);
+    error = Reflect.construct(ErrorClass as CustomErrorConstructor, [msg]);
   } catch {
     // Fall back to calling it as a factory function.
     // oxlint-disable-next-line new-cap
-    error = (ErrorClass as CustomErrorFactory)(formattedMessage);
+    error = (ErrorClass as CustomErrorFactory)(msg);
   }
 
   // oxlint-disable-next-line no-throw-literal
@@ -106,26 +105,16 @@ function serializePositional(value: unknown, flag: PlaceholderFlag): unknown {
     case "o": {
       // Preserve strings as-is to avoid wrapping them in extra quotes.
       if (typeof value === "string") return value;
-
       const serialized = JSON.stringify(value);
-
-      // Non-serializable values (functions, class instances without
-      // toJSON, etc.) fall through and are returned unchanged.
       const isEmptyContainer = serialized === "{}" || serialized === "[]";
       const isOpaqueObject = /^\[object .+?\]$/u.test(serialized);
       if (isEmptyContainer || isOpaqueObject) return value;
-
       return serialized;
     }
 
     default: {
-      // Exhaustiveness check: if PlaceholderFlag ever gains a new
-      // member without a corresponding case above, this assignment
-      // fails to compile instead of silently returning `undefined`
-      // at runtime.
-      const exhaustive: never = flag;
       // oxlint-disable-next-line typescript/restrict-template-expressions
-      throw new Error(`Unhandled placeholder flag: ${exhaustive}`);
+      throw new Error(`Unhandled placeholder flag: ${flag}`);
     }
   }
 }
@@ -137,10 +126,12 @@ export function format(message: string, ...positionals: unknown[]): string {
   let formatted = message.replaceAll(PLACEHOLDER_PATTERN, (match: string, ...args: unknown[]) => {
     // The last argument to a replacer callback is the `groups` object
     // when the pattern has named capture groups.
-    const groups = args.at(-1) as {
+    interface Groups {
       escapePrefix: string;
       flag: PlaceholderFlag;
-    };
+    }
+
+    const groups = args.at(-1) as Groups;
 
     // "%%s" - the leading "%" escapes the placeholder; leave it literal.
     if (groups.escapePrefix) return match;

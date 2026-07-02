@@ -3,7 +3,7 @@ title: Audiophile E-Commerce Platform
 description: A full-stack e-commerce application for premium audio products, demonstrating production-ready architecture, real-time calculations, and comprehensive form validation with server-side security.
 headline: Building a production-scale e-commerce platform from design to deployment
 summary: Transformed a Frontend Mentor design into a full-stack e-commerce application. Built layered validation architecture, implemented financial calculations with decimal precision, and deployed on Vercel. Demonstrates type-safe data flow from React components through Prisma ORM to SQLite database.
-draft: false
+published: release
 category: app
 image: ./image.png
 tags:
@@ -39,7 +39,7 @@ links:
 
 ## Problem & Context
 
-Building a polished e-commerce frontend is one thing. Making it *real* — with a backend, database, order processing, and financial calculations that actually work — is another.
+Building a polished e-commerce frontend is one thing. Making it _real_ — with a backend, database, order processing, and financial calculations that actually work — is another.
 
 Most frontend developers practice HTML/CSS/JavaScript with static designs from design systems. They rarely get to experience the full stack: designing APIs, modeling data, handling transactions, validating on multiple layers, and deploying everything cohesively.
 
@@ -55,19 +55,22 @@ This project answers those questions at production scale.
 ## Research & Constraints
 
 **User Goals:**
+
 - Browse premium audio products by category
 - Add/remove items from cart with confidence persistence
 - Complete a checkout with real-time tax and shipping calculations
 - Receive order confirmation with itemized details
 
 **Technical Constraints:**
+
 - Single-server deployment (no separate API + frontend)
 - Form validation on both client and server (defense in depth)
-- Financial calculations must be *exact* (no rounding errors)
+- Financial calculations must be _exact_ (no rounding errors)
 - Type safety across the entire stack (React → API → Database)
 - No external payment processor (this is the form POC, not Stripe integration)
 
 **Success Criteria:**
+
 - Checkout form can't be bypassed (server-side validation)
 - Cart persists across page refreshes (localStorage + recovery)
 - Tax calculated correctly ($X.99 + 20% = $X.99 × 1.2, not floating-point mess)
@@ -115,6 +118,7 @@ Modal displays confirmation with calculated totals
 ### Component Structure
 
 Rather than a monolithic form, break checkout into:
+
 - `<CheckoutForm>` — Form fields with Conform integration
 - `<OrderSummary>` — Read-only display of cart totals
 - `<OrderConfirmation>` — Success modal with itemized breakdown
@@ -153,24 +157,28 @@ The `product_id` reference is for UI lookups ("which product was this?"). The `p
 ### Tech Choices & Trade-offs
 
 **React 19 + React Router 7**
+
 - Eliminates the frontend/backend split
 - Server functions = API routes without boilerplate
 - File-based routing = less configuration
 - Trade-off: smaller community than Next.js (but growing fast)
 
 **Prisma ORM**
+
 - Type-safe queries with autocomplete
 - Migrations are tracked and repeatable (not manual SQL drift)
 - Auto-generated client types match database schema exactly
 - Trade-off: slight overhead vs. raw SQL (negligible for e-commerce scale)
 
 **Zod for Validation**
+
 - One schema definition, used on client and server
 - Runtypecheck on server catches tampering
 - Clear error messages (good UX)
 - Trade-off: adds dependency (but worth it)
 
 **SQLite Database**
+
 - Perfect for single-server deployment
 - ACID transactions prevent partial order creation
 - Proper `DECIMAL` type for currency (no floats)
@@ -292,16 +300,16 @@ Handling money correctly:
 
 ```typescript
 // ❌ WRONG: Using floats
-const subtotal = 250.00;
-const vat = subtotal * 0.20; // → 50.00000000000001
+const subtotal = 250.0;
+const vat = subtotal * 0.2; // → 50.00000000000001
 const total = subtotal + 50 + vat; // → 350.00000000000006
 
 // ✅ RIGHT: Using Decimal
-import Decimal from 'decimal.js';
+import Decimal from "decimal.js";
 
-const subtotal = new Decimal('250.00');
-const VAT_RATE = new Decimal('0.20');
-const SHIPPING = new Decimal('50.00');
+const subtotal = new Decimal("250.00");
+const VAT_RATE = new Decimal("0.20");
+const SHIPPING = new Decimal("50.00");
 
 const vat = subtotal.times(VAT_RATE); // → Decimal(50.00)
 const total = subtotal.plus(SHIPPING).plus(vat); // → Decimal(350.00)
@@ -324,19 +332,22 @@ This is non-negotiable for financial data. Floating-point rounding errors compou
 ## Pain Points & Trade-offs
 
 ### 1. Cart Persistence Strategy
+
 Initially, I cached the cart in Context state:
+
 ```javascript
 const [cart, setCart] = useState([]);
 ```
 
 Problem: When users refreshed the page, cart was gone. Solution: sync to localStorage.
+
 ```javascript
 useEffect(() => {
-  localStorage.setItem('cart', JSON.stringify(cart));
+  localStorage.setItem("cart", JSON.stringify(cart));
 }, [cart]);
 
 useEffect(() => {
-  const saved = localStorage.getItem('cart');
+  const saved = localStorage.getItem("cart");
   if (saved) setCart(JSON.parse(saved));
 }, []);
 ```
@@ -344,12 +355,15 @@ useEffect(() => {
 **Trade-off:** This couples cart state to browser storage. A production app with user accounts would sync to the database instead (`useEffect` → fetch `/api/cart` on mount). But for a guest checkout, localStorage is appropriate.
 
 ### 2. Real-time Validation vs. Hydration
+
 Server-side rendering + client-side hydration created a mismatch:
+
 - Server renders `<input value={cartQuantity} />`
 - Client hydrates but cart hasn't loaded from localStorage yet
 - Hydration mismatch → React warning
 
 **Solution:** Defer rendering until client-side cart is loaded:
+
 ```jsx
 const [isHydrated, setIsHydrated] = useState(false);
 
@@ -363,7 +377,9 @@ if (!isHydrated) return null; // Don't render until client cart data loaded
 This is a common pattern in SSR applications.
 
 ### 3. Decimal Precision in Zod
+
 Zod's `z.number()` doesn't guarantee decimal precision. I had to coerce strings:
+
 ```typescript
 const checkoutSchema = z.object({
   amount: z.string().pipe(z.coerce.number()), // String → Number
@@ -371,29 +387,33 @@ const checkoutSchema = z.object({
 ```
 
 But then Prisma expects `Prisma.Decimal`, not `number`. Solution: custom Zod transformer:
+
 ```typescript
-const decimalSchema = z.string().transform(val => new Decimal(val));
+const decimalSchema = z.string().transform((val) => new Decimal(val));
 ```
 
 This isn't documented well; I had to debug it empirically.
 
 ## Outcome & Metrics
 
-| Metric | Value |
-|--------|-------|
-| Time to Build | ~40 hours |
-| Lines of Code | ~3,200 (app) + ~200 (database) |
-| Type Coverage | 100% (no `any` types) |
-| Test Coverage | 60% (forms, mutations) |
-| Bundle Size | 145 KB (gzipped) |
+| Metric           | Value                             |
+| ---------------- | --------------------------------- |
+| Time to Build    | ~40 hours                         |
+| Lines of Code    | ~3,200 (app) + ~200 (database)    |
+| Type Coverage    | 100% (no `any` types)             |
+| Test Coverage    | 60% (forms, mutations)            |
+| Bundle Size      | 145 KB (gzipped)                  |
 | Lighthouse Score | 92 Performance, 100 Accessibility |
-| Deploy Time | 3 minutes (Vercel) |
+| Deploy Time      | 3 minutes (Vercel)                |
 
 ### Live Deployment
+
 The app deployed to Vercel in 3 minutes with zero configuration. React Router's `@vercel/react-router` automatically detected the environment and deployed correctly.
 
 ### Type Safety Win
+
 Every refactor was safe. When I changed the `Order` schema to add an `order_number` field:
+
 1. Updated `prisma/schema.prisma`
 2. Ran `prisma generate` → Prisma types updated
 3. TypeScript immediately flagged all components expecting the old type
@@ -414,16 +434,21 @@ This is the hidden power of end-to-end TypeScript.
 ### What I'd Do Differently
 
 1. **Database Layer Abstraction**
+
    ```typescript
    // Currently: raw Prisma calls in route handlers
    // Better: create a service layer
    const orderService = {
-     createOrder: async (data) => { /* validation + creation */ },
+     createOrder: async (data) => {
+       /* validation + creation */
+     },
    };
    ```
+
    This makes testing easier and separates business logic from HTTP concerns.
 
 2. **Error Handling Middleware**
+
    ```typescript
    // Status quo: try-catch scattered through route handlers
    // Better: centralized error boundary
@@ -451,15 +476,18 @@ This is the hidden power of end-to-end TypeScript.
 ## Resources & References
 
 **Why These Technologies:**
+
 - [React Router vs. Next.js](https://reactrouter.com) — File-based routing, server functions, co-located frontend+backend
 - [Prisma Type Safety](https://www.prisma.io/docs/concepts/components/prisma-client) — Auto-generated types that match database schema
 - [Decimal Precision in Currency](https://stackoverflow.com/questions/3730019) — Why floats fail for money
 
 **Production Patterns:**
+
 - [Web.dev on Form Validation](https://web.dev/articles/device-form-validation)
 - [OWASP Input Validation](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html) — Server-side validation is not optional
 
 **Related Projects:**
+
 - [Frontend Mentor: Invoice App](https://www.frontendmentor.io/challenges/invoice-app-i7KaLTQjl) — Advanced financial calculations
 - [Frontend Mentor: Todo App](https://www.frontendmentor.io/challenges/todo-app-Su1_KokOW) — Foundation full-stack patterns
 
@@ -474,16 +502,16 @@ This project taught me that **full-stack** means understanding the whole system,
 
 It's the difference between "I built a React app" and "I shipped a production e-commerce system with real architectural decisions."
 
-{/*   */}
+{/\* \*/}
 
-{/* Previous Project  */}
-{/* Next Project  */}
+{/_ Previous Project _/}
+{/_ Next Project _/}
 
 ## Related Projects?
 
-{/* A short list (2 items?) of related projects with short one-liner tagline each  */}
+{/_ A short list (2 items?) of related projects with short one-liner tagline each _/}
 
 ## Talk about this project / Contact Me
 
 If you'd like to discuss this project or hire me, send a short message below.
-{/* This section could instead be a cta leading to the contact page  */}
+{/_ This section could instead be a cta leading to the contact page _/}

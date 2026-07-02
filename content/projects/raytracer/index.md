@@ -3,7 +3,7 @@ title: Raytracer
 description: Greeting
 headline: Some headline
 summary: Some summary
-draft: true
+published: draft
 category: app
 image: ./image.jpg
 tags:
@@ -40,10 +40,10 @@ Business goals & success criteria**.**
 
 Walk through wireframes, flows, and the reasoning behind major decisions. Use visuals sparingly and caption them to explain the choice.
 
-{/_ Gallery Image Carousel _/}
-{/_ \__ Wireframe — early sketch & notes _\_ _/}
+{/_ery Image Carousel _/}
+{/\_ \__ Wireframe — early sketch & notes_/}
 {/_ Prototype screenshot _/}
-{/_ Design exploration and options considered _/}
+{/\_ Design exploration and options considered \_/}
 
 Tip: use the gallery above to show process artifacts; they don't have to be pretty — they must be explanatory.
 
@@ -78,10 +78,10 @@ async function fetchData(url) {
 
 ## Outcome & Metrics
 
-{/_ what's below: Box _/}
+{/_'s below: Box _/}
 {/_ Performance —35% load _/}
 {/_ Engagement +18% _/}
-{/_ TTM 3 weeks to MVP _/}
+{/\_ TTM 3 weeks to MVP
 
 Short storytelling: what changed, and how you measured it. Be honest about measurement quality and confidence intervals.
 
@@ -91,24 +91,24 @@ Summarize what you'd change, experiments you'd run next, and how you measure con
 
 ## Extras
 
-{/_ https://www.theodinproject.com/lessons/ruby-how-this-course-will-work#okay-enough-talk-lets-learn-ruby _/}
+{/_<https://www.theodinproject.com/lessons/ruby-how-this-course-will-work#okay-enough-talk-lets-learn-ruby>_/}
 
-{/_ Improve on github _/}
+{/_ove on github_}
 
-{/_ Report issue(s) _/}
+{/_rt issue(s)_}
 
-{/_ See page changelog _/}
+{/_page changelog_}
 
 {/\* \*/}
 
-{/_ Previous Project _/}
-{/_ Next Project _/}
+{/_ious Project _/}
+{/\_ Next Project
 
 ## Related Projects?
 
-{/_ A short list (2 items?) of related projects with short one-liner tagline each _/}
+{/_ort list (2 items?) of related projects with short one-liner tagline each_}
 
 ## Talk about this project / Contact Me
 
 If you'd like to discuss this project or hire me, send a short message below.
-{/_ This section could instead be a cta leading to the contact page _/}
+{/_ section could instead be a cta leading to the contact page_}
