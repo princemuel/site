@@ -1,27 +1,35 @@
+import path from "node:path";
+
 import type { ImageMetadata } from "astro";
 import { z } from "astro/zod";
 import type { ImageFunction } from "astro:content";
 
 import { iconNames } from "@/assets/icons";
 
-export const revision = z.object({
-  date: z.iso.datetime({ offset: true, local: true }),
-  note: z.string(),
-});
+export const content = path.join(process.cwd(), "content");
 
-export const robots = z.enum(["noindex", "nofollow", "nosnippet", "noarchive", "noimageindex"]);
+export const revision = z.object({ date: z.iso.datetime(), note: z.string() });
+
+export const directives = [
+  "noindex",
+  "nofollow",
+  "nosnippet",
+  "noarchive",
+  "noimageindex",
+] as const;
+export const robots = z.enum(directives);
 
 export const baseSchema = z.object({
   title: z.string().min(2),
   description: z.string().min(2),
   headline: z.string().default(""),
   summary: z.string().default(""),
-  draft: z.boolean().default(false),
   tags: z.array(z.string()).default([]),
-  date: z.iso.datetime({ offset: true, local: true }),
-  updated: z.iso.datetime({ offset: true, local: true }).optional(),
+  date: z.iso.datetime(),
+  updated: z.iso.datetime().optional(),
+  published: z.enum(["never", "draft", "release"]).default("never"),
   revisions: z.array(revision).default([]),
-  duration: z.string().default("1 min read"),
+  duration: z.uint32().default(0),
   words: z.uint32().lte(65_535).default(0),
   language: z.enum(["en", "es", "fr"]).default("en"),
   permalink: z.string().default("/"),
@@ -39,43 +47,43 @@ export const img = (image: ImageFunction) =>
     .transform((url) => ({ src: url, width: 1200, height: 630, format: "jpg" }) as ImageInfo)
     .or(image());
 
-// const generateSlug = ((options) => {
-//   if (options.data.slug) return options.data.slug as string;
-//   return path.basename(options.entry, ".md");
+// Const generateSlug = ((options) => {
+//   If (options.data.slug) return options.data.slug as string;
+//   Return path.basename(options.entry, ".md");
 // }) satisfies Parameters<typeof glob>[0]["generateId"];
 
-// type _Content = ["books", "films", "series", "games"][number];
+// Type _Content = ["books", "films", "series", "games"][number];
 
-// export const withMetadata = (content: Content) => {
-//   const loader = glob({
-//     base: `content/${content}`,
-//     pattern: "**/[!_]*.{md,mdx}",
+// Export const withMetadata = (content: Content) => {
+//   Const loader = glob({
+//     Base: `content/content`,
+//     Pattern: "**/[!_]*.{md,mdx}",
 //   });
 
-//   return {
+//   Return {
 //     ...loader,
-//     async load(context) {
-//       await loader.load(context);
+//     Async load(context) {
+//       Await loader.load(context);
 
-//       const entries = Array.from(context.store.entries());
-//       context.store.clear();
+//       Const entries = Array.from(context.store.entries());
+//       Context.store.clear();
 
-//       const requests = entries.map(async ([id, entry]) => {
-//         if (!entry.filePath) return [id, entry] as const;
-//         try {
-//           const metadata = await loadMeta(entry.filePath);
-//           const rendered = await context.renderMarkdown("");
+//       Const requests = entries.map(async ([id, entry]) => {
+//         If (!entry.filePath) return [id, entry] as const;
+//         Try {
+//           Const metadata = await loadMeta(entry.filePath);
+//           Const rendered = await context.renderMarkdown("");
 
-//           return [id, { ...entry, data: { ...entry.data, metadata } }] as const;
+//           Return [id, { ...entry, data: { ...entry.data, metadata } }] as const;
 //         } catch (error) {
-//           println$(`Failed to load metadata for ${entry.filePath}:`, error);
-//           return [id, { ...entry, data: { ...entry.data, metadata: {} } }] as const;
+//           Println$(`Failed to load metadata for ${entry.filePath}:`, error);
+//           Return [id, { ...entry, data: { ...entry.data, metadata: {} } }] as const;
 //         }
 //       });
 
-//       const response = await Promise.all(requests);
+//       Const response = await Promise.all(requests);
 
-//       for (const [_, entry] of response) context.store.set(entry);
+//       For (const [_, entry] of response) context.store.set(entry);
 
 //       // for (const entry of entries) {
 //       //   if (!entry[1].filePath) continue;
@@ -92,13 +100,19 @@ export const img = (image: ImageFunction) =>
 //   } satisfies Loader;
 // };
 
-// async function loadMeta(filePath: string): Promise<unknown> {
-//   const file = path.join(path.dirname(filePath), "meta.json");
-//   try {
-//     return JSON.parse(await fs.readFile(file, "utf-8"));
+// Async function loadMeta(filePath: string): Promise<unknown> {
+//   Const file = path.join(path.dirname(filePath), "meta.json");
+//   Try {
+//     Return JSON.parse(await fs.readFile(file, "utf-8"));
 //   } catch (error) {
 //     // File doesn't exist, return empty metadata
-//     if ((error as NodeJS.ErrnoException).code === "ENOENT") return {};
-//     throw error; // Re-throw other errors (parsing, permissions, etc.)
+//     If ((error as NodeJS.ErrnoException).code === "ENOENT") return {};
+//     Throw error; // Re-throw other errors (parsing, permissions, etc.)
 //   }
 // }
+
+export const published = (value: string, strict = false) => {
+  return import.meta.env.PROD || strict
+    ? value !== "never" && value !== "draft"
+    : value !== "never";
+};

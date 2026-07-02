@@ -2,7 +2,7 @@
 import { createHash } from "node:crypto";
 import { createReadStream } from "node:fs";
 import { mkdir, readFile, readdir, writeFile } from "node:fs/promises";
-import { dirname, join, relative, resolve } from "node:path";
+import path from "node:path";
 import { pipeline } from "node:stream/promises";
 
 import {
@@ -20,13 +20,13 @@ import { loadCollectionFromFS } from "@iconify/utils/lib/loader/fs";
 type IconifyJSON = Parameters<typeof getIcons>[0];
 type SVGOOptions = Omit<NonNullable<Parameters<typeof runSVGO>[1]>, "keepShapes">;
 
-const root = resolve(import.meta.dirname, "..");
+const root = path.resolve(import.meta.dirname, "..");
 
-const iconsJson = resolve(root, "app/assets/icons/icons.json");
-const iconsDir = resolve(root, "app/assets/icons");
-const outfile = resolve(root, "app/assets/icons/index.ts");
-const manifestFile = resolve(root, "app/assets/icons/manifest.json");
-const packageJson = resolve(root, "package.json");
+const iconsJson = path.resolve(root, "app/assets/icons/icons.json");
+const iconsDir = path.resolve(root, "app/assets/icons");
+const outfile = path.resolve(root, "app/assets/icons/index.ts");
+const manifestFile = path.resolve(root, "app/assets/icons/manifest.json");
+const packageJson = path.resolve(root, "package.json");
 
 type IconConfig = Record<string, string[]>;
 
@@ -55,7 +55,7 @@ async function computeInputsHash(
   // package.json never changes the hash.
   const depVersions = await getIconifyDepVersions(Object.keys(iconConfig));
   const depsHash = createHash("sha256")
-    .update(depVersions.map(([name, version]) => `${name}@${version}`).join("\n"))
+    .update(depVersions.map(([name, version]) => `${name}@${version}`).path.join("\n"))
     .digest("hex");
 
   // 3. Local icon files  sorted by path, hash relative path + content
@@ -63,7 +63,7 @@ async function computeInputsHash(
   // this script's own generated artifacts (see hashLocalIconFiles).
   const localFiles = await hashLocalIconFiles(iconsDir, new Set([outfile, manifestFile]));
   const filesHash = createHash("sha256")
-    .update(localFiles.map(([path, fileHash]) => `${path}:${fileHash}`).join("\n"))
+    .update(localFiles.map(([path, fileHash]) => `${path}:${fileHash}`).path.join("\n"))
     .digest("hex");
 
   const combined = createHash("sha256")
@@ -93,7 +93,7 @@ async function getIconifyDepVersions(setNames: string[]): Promise<[string, strin
   return setNames
     .map((name) => `@iconify-json/${name}`)
     .filter((pkgName) => pkgName in allDeps)
-    .sort()
+    .toSorted()
     .map((pkgName) => [pkgName, allDeps[pkgName]] as [string, string]);
 }
 
@@ -122,7 +122,7 @@ async function runPooled<T, R>(
 
   async function runWorker() {
     while (next < items.length) {
-      const index = next++;
+      const index = (next += 1);
       results[index] = await worker(items[index]!);
     }
   }
@@ -132,9 +132,9 @@ async function runPooled<T, R>(
 }
 
 /** SHA-256 of a file's contents via streaming, so memory use stays flat regardless of file size. */
-async function hashFile(path: string): Promise<string> {
+async function hashFile(pathname: string): Promise<string> {
   const hash = createHash("sha256");
-  await pipeline(createReadStream(path), hash);
+  await pipeline(createReadStream(pathname), hash);
   return hash.digest("hex");
 }
 
@@ -163,7 +163,7 @@ async function hashLocalIconFiles(dir: string, exclude: Set<string>): Promise<[s
   async function exploreDir(current: string): Promise<void> {
     const entries = await readdir(current, { withFileTypes: true });
     for (const entry of entries) {
-      const full = join(current, entry.name);
+      const full = path.join(current, entry.name);
       if (exclude.has(full)) continue;
 
       if (entry.isDirectory()) {
@@ -182,16 +182,16 @@ async function hashLocalIconFiles(dir: string, exclude: Set<string>): Promise<[s
   // a single Promise.all(pendingDirs) would miss subtrees discovered
   // by the directories it's currently waiting on.
   while (pendingDirs.length > 0) {
-    const batch = pendingDirs.splice(0, pendingDirs.length);
+    const batch = pendingDirs.splice(0);
     await Promise.all(batch);
   }
 
-  const hashes = await runPooled(filePaths, 8, async (path) => {
-    const fileHash = await hashFile(path);
-    return [relative(dir, path), fileHash] as [string, string];
+  const hashes = await runPooled(filePaths, 8, async (pathname) => {
+    const fileHash = await hashFile(pathname);
+    return [path.relative(dir, pathname), fileHash] as [string, string];
   });
 
-  return hashes.sort(([a], [b]) => a.localeCompare(b));
+  return hashes.toSorted(([a], [b]) => a.localeCompare(b));
 }
 
 async function readManifest(): Promise<Manifest | null> {
@@ -205,7 +205,7 @@ async function readManifest(): Promise<Manifest | null> {
 }
 
 async function writeManifest(hash: string, parts: Record<string, string>): Promise<void> {
-  await mkdir(dirname(manifestFile), { recursive: true });
+  await mkdir(path.dirname(manifestFile), { recursive: true });
   await writeFile(manifestFile, JSON.stringify({ hash, parts } satisfies Manifest), "utf8");
 }
 
@@ -264,7 +264,7 @@ export const iconNames = [${iconNames.map((name) => `"${name}"`).join(",")}
 export const icons: Record<string, IconifyJSON> = ${JSON.stringify(all)};
  `;
 
-  await mkdir(dirname(outfile), { recursive: true });
+  await mkdir(path.dirname(outfile), { recursive: true });
   await writeFile(outfile, output, "utf8");
   await writeManifest(hash, parts);
 
@@ -292,7 +292,7 @@ async function loadIconifyCollections(config: IconConfig) {
       let collection = await loadCollectionFromFS(setName);
       if (!collection) {
         console.warn(`[icons] "${setName}" not found...is @iconify-json/${setName} installed?`);
-        return null;
+        return;
       }
       // "*" means entire set
       if (requested.length === 1 && requested[0] === "*") return [setName, collection] as const;
@@ -302,7 +302,7 @@ async function loadIconifyCollections(config: IconConfig) {
       collection = getIcons(collection, names);
       if (!collection) {
         console.warn(`[icons] "${setName}" failed to load the specified icons!`);
-        return null;
+        return;
       }
 
       const missing = names.filter((name) => !(name in collection.icons));
@@ -382,26 +382,32 @@ function isMonochrome(svg: SVG) {
 
 function isBlack(color: Color) {
   switch (color.type) {
-    case "rgb":
+    case "rgb": {
       return color.r === 0 && color.r === color.g && color.g === color.b;
-    case "hsl":
+    }
+    case "hsl": {
       return color.l === 0;
+    }
     case "lab":
-    case "lch":
+    case "lch": {
       return color.l === 0;
+    }
   }
   return false;
 }
 
 function isWhite(color: Color) {
   switch (color.type) {
-    case "rgb":
+    case "rgb": {
       return color.r === 255 && color.r === color.g && color.g === color.b;
-    case "hsl":
+    }
+    case "hsl": {
       return color.l === 1;
+    }
     case "lab":
-    case "lch":
+    case "lch": {
       return color.l === 100;
+    }
   }
   return false;
 }

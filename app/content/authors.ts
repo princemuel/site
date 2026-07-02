@@ -3,7 +3,7 @@ import { z } from "astro/zod";
 import { defineCollection } from "astro:content";
 
 export default defineCollection({
-  loader: glob({ base: "content/authors", pattern: "**/[^_]*.toml" }),
+  loader: glob({ base: `content/authors`, pattern: "**/[^_]*.toml" }),
   schema: ({ image }) =>
     z.object({
       name: z.string().min(2),

@@ -1,1 +1,1 @@
-export const cache = new WeakMap<Request, Map<string, number>>();
+export const cache = new WeakMap<Request, Set<string>>();

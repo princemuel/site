@@ -1,3 +1,6 @@
+// oxlint-disable max-statements
+// oxlint-disable typescript/no-unsafe-type-assertion
+// oxlint-disable max-params
 /**
  * Async, non-reentrant mutex protecting a shared object.
  *
@@ -16,11 +19,11 @@
  * ❌ Unsafe:
  *   - `acquire()` without guaranteed release
  */
-type Acquired<T extends object> = T & { release(): void };
+type Acquired<Type extends object> = Type & { release(): void };
 
 export class Mutex<T extends object> {
   #locked = false;
-  #queue: PromiseWithResolvers<Acquired<T>>[] = [];
+  readonly #queue: PromiseWithResolvers<Acquired<T>>[] = [];
 
   constructor(private readonly resource: T) {}
 

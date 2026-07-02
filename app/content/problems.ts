@@ -5,14 +5,14 @@ import { defineCollection } from "astro:content";
 import { Keys, revision } from "@/content/helpers";
 
 export default defineCollection({
-  loader: glob({ base: "content/problems", pattern: "**/[!_]*.{md,mdx}" }),
+  loader: glob({ base: `content/problems`, pattern: "**/[!_]*.{md,mdx}" }),
   schema: z.object({
     title: z.string(),
     status: z.uint32(),
     type: z.url(),
     description: z.string(),
     extensions: z.record(Keys, z.string()).default({}),
-    draft: z.boolean().default(false),
+    published: z.enum(["never", "draft", "release"]).default("never"),
     date: z.iso.datetime({ offset: true }),
     updated: z.iso.datetime({ offset: true }).optional(),
     revisions: z.array(revision).default([]),

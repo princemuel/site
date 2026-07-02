@@ -1,11 +1,11 @@
 /**
  * Hashes a value using MurmurHash3
  * @param {string} value - The value to hash
- * @param length - Desired output length (default: 12)
+ * @param length - Desired output length (default: 6)
  * @param radix - Base for output (16=hex, 36=alphanumeric)
  * @returns Fixed-length hash string
  */
-export function hash(value: string, length = 12, radix = 16) {
+export function hash(value: string, length = 6, radix = 16) {
   return format(murmur3(value), length, radix);
 }
 

@@ -5,7 +5,7 @@ import { defineCollection } from "astro:content";
 import { IconEnum } from "@/content/helpers";
 
 export const labels = defineCollection({
-  loader: file("content/sandbox/labels.toml"),
+  loader: file(`content/sandbox/labels.toml`),
   schema: z.object({
     text: z.string().min(2),
     icon: IconEnum,
@@ -14,7 +14,7 @@ export const labels = defineCollection({
 });
 
 export const genres = defineCollection({
-  loader: file("content/sandbox/genres.toml"),
+  loader: file(`content/sandbox/genres.toml`),
   schema: z.object({
     text: z.string().min(2),
     icon: IconEnum,
@@ -23,7 +23,7 @@ export const genres = defineCollection({
 });
 
 export const routes = defineCollection({
-  loader: file("content/sandbox/routes.toml"),
+  loader: file(`content/sandbox/routes.toml`),
   schema: z.object({
     href: z.string(),
     text: z.string().min(2),
@@ -33,7 +33,7 @@ export const routes = defineCollection({
 });
 
 export const socials = defineCollection({
-  loader: file("content/sandbox/socials.toml"),
+  loader: file(`content/sandbox/socials.toml`),
   schema: z.object({
     href: z.string().min(2),
     text: z.string().min(2),
@@ -44,7 +44,7 @@ export const socials = defineCollection({
 });
 
 export const sharers = defineCollection({
-  loader: file("content/sandbox/sharers.toml"),
+  loader: file(`content/sandbox/sharers.toml`),
   schema: z.object({
     href: z.string(),
     text: z.string().min(2),

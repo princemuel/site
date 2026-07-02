@@ -87,7 +87,7 @@ export function* range(
 
   const forward = step > 0;
 
-  // Prevent infinite loops by skip ping iteration setup if range is impossible
+  // Prevent infinite loops by skipping the iteration setup if the range is impossible
   if ((forward && start > stop) || (!forward && start < stop)) return;
 
   if (forward) {
