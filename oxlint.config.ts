@@ -9,7 +9,7 @@ export default defineConfig({
     // restriction: "warn",
     suspicious: "warn",
     style: "warn",
-    // Nursery: "warn",
+    // nursery: "warn",
   },
   rules: {
     curly: ["deny", "multi-line", "consistent"],

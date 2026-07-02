@@ -1,12 +1,12 @@
-import { fontProviders } from "astro/config";
-
 import type { AstroUserConfig } from "astro";
+import { fontProviders } from "astro/config";
 
 type Config = AstroUserConfig["fonts"];
 
+// name: "Cantarell", // name: "Sen",
 export const fonts = [
   {
-    name: "Uncut Sans",
+    name: "Catamaran",
     provider: fontProviders.fontsource(),
     cssVariable: "--font-family-sans",
     subsets: ["latin"],
@@ -22,7 +22,7 @@ export const fonts = [
     formats: ["woff2", "ttf"],
   },
   {
-    name: "Geist Mono",
+    name: "JetBrains Mono",
     provider: fontProviders.fontsource(),
     cssVariable: "--font-family-mono",
     fallbacks: [

@@ -1,6 +1,5 @@
 import { defineConfig } from "astro/config";
 
-import "./app/polyfills/temporal";
 import {
   adapter,
   envSchema,
@@ -22,13 +21,13 @@ export default defineConfig({
   site: envVars.PUBLIC_SITE_URL,
   env: { validateSecrets: true, schema: envSchema },
   experimental: flags,
-  fonts: fonts,
-  integrations: integrations,
+  fonts,
+  integrations,
   server: ({ command }) => ({ host: command === "dev" }),
-  prefetch: prefetch,
-  security: security,
-  markdown: markdown,
+  prefetch,
+  security,
+  markdown,
   image: images,
-  adapter: adapter,
+  adapter,
   vite: pluginsVite,
 });

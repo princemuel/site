@@ -6,12 +6,12 @@ type Config = NonNullable<NonNullable<AstroUserConfig["env"]>["schema"]>;
 
 const mode = process.env.NODE_ENV ?? "production";
 
-const z = envField;
-const s_str = z.string({ context: "server", access: "secret" });
-const p_url = z.string({ context: "server", access: "public", url: true });
-const s_url = z.string({ context: "server", access: "secret", url: true });
-// const s_int = z.number({ context: "server", access: "secret", int: true });
-const s_bool = z.boolean({ context: "server", access: "secret", default: false });
+const env = envField;
+const s_str = env.string({ context: "server", access: "secret" });
+const p_url = env.string({ context: "server", access: "public", url: true });
+const s_url = env.string({ context: "server", access: "secret", url: true });
+// Const s_int = z.number({ context: "server", access: "secret", int: true });
+const s_bool = env.boolean({ context: "server", access: "secret", default: false });
 
 export const envSchema = {
   ASTRO_KEY: s_str,
