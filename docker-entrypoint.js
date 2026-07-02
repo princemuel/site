@@ -5,11 +5,11 @@ import { spawn } from "node:child_process";
 const env = { ...process.env };
 
 // If running the web server then migrate existing database
-if (process.argv.slice(-3).join(" ") === "node /app/dist/server/entry.mjs") {
-  // await exec("pnpx prisma migrate deploy");
+if (process.argv.slice(-3).join(" ") === "node ./dist/server/entry.mjs") {
+  // Await exec("pnpx prisma migrate deploy");
 }
 
-// launch application
+// Launch application
 await exec(process.argv.slice(2).join(" "));
 
 function exec(command) {
