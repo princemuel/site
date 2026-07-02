@@ -1,4 +1,4 @@
-# princemuel.vercel.app
+# princemuel.fly.dev
 
 This is my portfolio and blog built with Astro.
 
