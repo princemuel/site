@@ -29,7 +29,7 @@ export const comments = sqliteTable(
     created_at: timestamptz()
       .default(sql`(strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))`)
       .notNull(),
-    updated_at: timestamptz().$onUpdate(() => Temporal.Now.instant()),
+    updated_at: timestamptz().$onUpdate(() => sql`(strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))`),
   },
   (table) => [
     index("comments_post_id_created_at_idx").on(table.post_id, table.created_at),

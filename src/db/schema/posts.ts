@@ -12,7 +12,7 @@ export const posts = sqliteTable(
     created_at: timestamptz()
       .default(sql`(strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))`)
       .notNull(),
-    updated_at: timestamptz().$onUpdate(() => Temporal.Now.instant()),
+    updated_at: timestamptz().$onUpdate(() => sql`(strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))`),
   },
   (table) => [index("post_created_at_idx").on(table.created_at)],
 );
