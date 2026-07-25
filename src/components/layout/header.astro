@@ -1,9 +1,16 @@
 ---
-import Fence from "@/components/layout/fence.astro";
-import Routes from "@/components/layout/routes.astro";
+import { excluded } from "@/assets/include";
 import Icon from "@/components/shared/icon.astro";
+import Navlink from "@/components/shared/navlink.astro";
+import { getCollection } from "astro:content";
+
+import Fence from "@/components/layout/fence.astro";
 import Link from "@/components/shared/link.astro";
 import ThemePicker from "@/components/widgets/theme.astro";
+const excludedRoutes = new Set(excluded);
+
+const routes = await getCollection("routes", (data) => !excludedRoutes.has(data.id));
+routes.sort((a, b) => a.data.order - b.data.order);
 ---
 
 <Fence as="header" class="bg-inherit">
@@ -12,12 +19,32 @@ import ThemePicker from "@/components/widgets/theme.astro";
     <ThemePicker />
   </section>
 
-  <section class="flex items-center gap-4 border-y border-stone-200 dark:border-stone-700">
-    <Routes class="mr-auto" />
+  <section class="flex items-center gap-4 border-y border-gray-200 dark:border-gray-700">
+    <nav aria-label="Main" class="mr-auto flex items-center justify-evenly capitalize">
+      {
+        routes.map((r) => (
+          <Navlink
+            href={r.data.href}
+            class:list={[
+              "p-3 text-base text-gray-600 dark:text-gray-400",
+              "hover:text-gray-900 focus:text-gray-900 aria-page:text-gray-900",
+              "dark:hover:text-gray-100 dark:focus:text-gray-100 dark:aria-page:text-gray-100",
+            ]}
+          >
+            <Icon name={r.data.icon} class="text-2xl md:hidden" />
+            <span class="sr-only md:not-sr-only">{r.data.text}</span>
+          </Navlink>
+        ))
+      }
+    </nav>
 
     <section class="flex items-center">
-      <Link href="/rss.xml" class="p-3 text-2xl text-stone-900 dark:text-stone-200">
+      <Link href="/rss.xml" class="p-3 text-2xl text-gray-900 dark:text-gray-200">
         <Icon name="lucide:rss" class="text-inherit" />
+        <span class="sr-only">RSS</span>
+      </Link>
+      <Link href="/resume.pdf" class="p-3 text-2xl text-gray-900 dark:text-gray-200">
+        <Icon name="lucide:file-terminal" class="text-inherit" />
         <span class="sr-only">RSS</span>
       </Link>
     </section>

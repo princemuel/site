@@ -10,8 +10,6 @@ invariant(Astro.props.href, "Expected `href` to be set but got `%s`", typeof Ast
 const thatPathname = Astro.props.href.toString().toLocaleLowerCase();
 const thisPathname = Astro.url.pathname.toLocaleLowerCase();
 
-// Determine if link is active
-// If `href` has a trailing slash, match exact position, otherwise look for slash after
 const endSlashPosition =
   thatPathname !== "/" && thatPathname.endsWith("/")
     ? thatPathname.length - 1

@@ -1,6 +1,5 @@
 ---
-import { invariant } from "outvariant";
-
+import { invariant } from "@/utils/error";
 import type { HTMLAttributes } from "astro/types";
 
 type Props = HTMLAttributes<"a">;
@@ -9,11 +8,10 @@ invariant(Astro.props.href, "Expected `href` to be set but got `%s`", typeof Ast
 
 const href = Astro.props.href.toString();
 
-const is_internal = ["/", "#"].some((s) => href.startsWith(s));
-
+const is_internal = href.startsWith("#") || (href.startsWith("/") && !href.startsWith("//"));
 const attrs = is_internal
   ? { ...Astro.props, href: new URL(href, Astro.site), "data-astro-prefetch": true }
-  : { ...Astro.props, target: "_blank", rel: "noopener noreferrer" };
+  : { ...Astro.props, target: "_blank", rel: "noopener noreferrer external" };
 ---
 
 <a

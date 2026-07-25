@@ -12,11 +12,11 @@ type Props = HTMLAttributes<"button">;
     title="Toggle Theme"
     class:list={[
       "group relative flex items-center p-3 text-2xl",
-      "text-stone-900 dark:text-stone-200",
-      "hover:text-stone-200 dark:hover:text-stone-900",
-      "hover:bg-stone-900 dark:hover:bg-stone-200",
-      "focus:text-stone-200 dark:focus:text-stone-900",
-      "focus:bg-stone-900 dark:focus:bg-stone-200",
+      "text-gray-900 dark:text-gray-200",
+      "hover:text-gray-200 dark:hover:text-gray-900",
+      "hover:bg-gray-900 dark:hover:bg-gray-200",
+      "focus:text-gray-200 dark:focus:text-gray-900",
+      "focus:bg-gray-900 dark:focus:bg-gray-200",
       Astro.props.class,
     ]}
   >
@@ -53,25 +53,21 @@ type Props = HTMLAttributes<"button">;
 <script>
   import { createElement } from "@/helpers/dom";
 
-  type Theme = (typeof themes)[number];
+  type Theme = "system" | "light" | "dark";
+  // type Theme = (typeof themes)[number];
   type ColorScheme = Exclude<Theme, "system">;
   const ThemeKey = "ui-theme";
 
-  // ============================================================================
-  // State Management
-  // ============================================================================
+  // const themes = ["system", "light", "dark"] as const;
+  const ThemeMap = { system: "light", light: "dark", dark: "system" } as Record<Theme, Theme>;
   const mql = matchMedia("(prefers-color-scheme: light)");
-  const channel = new BroadcastChannel(ThemeKey);
+  const channel = "BroadcastChannel" in globalThis ? new BroadcastChannel(ThemeKey) : null;
 
-  const themes = ["system", "light", "dark"] as const;
-  /** Yields the next theme value, looping back to the first after reaching the end. */
-  const themeGen = (function* infinite() {
-    let i = 0;
-    while (true) {
-      yield themes[i];
-      i = (i + 1) % themes.length;
-    }
-  })();
+  // const nextTheme = (current: Theme): Theme => {
+  //   const idx = themes.indexOf(current);
+  //   return themes[(idx + 1) % themes.length]!;
+  // };
+  const nextTheme = (current: Theme) => ThemeMap[current];
 
   const getSystemScheme = (): ColorScheme => (mql.matches ? "light" : "dark");
 
@@ -87,13 +83,9 @@ type Props = HTMLAttributes<"button">;
   const resolveScheme = (theme: Theme): ColorScheme =>
     theme === "system" ? getSystemScheme() : theme;
 
-  // ============================================================================
-  // Theme Application
-  // ============================================================================
   const root = document.documentElement;
 
   /** Update theme widget, document theme, and local storage state. */
-
   const setTheme = (theme: Theme) => {
     Theme.selectThemeIcon(theme);
 
@@ -106,22 +98,25 @@ type Props = HTMLAttributes<"button">;
 
   const onThemeChange = (theme: Theme) => {
     setTheme(theme);
-    channel.postMessage({ theme, timestamp: Temporal.Now.instant().epochMilliseconds });
+    // oxlint-disable-next-line unicorn/require-post-message-target-origin
+    channel?.postMessage({ theme, timestamp: Temporal.Now.instant().epochMilliseconds });
   };
 
   // ============================================================================
   // Cross-tab Synchronization
   // ============================================================================
   let lastBroadcast = 0;
-  type Message = { theme: Theme; timestamp: number };
+  interface Message {
+    theme: Theme;
+    timestamp: number;
+  }
   type ChannelEvent = MessageEvent<Message>;
 
-  channel.addEventListener("message", (event: ChannelEvent) => {
+  channel?.addEventListener("message", (event: ChannelEvent) => {
     const { theme, timestamp } = event.data;
-    // Prevent echo/loop and out-of-order messages
     if (timestamp <= lastBroadcast) return;
     lastBroadcast = timestamp;
-    onThemeChange(parseTheme(theme));
+    setTheme(parseTheme(theme));
   });
 
   // React to changes in system color scheme.
@@ -130,10 +125,10 @@ type Props = HTMLAttributes<"button">;
   });
 
   // Fallback for browsers without BroadcastChannel (rare but defensive)
-  if (!("BroadcastChannel" in globalThis)) {
-    window.addEventListener("storage", (e) => {
+  if (!channel) {
+    globalThis.addEventListener("storage", (e) => {
       if (e.key === ThemeKey && e.newValue !== null) {
-        onThemeChange(parseTheme(e.newValue));
+        setTheme(parseTheme(e.newValue));
       }
     });
   }
@@ -143,7 +138,7 @@ type Props = HTMLAttributes<"button">;
     class UiTheme extends HTMLElement implements CustomElement {
       #ctrl?: AbortController;
       connectedCallback() {
-        onThemeChange(loadTheme());
+        setTheme(loadTheme());
         this.#ctrl = new AbortController();
         this.addEventListener("click", this, { signal: this.#ctrl.signal });
       }
@@ -152,15 +147,14 @@ type Props = HTMLAttributes<"button">;
         this.#ctrl?.abort();
       }
 
-      handleEvent<E extends Event>(event: E) {
-        // @ts-expect-error
+      handleEvent(event: Event) {
+        // @ts-expect-error: TS2349 - This is a known limitation with third-party types
         this[`on${event.type}` as keyof this](event);
       }
 
-      //@ts-expect-error
-      // oxlint-disable-next-line no-unused-private-class-members
-      onclick(_e) {
-        onThemeChange(parseTheme(themeGen.next().value));
+      // @ts-expect-error: TS2425 - 'UiTheme' defines onclick as instance member function
+      override onclick() {
+        onThemeChange(nextTheme(loadTheme()));
       }
     },
   );

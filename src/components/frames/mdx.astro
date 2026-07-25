@@ -4,7 +4,7 @@ import Shell from "@/components/frames/shell.astro";
 import { toRobotsObject } from "@/helpers/robots";
 import type { MDXLayoutProps } from "astro";
 
-type PageProps = {
+interface PageProps {
   title: string;
   description: string;
   headline: string;
@@ -18,7 +18,7 @@ type PageProps = {
   permalink: string;
   robots: ("noindex" | "nofollow" | "nosnippet" | "noarchive" | "noimageindex")[];
   updated?: string | undefined;
-};
+}
 
 type Props = MDXLayoutProps<PageProps>;
 

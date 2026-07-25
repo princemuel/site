@@ -10,14 +10,13 @@ const { datetime, format, ...attrs } = Astro.props;
 
 const instant = Temporal.Instant.from(datetime);
 const fallback = new Intl.DateTimeFormat(undefined, {
-  dateStyle: "medium",
+  dateStyle: "short",
   timeStyle: "short",
 }).format(instant);
 ---
 
 <local-time
   role="time"
-  aria-roledescription="The local-time element represents its contents, along with a machine-readable form of those contents in the datetime attribute."
   datetime={datetime}
   data-format={format ? JSON.stringify(format) : undefined}
   {...attrs}
@@ -31,34 +30,46 @@ const fallback = new Intl.DateTimeFormat(undefined, {
   createElement(
     "local-time",
     class LocalTimeElement extends HTMLElement implements CustomElement {
-      static observedAttributes = ["datetime", "format"];
+      static observedAttributes = ["datetime", "data-format"];
+      #Intl: Intl.DateTimeFormat | null = null;
 
       connectedCallback() {
         this.#render();
       }
 
-      attributeChangedCallback() {
+      attributeChangedCallback(name: string) {
+        if (name === "data-format") this.#Intl = null;
         this.#render();
       }
 
-      get dateTime(): string {
-        return this.getAttribute("datetime") ?? "";
-      }
-
-      set dateTime(value: string) {
-        this.setAttribute("datetime", value);
+      disconnectedCallback() {
+        this.#Intl = null;
       }
 
       #render() {
-        if (!this.dateTime) return;
+        const datetime = this.getAttribute("datetime");
+        if (!datetime) return;
 
-        const instant = Temporal.Instant.from(this.dateTime);
-        const options: Intl.DateTimeFormatOptions = this.dataset.format
-          ? (JSON.parse(this.dataset.format) as Intl.DateTimeFormatOptions)
-          : { dateStyle: "medium", timeStyle: "short" };
+        let target: Temporal.Instant | null = null;
+        try {
+          target = Temporal.Instant.from(datetime);
+        } catch {
+          return;
+        }
 
+        this.textContent = this.#formatter().format(target);
+      }
+
+      #formatter(): Intl.DateTimeFormat {
+        if (this.#Intl) return this.#Intl;
+
+        const raw = this.dataset.format;
+        const options: Intl.DateTimeFormatOptions = raw
+          ? (JSON.parse(raw) as Intl.DateTimeFormatOptions)
+          : { dateStyle: "short", timeStyle: "short" };
         options.timeZone = Temporal.Now.timeZoneId();
-        this.textContent = new Intl.DateTimeFormat(navigator.language, options).format(instant);
+        this.#Intl = new Intl.DateTimeFormat(navigator.language, options);
+        return this.#Intl;
       }
     },
   );

@@ -30,8 +30,8 @@
   import { $ } from "@/helpers/dom";
 
   // oxlint-disable-next-line max-params
-  function toDeg(value: number, period: number, fine = 0, finePeriod = 1) {
-    return ((value / period + fine / (period * finePeriod)) * 360).toString();
+  function toDeg(value: number, period: number, subUnit = 0, subUnitPeriod = 1) {
+    return ((value / period + subUnit / (period * subUnitPeriod)) * 360).toString();
   }
 
   const face = $("#clock-face", HTMLDivElement);
@@ -40,8 +40,8 @@
 
   const { timeZone } = new Intl.DateTimeFormat().resolvedOptions();
   const today = Temporal.Now.zonedDateTimeISO(timeZone);
-  // Computed once on page load. if a DST transition occurs mid-session, the offset
-  // Label will be stale, but this resolves on the next page load or reload
+  // Computed once on page load. If a DST transition occurs mid-session, the offset
+  // label will be stale, but this resolves on the next page load or reload.
   const timeZoneOffset = today.offset;
   offset.value = timeZoneOffset;
   offset.textContent =
@@ -57,9 +57,12 @@
     const min = now.minute;
     const sec = now.second;
 
-    const isoTime = now.toPlainTime();
-    digital.dateTime = isoTime.toString({ smallestUnit: "second", roundingMode: "halfCeil" });
-    digital.textContent = isoTime.toLocaleString();
+    // Round once, then derive both the machine-readable attribute and the
+    // visible text from the same value so they can't disagree at a
+    // rounding boundary (e.g. one showing :59 while the other shows :00).
+    const rounded = now.toPlainTime().round({ smallestUnit: "second", roundingMode: "halfCeil" });
+    digital.dateTime = rounded.toString({ smallestUnit: "second" });
+    digital.textContent = rounded.toLocaleString();
 
     face.style.setProperty("--second", toDeg(sec, 60));
     if (min !== prevMin) {
@@ -69,6 +72,11 @@
     }
   }
 
-  tick();
-  setInterval(tick, 1000);
+  function scheduleTick() {
+    tick();
+    const msIntoSecond = Temporal.Now.instant().epochMilliseconds % 1000;
+    setTimeout(scheduleTick, 1000 - msIntoSecond);
+  }
+
+  scheduleTick();
 </script>

@@ -35,7 +35,7 @@ const { as: As = "div", class: clsx, ...attrs } = Astro.props;
       var(--popout) [popout-end]
       var(--feature) [feature-end]
       var(--full) [full-end];
-    /* grid-template-rows: min-content; */
+    grid-template-rows: min-content;
 
     row-gap: var(--spacer);
 
@@ -68,8 +68,9 @@ const { as: As = "div", class: clsx, ...attrs } = Astro.props;
   }
   .content > .full {
     grid-column: full;
+    min-width: 0;
+
     display: grid;
     grid-template-columns: subgrid;
-    min-width: 0;
   }
 </style>

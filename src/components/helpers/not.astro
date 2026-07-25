@@ -1,5 +1,4 @@
 ---
-// Not.astro
 import type { ComponentProps } from "astro/types";
 import If from "./if.astro";
 
@@ -8,11 +7,6 @@ type Props = ComponentProps<typeof If>;
 const { condition } = Astro.props;
 ---
 
-<!--
-  Not(condition) is If(!condition) with "true"/"false" slot roles swapped:
-  content in the "true" slot here should render when `condition` is falsy,
-  which is exactly what If's "true" slot does for `!condition`.
--->
 <If condition={!condition}>
   <slot name="true" slot="true" />
   <slot name="false" slot="false" />

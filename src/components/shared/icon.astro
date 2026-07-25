@@ -17,7 +17,7 @@
  */
 
 import { icons, type iconNames } from "@/assets/media/icons";
-import { cache } from "@/lib/cache";
+import { IconCache } from "@/lib/cache";
 import { invariant } from "@/utils/error";
 import { getIconData, iconToSVG } from "@iconify/utils";
 import type { HTMLAttributes } from "astro/types";
@@ -36,21 +36,15 @@ interface Props extends SVGAttributes {
   "is:inline"?: boolean;
 }
 
-const {
-  name,
-  title,
-  desc,
-  size,
-  "is:inline": inlined = false,
-  width,
-  height,
-  ...rest
-} = Astro.props;
+const { name, title, desc, size, width, height, "is:inline": inlined, ...rest } = Astro.props;
 
-const parts = (name as string).split(":", 2);
-const [iconSet, iconName] = parts.length === 1 ? ["local", parts[0]] : parts;
+const [iconSet, iconName] = (() => {
+  const [first, second] = (name as string).split(":", 2);
+  return second === undefined ? ["local", first] : [first, second];
+})();
 
-const collection = icons[iconSet];
+const collection = icons[iconSet!];
+
 invariant(
   collection,
   `[Icon] Unknown icon set "${iconSet}". Did you run the bootstrap:icons script?`,
@@ -63,45 +57,43 @@ invariant(
   `[Icon] "${iconName}" not found in "${iconSet}". Is it listed in icons/manifest.json?`,
 );
 
-// In SSR mode, each unique icon is rendered as a <symbol> once per request.
-// Every subsequent use emits only a <use href="#id"> avoiding repeating
-// The full SVG body (which can be 1–3 KB) for common icons like "home".
 const id = `${iconSet}:${iconName}`;
+// In SSR mode, each unique icon is rendered as a <symbol> once per request.
+// Every subsequent use emits only a <use href="#id">, avoiding repeating
+// the full SVG body (which can be 1–3 KB) for common icons like "home".
+const isInline = inlined ?? Astro.isPrerendered;
 
-let isFirstRender = true;
-if (!inlined && !Astro.isPrerendered) {
+let isFirstRenderInRequest = true;
+if (!isInline) {
   const req = Astro.request;
-  const seen = cache.getOrInsertComputed(req, () => new Set());
-  isFirstRender = !seen.has(id);
+  const seen = IconCache.getOrInsertComputed(req, () => new Set());
+  isFirstRenderInRequest = !seen.has(id);
   seen.add(id);
 }
 
-const useSymbol = !inlined && isFirstRender;
+const useSymbol = !isInline && isFirstRenderInRequest;
 
 const { attributes, body } = iconToSVG(iconData);
-const resolvedWidth = (size ?? width ?? attributes.width)?.toString();
-const resolvedHeight = (size ?? height ?? attributes.height)?.toString();
+const { viewBox, ...attributesWithoutViewBox } = attributes;
 
-const { viewBox, ...attrsWithoutViewBox } = attributes;
 const attrs = {
-  ...(useSymbol ? attrsWithoutViewBox : attributes),
+  ...(useSymbol ? attributesWithoutViewBox : attributes),
   ...rest,
-  width: resolvedWidth,
-  height: resolvedHeight,
+  width: (size ?? width ?? attributes.width ?? "1em").toString(),
+  height: (size ?? height ?? attributes.height ?? "1em").toString(),
 };
 ---
 
 <svg {...attrs}>
   {title && <title>{title}</title>}
   {desc && <desc>{desc}</desc>}
-
   {
-    inlined ? (
+    isInline ? (
       <Fragment set:html={body} />
     ) : (
       <Fragment>
         {useSymbol && <symbol id={id} viewBox={viewBox} set:html={body} />}
-        <use href={`#${id}`} width={resolvedWidth} height={resolvedHeight} />
+        <use href={`#${id}`} />
       </Fragment>
     )
   }

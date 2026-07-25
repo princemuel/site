@@ -2,49 +2,54 @@
 import Fence from "@/components/layout/fence.astro";
 import Icon from "@/components/shared/icon.astro";
 import Link from "@/components/shared/link.astro";
-import Time from "@/components/shared/time.astro";
 import Clock from "@/components/widgets/clock.astro";
 import { built } from "@/lib/build";
 import { getCollection } from "astro:content";
 
 // const excludedRoutes = new Set(["discord", "youtube", "website", "rss", "instagram"]);
-const excludedRoutes = new Set(["discord", "youtube", "website", "rss", ""]);
+const excluded = new Set(["discord", "youtube", "website", "rss", "keyoxide", "mastodon"]);
 
-let socials = await getCollection("socials", (entry) => !excludedRoutes.has(entry.id));
-socials = socials.toSorted((a, b) => a.data.order - b.data.order);
+const profiles = await getCollection("profiles", (entry) => !excluded.has(entry.id));
+profiles.sort((a, b) => a.data.order - b.data.order);
 ---
 
-<Fence as="footer" class="py-10 text-sm">
-  <!-- <section class="flex flex-col items-center gap-8">
-    <address class="flex items-center justify-center gap-4 text-3xl">
+<Fence as="footer" class="text-sm">
+  <section
+    class="flex items-center justify-between border-b border-gray-200 py-4 dark:border-gray-800"
+  >
+    <address class="flex items-center justify-center gap-4 text-2xl">
       {
-        socials.map((r) => (
+        profiles.map((r) => (
           <Link href={r.data.href} class:list={["transition", r.data.color ?? "text-current"]}>
             <Icon name={r.data.icon} title={r.data.text} class="text-current" />
           </Link>
         ))
       }
     </address>
-
     <Clock />
+  </section>
 
-    <div class="flex flex-wrap items-center justify-center gap-2">
-      <Link href={new URL("/sitemap-index.xml", Astro.site)}>Sitemap</Link>
-      <Link href={new URL("/policies", Astro.site)}>Policies</Link>
-    </div>
+  <section class="flex items-center justify-between py-4">
+    <p>
+      &copy;
+      <time datetime="2024-02-04">2024</time>
+      &minus;
+      <time datetime={__BUILD_TIME__}>{built.year}</time>
+      &nbsp;
+      <span>Prince Muel</span>
+    </p>
 
-    <div class="flex items-center gap-2">
-      <Link href="https://docs.astro.build/en/getting-started/">
-        <Icon name="devicon:astro" title={`Powered by ${Astro.generator}`} />
-        <span class="sr-only">
-          {Astro.generator}
-        </span>
-      </Link>
-      <p>
-        &copy;
-        <Time datetime={__BUILD_TIME__}>{built.year}</Time>
-        Prince Muel
-      </p>
-    </div>
-  </section> -->
+    <nav aria-label="Footer" class="flex items-center justify-center gap-1">
+      <Link href="/policies">Policies</Link>
+      <Link href="/sitemap-index.xml">Sitemap</Link>
+      <Link href="/changelog">Changelog</Link>
+    </nav>
+  </section>
+
+  <Link
+    href="https://docs.astro.build/en/getting-started/"
+    class="text-center text-xs text-gray-600/80 dark:text-gray-300/80"
+  >
+    Built with {Astro.generator}
+  </Link>
 </Fence>
