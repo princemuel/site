@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// oxlint-disable typescript/consistent-return unicorn/no-object-as-default-parameter
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
@@ -121,6 +122,7 @@ async function loadLocalCollection(
     },
   });
 
+  // @ts-expect-error (TS7030): Not all code paths return a value.
   void iconSet.forEach((name, type) => {
     if (type !== "icon") return;
 
