@@ -72,7 +72,6 @@ invariant.as = (ErrorClass, condition, message, ...positionals): asserts conditi
     error = (ErrorClass as CustomErrorFactory)(msg);
   }
 
-  // oxlint-disable-next-line no-throw-literal
   throw error;
 };
 

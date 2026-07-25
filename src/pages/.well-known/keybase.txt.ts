@@ -1,3 +1,4 @@
+// oxlint-disable typescript/no-unsafe-argument
 import type { APIRoute } from "astro";
 
 import { keybase as buffer } from "../../assets/include";

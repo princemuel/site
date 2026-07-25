@@ -2,6 +2,7 @@
   "js/ts.updateImportsOnFileMove.enabled": "always",
   "js/ts.suggest.autoImports": true,
   "js/ts.experimental.useTsgo": true,
+  "js/ts.tsdk.path": "./node_modules/typescript",
   "js/ts.tsdk.promptToUseWorkspaceVersion": true,
   "editor.wordWrap": "bounded",
   "editor.wordWrapColumn": 108,
@@ -60,7 +61,7 @@
   "[dockerfile]": {
     "editor.defaultFormatter": "ms-azuretools.vscode-containers"
   },
-  "typescript.native-preview.tsdk": "node_modules/@typescript/native-preview",
+
   "[yaml]": {
     "editor.defaultFormatter": "oxc.oxc-vscode"
   },
@@ -71,5 +72,12 @@
     "editor.defaultFormatter": "mtxr.sqltools"
   },
   "python-envs.defaultEnvManager": "ms-python.python:venv",
-  "typescript.tsdk": "node_modules/typescript/lib"
+  "files.associations": {
+    "*.ss": "scheme",
+    "*.sps": "scheme",
+    "*.scm": "scheme",
+    "*.sch": "scheme",
+    "*.sls": "scheme",
+    "*.sld": "scheme"
+  }
 }
