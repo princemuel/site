@@ -1,4 +1,4 @@
-// oxlint-disable max-lines-per-function require-unicode-regexp no-continue typescript/no-unsafe-assignment max-params
+// oxlint-disable require-unicode-regexp no-continue typescript/no-unsafe-assignment max-params
 import { fileURLToPath } from "node:url";
 
 import type { AstroConfig, AstroIntegration } from "astro";

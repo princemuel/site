@@ -5,7 +5,7 @@ import { statSync } from "node:fs";
 export const getGitCommit = (fallback = "unknown"): string => {
   try {
     const sha = execSync("git rev-parse HEAD", { encoding: "utf8" }).trim();
-    if (!/^[0-9a-f]{40}$/i.test(sha)) throw new Error("Invalid git commit sha");
+    if (!/^[0-9a-f]{40}$/iu.test(sha)) throw new Error("Invalid git commit sha");
     return sha;
   } catch {
     return fallback;
