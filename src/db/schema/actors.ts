@@ -1,6 +1,7 @@
-import { timestamptz } from "@/db/helpers";
 import { sql } from "drizzle-orm";
 import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
+
+import { timestamptz } from "@/db/module/helpers";
 
 export const actors = sqliteTable("actors", {
   id: integer("id").primaryKey(),

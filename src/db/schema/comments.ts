@@ -1,13 +1,13 @@
 import { sql } from "drizzle-orm";
 import {
-  type AnySQLiteColumn,
   index,
   integer,
   sqliteTable,
   text,
+  type AnySQLiteColumn,
 } from "drizzle-orm/sqlite-core";
 
-import { timestamptz } from "@/db/helpers";
+import { timestamptz } from "@/db/module/helpers";
 
 import { actors } from "./actors";
 import { posts } from "./posts";
