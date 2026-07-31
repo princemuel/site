@@ -4,6 +4,7 @@ export default defineConfig({
   semi: true,
   singleQuote: false,
   tabWidth: 2,
+  printWidth: 96,
   trailingComma: "all",
   jsdoc: true,
   attributeGroups: ["^class$", "^(id|name)$", "$DEFAULT", "^aria-"],

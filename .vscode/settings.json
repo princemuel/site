@@ -63,5 +63,8 @@
   "typescript.native-preview.tsdk": "node_modules/@typescript/native-preview",
   "[yaml]": {
     "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "oxc.oxc-vscode"
   }
 }

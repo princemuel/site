@@ -9,7 +9,6 @@ export default defineConfig({
     // restriction: "warn",
     suspicious: "warn",
     style: "warn",
-    // nursery: "warn",
   },
   rules: {
     curly: ["deny", "multi-line", "consistent"],
@@ -23,12 +22,13 @@ export default defineConfig({
     "capitalized-comments": "allow",
     "oxc/no-rest-spread-properties": "allow",
     "oxc/no-optional-chaining": "allow",
+    "unicorn/max-nested-calls": ["allow", { max: 6 }],
     "typescript/explicit-module-boundary-types": "allow",
     "typescript/no-unsafe-type-assertion": "allow",
     "typescript/prefer-readonly-parameter-types": "allow",
     "typescript/strict-boolean-expressions": "allow",
     "unicorn/catch-error-name": ["warn", { ignore: ["error", "err", "e", "exception", "ex"] }],
   },
-  env: { builtin: true, "shared-node-browser": true },
-  options: { typeAware: true, typeCheck: true },
+  env: { builtin: true, "shared-node-browser": true, astro: true },
+  options: { typeAware: true, typeCheck: true, reportUnusedDisableDirectives: "warn" },
 });
