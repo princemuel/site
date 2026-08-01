@@ -1,0 +1,52 @@
+---
+import "@/global.css";
+import { Font } from "astro:assets";
+
+import Meta from "@/components/content/meta.astro";
+import Fence from "@/components/layout/fence.astro";
+import Footer from "@/components/layout/footer.astro";
+import Header from "@/components/layout/header.astro";
+import type { ComponentProps } from "astro/types";
+import { ClientRouter } from "astro:transitions";
+
+// oxlint-disable-next-line typescript/no-empty-interface
+interface Props extends ComponentProps<typeof Meta> {}
+
+const { meta, og, twitter } = Astro.props;
+---
+
+<!doctype html>
+<html
+  lang="en"
+  class:list={["scheme-light motion-safe:scroll-smooth dark:scheme-dark"]}
+  data-theme="light"
+>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <Meta meta={meta} og={og} twitter={twitter} />
+    <Font cssVariable="--font-family-sans" preload />
+    <Font cssVariable="--font-family-accent" />
+    <Font cssVariable="--font-family-mono" />
+    <script is:inline src="/assets/theme.js"></script>
+    <script src="@/assets/scripts/settings.ts"></script>
+    <script src="@/assets/scripts/temporal.ts"></script>
+    <script src="@/assets/scripts/css-naked-day.ts"></script>
+    <ClientRouter />
+  </head>
+  <body
+    class:list={[
+      "relative grid min-h-svh grid-rows-[auto_1fr_auto]",
+      "font-norrmal overflow-auto font-sans text-base tracking-tight antialiased",
+      "bg-white text-stone-900 dark:bg-stone-950 dark:text-stone-50",
+    ]}
+  >
+    <Header />
+    <Fence as="main" aria-labelledby="a11ty-headline" class="py-12">
+      <slot />
+    </Fence>
+    <Footer />
+  </body>
+</html>

@@ -1,0 +1,52 @@
+---
+import Prose from "@/components/content/prose.astro";
+import Shell from "@/components/frames/shell.astro";
+import Link from "@/components/shared/link.astro";
+import { published } from "@/content/helpers";
+import { capitalize } from "@/utils/strings";
+import { stripTz } from "@/utils/time";
+import { getCollection, getEntry, render } from "astro:content";
+
+const [entry, entries] = await Promise.all([
+  getEntry("documents", "journal"),
+  getCollection("journal", ({ data }) => published(data.published)),
+]);
+
+if (!entry) throw new Response(undefined, { status: 404 });
+
+const { Content } = await render(entry);
+
+const datetime = new Intl.DateTimeFormat(undefined, { year: "numeric", month: "short" });
+---
+
+<Shell>
+  <Prose as="section">
+    <Content frontmatter={entry.data} />
+  </Prose>
+
+  <ul aria-label="PROJECTS DONE OR ONGOING" aria-busy="false" class="gap flex flex-col">
+    {
+      entries.map(async ({ id, data }, idx) => {
+        return (
+          <li
+            tabindex="0"
+            aria-posinset={idx + 1}
+            aria-setsize={entries.length}
+            class="flex flex-col md:grid md:grid-cols-[auto_1fr_auto] md:items-center"
+          >
+            <p class="order-first w-fit rounded-lg border border-stone-200 px-2 py-0.5 text-xs md:order-0">
+              {capitalize(data.category)}
+            </p>
+            <Link href={`/journal/${id}`} class="md:col-start-1 md:row-start-1">
+              {data.title}
+            </Link>
+            <hr class="mx-4 hidden border-t border-stone-200 md:col-start-2 md:row-start-1 md:block" />
+            <time datetime={data.date} class="text-sm text-stone-400 md:col-start-1 md:row-start-2">
+              {datetime.format(Temporal.PlainDateTime.from(`${stripTz(data.date)}`))}
+            </time>
+          </li>
+        );
+      })
+    }
+  </ul>
+</Shell>

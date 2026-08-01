@@ -1,0 +1,37 @@
+---
+import Prose from "@/components/content/prose.astro";
+import Shell from "@/components/frames/shell.astro";
+import { toRobotsObject } from "@/helpers/robots";
+import { getEntry, render } from "astro:content";
+
+interface Props {
+  error: unknown;
+}
+
+const entry = await getEntry("documents", "errors");
+if (!entry) throw new Response(undefined, { status: 404 });
+
+const { Content } = await render(entry);
+
+const { error: _ex } = Astro.props;
+const { title, description, headline, date, robots, updated, language, permalink } = entry.data;
+---
+
+<Shell
+  meta={{
+    title: [title, true],
+    description,
+    date,
+    updated,
+    robots: toRobotsObject(robots),
+    language,
+    canonical: permalink,
+  }}
+>
+  <Prose as="article" aria-labelledby="a11ty-headline">
+    <h1 id="a11ty-headline">
+      {headline}
+    </h1>
+    <Content frontmatter={entry.data} />
+  </Prose>
+</Shell>

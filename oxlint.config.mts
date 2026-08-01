@@ -7,7 +7,7 @@ export default defineConfig({
     pedantic: "warn",
     perf: "warn",
     // restriction: "warn",
-    suspicious: "warn",
+     suspicious: "warn",
     style: "warn",
   },
   rules: {

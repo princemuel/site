@@ -1,0 +1,17 @@
+---
+interface Props {
+  /** Any value; checked for truthiness, same as a plain JS `if`. */
+  condition: unknown;
+}
+
+const { condition } = Astro.props;
+const hasTrueSlot = Astro.slots.has("true");
+const hasFalseSlot = Astro.slots.has("false");
+const hasDefaultSlot = Astro.slots.has("default");
+const hasElseSlot = Astro.slots.has("else");
+---
+
+{condition && hasTrueSlot && <slot name="true" />}
+{condition && !hasTrueSlot && hasDefaultSlot && <slot />}
+{!condition && hasFalseSlot && <slot name="false" />}
+{!condition && !hasFalseSlot && hasElseSlot && <slot name="else" />}

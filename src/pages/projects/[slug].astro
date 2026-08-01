@@ -1,0 +1,104 @@
+---
+import { developer, placeholder } from "@/assets";
+import Prose from "@/components/content/prose.astro";
+import Shell from "@/components/frames/shell.astro";
+import Icon from "@/components/shared/icon.astro";
+import Link from "@/components/shared/link.astro";
+import Pattern from "@/components/shared/pattern.astro";
+import { published } from "@/content/helpers";
+import { toRobotsObject } from "@/helpers/robots";
+import { stripTz } from "@/utils/time";
+import { Image } from "astro:assets";
+import { getCollection, render } from "astro:content";
+
+export async function getStaticPaths() {
+  const entries = await getCollection("projects", ({ data }) => published(data.published));
+
+  return entries.map((entry) => ({
+    props: { entry },
+    params: { slug: decodeURI(entry.id) },
+  }));
+}
+
+const { entry } = Astro.props;
+
+const [markdown, entries] = await Promise.all([
+  render(entry),
+  getCollection("projects", ({ data }) => published(data.published)),
+]);
+
+const { Content, remarkPluginFrontmatter: frontmatter, ...rest } = markdown;
+const datetime = new Intl.DateTimeFormat(undefined, { year: "numeric", month: "short" });
+
+entry.data.words ??= frontmatter.words;
+entry.data.duration ??= frontmatter.duration;
+entry.data.updated ??= frontmatter.updated;
+
+console.log(JSON.stringify({ frontmatter, rest }, null, 2));
+
+const { title, headline, description, summary, date, robots, updated, language, permalink } =
+  entry.data;
+---
+
+<Shell
+  meta={{
+    title: [title, true],
+    description,
+    date,
+    updated,
+    robots: toRobotsObject(robots),
+    language,
+    canonical: permalink,
+  }}
+>
+  <div class="feature grid min-h-120 lg:grid-cols-6 lg:grid-rows-8">
+    <Pattern class="hidden lg:col-span-1 lg:row-span-6 lg:block" />
+    <header class="flex flex-col items-center gap-12 py-16 text-center lg:col-span-4 lg:row-span-8">
+      <Image src={developer} alt={"Just a dev"} class="w-60" />
+      <section
+        class="flex items-center gap-2 font-mono text-base font-medium tracking-widest uppercase"
+      >
+        <Link href="#" class="text-stone-950">Engineering</Link>
+        <span class="text-stone-300">&mdash;</span>
+        <time datetime={date} class="text-stone-400">
+          {datetime.format(Temporal.PlainDateTime.from(`${stripTz(date)}`))}
+        </time>
+      </section>
+
+      <h1 id="a11ty-headline" class="font-stone-950 text-4xl text-balance lg:text-6xl">
+        {title}
+      </h1>
+
+      <time datetime="">{Temporal.Duration.from({ minutes: entry.data.duration })}</time>
+
+      <section
+        class="inline-grid grid-cols-[3fr_1fr_auto_1fr_3fr] items-center gap-5 text-2xl font-medium text-stone-500"
+      >
+        <hr class="border border-stone-200" />
+        <Link
+          href="https://bsky.app/profile/kettanaito.com"
+          class="p-5 hover:text-stone-950"
+          aria-label="Follow me on Bluesky"
+        >
+          <Icon name="carbon:logo-bluesky" />
+        </Link>
+        <Image src={placeholder} alt="kettanaito's avatar" class="size-12 rounded-full shadow-lg" />
+        <Link
+          href="https://twitter.com/kettanaito"
+          class="p-5 hover:text-stone-950"
+          aria-label='Follow me on "Twitter"'
+        >
+          <Icon name="carbon:logo-twitter" />
+        </Link>
+        <hr class="border border-stone-200" />
+      </section>
+    </header>
+
+    <Pattern class="hidden lg:col-span-1 lg:row-span-6 lg:block" />
+  </div>
+
+  <Prose as="article" aria-labelledby="a11ty-headline">
+    <Content frontmatter={entry.data} />
+    <!-- <Content frontmatter={entry.data} /> -->
+  </Prose>
+</Shell>

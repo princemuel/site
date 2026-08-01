@@ -1,0 +1,22 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type Props = HTMLAttributes<"dialog">;
+
+const { ...attrs } = Astro.props;
+---
+
+<dialog
+  closedby="any"
+  {...attrs}
+  class:list={[
+    "m-auto w-full max-w-xl rounded-xl bg-white p-8 shadow-xl",
+    "scale-95 opacity-0 backdrop:bg-stone-900/50",
+    "transition transition-discrete duration-200 ease-in",
+    "open:scale-100 open:opacity-100 starting:open:scale-95 starting:open:opacity-0",
+  ]}
+>
+  <section class="flex flex-col gap-6">
+    <slot />
+  </section>
+</dialog>

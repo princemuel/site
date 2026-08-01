@@ -13,7 +13,7 @@ ENV NODE_ENV="production"
 
 # Corepack was removed from Node core in v25+, so install it explicitly
 RUN npm install -g corepack@latest
-RUN corepack enable && corepack prepare yarn@stable --activate
+RUN corepack enable && corepack prepare --activate
 
 # Throw-away build stage to reduce size of final image
 FROM base AS build
@@ -58,10 +58,10 @@ COPY docker-entrypoint.js ./docker-entrypoint.js
 
 RUN chmod +x ./docker-entrypoint.js
 
-ENV  HOST="0.0.0.0"
+ENV HOST="0.0.0.0"
 ENV PORT="8080"
 
 EXPOSE 8080
 
-ENTRYPOINT ["./docker-entrypoint.js"]
+ENTRYPOINT ["./docker-entrypoint.mjs"]
 CMD ["node", "./dist/server/entry.mjs"]

@@ -1,0 +1,45 @@
+---
+import Prose from "@/components/content/prose.astro";
+import Shell from "@/components/frames/shell.astro";
+import Icon from "@/components/shared/icon.astro";
+import Link from "@/components/shared/link.astro";
+import { published } from "@/content/helpers";
+import { Picture } from "astro:assets";
+import { getCollection, getEntry, render } from "astro:content";
+
+const [entry, entries] = await Promise.all([
+  getEntry("documents", "projects"),
+  getCollection("projects", ({ data }) => published(data.published)),
+]);
+
+if (!entry) throw new Response(undefined, { status: 404 });
+
+const { Content } = await render(entry);
+---
+
+<Shell>
+  <Prose as="section">
+    <Content frontmatter={entry.data} />
+  </Prose>
+
+  <section aria-label="PROJECTS DONE OR ONGOING" aria-busy="false" class="flex flex-col gap-12">
+    {
+      entries.map(async ({ id, data }) => {
+        return (
+          <Link href={`/projects/${id}`} class="group flex flex-col gap-2">
+            {data.image ? (
+              <Picture src={data.image} alt={data.headline} class="rounded-lg" />
+            ) : null}
+            <hgroup class="flex items-center justify-between">
+              <h3 class="font-bold">{data.title}</h3>
+              <p class="flex items-center gap-1 align-middle text-base text-stone-400 group-hover:opacity-100 lg:opacity-0">
+                <span>Case Study</span>
+                <Icon name="carbon:chevron-right" class="self-end" />
+              </p>
+            </hgroup>
+          </Link>
+        );
+      })
+    }
+  </section>
+</Shell>
