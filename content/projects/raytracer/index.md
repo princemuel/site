@@ -40,8 +40,8 @@ Business goals & success criteria**.**
 
 Walk through wireframes, flows, and the reasoning behind major decisions. Use visuals sparingly and caption them to explain the choice.
 
-{/_ery Image Carousel _/}
-{/\_ \__ Wireframe — early sketch & notes_/}
+{/_ery Image Carousel */}
+{/\_ \_* Wireframe — early sketch & notes_/}
 {/_ Prototype screenshot _/}
 {/\_ Design exploration and options considered \_/}
 

@@ -40,8 +40,8 @@ Business goals & success criteria**.**
 
 Walk through wireframes, flows, and the reasoning behind major decisions. Use visuals sparingly and caption them to explain the choice.
 
-{/_Gallery Image Carousel _/}
-{/\_ \__ Wireframe — early sketch & notes _\_ _/}
+{/_Gallery Image Carousel */}
+{/\_ \_* Wireframe — early sketch & notes_\_ _/}
 {/_ Prototype screenshot _/}
 {/_ Design exploration and options considered\_/}
 
@@ -78,10 +78,10 @@ async function fetchData(url) {
 
 ## Outcome & Metrics
 
-{/_what's below: Box _/}
-{/_ Performance —35% load _/}
-{/_ Engagement +18% _/}
-{/_ TTM 3 weeks to MVP_/}
+{/_what's below: Box */}
+{/* Performance —35% load */}
+{/* Engagement +18% */}
+{/* TTM 3 weeks to MVP_/}
 
 Short storytelling: what changed, and how you measured it. Be honest about measurement quality and confidence intervals.
 
@@ -101,8 +101,8 @@ Summarize what you'd change, experiments you'd run next, and how you measure con
 
 {/\* \*/}
 
-{/_Previous Project _/}
-{/_ Next Project_/}
+{/_Previous Project */}
+{/* Next Project_/}
 
 ## Related Projects?
 
