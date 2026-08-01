@@ -56,17 +56,20 @@ const { as: As = "div", class: clsx, ...attrs } = Astro.props;
   .content > :not(.popout, .feature, .full),
   .full > :not(.popout, .feature, .full) {
     grid-column: content;
+    min-width: 0;
   }
   .content > .popout {
     grid-column: popout;
+    min-width: 0;
   }
   .content > .feature {
     grid-column: feature;
+    min-width: 0;
   }
   .content > .full {
     grid-column: full;
-
     display: grid;
     grid-template-columns: subgrid;
+    min-width: 0;
   }
 </style>
