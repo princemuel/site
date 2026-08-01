@@ -33,7 +33,7 @@ any issues using the site, or have specific questions or concerns about the
 accessibility of any particular page, please contact me via **[email][email]**
 or if you have the technical know-how, you can open an issue [on GitHub][issues].
 
-_Happy Surfing_ :wave:
+_Happy Surfing_ 🏄🌊
 
 [wcag]: https://www.w3.org/WAI/standards-guidelines/wcag
 [email]: mailto:vansomecsam@gmail.com
