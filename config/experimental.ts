@@ -5,7 +5,7 @@ type Config = NonNullable<AstroUserConfig["experimental"]>;
 
 export const experimental = {
   svgOptimizer: svgoOptimizer(),
-  clientPrerender: true,
   contentIntellisense: true,
   chromeDevtoolsWorkspace: true,
+  collectionStorage: { type: "chunked", chunkSize: 1024 * 1024 },
 } satisfies Config;

@@ -1,31 +1,19 @@
 import getReadingTime from "reading-time";
 import type { MdastPluginDefinition } from "satteri";
 
-console.log("[MdastReadingTime] plugin loaded");
+export const mdast_reading_time = (): MdastPluginDefinition => {
+  let text = "";
 
-export function MdastReadingTime(): MdastPluginDefinition {
   return {
     name: "mdast-reading-time",
     text(node, ctx) {
-      if (ctx.data.astro?.frontmatter) {
-        const readingTime = getReadingTime(node.value);
+      const frontmatter = ctx.data.astro?.frontmatter;
+      if (!frontmatter) return;
 
-        if (!ctx.data.astro.frontmatter.words) ctx.data.astro.frontmatter.words = readingTime.words;
-        else ctx.data.astro.frontmatter.words += readingTime.words;
-
-        if (!ctx.data.astro.frontmatter.duration)
-          ctx.data.astro.frontmatter.duration = readingTime.minutes;
-        else ctx.data.astro.frontmatter.duration += readingTime.minutes;
-      }
+      text += `${node.value} `;
+      const { words, minutes } = getReadingTime(text);
+      frontmatter.words = words;
+      frontmatter.duration = minutes;
     },
   };
-}
-
-// Const remarkReadingTime: RemarkPlugin = () => (tree, file) => {
-//   If (file.data.astro?.frontmatter) {
-//     Const textOnPage = toString(tree);
-//     Const readingTime = getReadingTime(textOnPage);
-//     File.data.astro.frontmatter.words = readingTime.words;
-//     File.data.astro.frontmatter.duration = readingTime.text;
-//   }
-// };
+};

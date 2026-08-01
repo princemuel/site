@@ -3,10 +3,10 @@ import { fontProviders } from "astro/config";
 
 type Config = AstroUserConfig["fonts"];
 
-// name: "Cantarell", // name: "Sen",
+// name: "Cantarell", // name: "Sen", // name: "Catamaran"
 export const fonts = [
   {
-    name: "Catamaran",
+    name: "Sen",
     provider: fontProviders.fontsource(),
     cssVariable: "--font-family-sans",
     subsets: ["latin"],
@@ -25,6 +25,7 @@ export const fonts = [
     name: "JetBrains Mono",
     provider: fontProviders.fontsource(),
     cssVariable: "--font-family-mono",
+    subsets: ["latin"],
     fallbacks: [
       "ui-monospace",
       "SFMono-Regular",
@@ -34,6 +35,19 @@ export const fonts = [
       "Liberation Mono",
       "Courier New",
       "monospace",
+    ],
+  },
+  {
+    provider: fontProviders.fontsource(),
+    name: "Zeyada",
+    cssVariable: "--font-family-accent",
+    subsets: ["latin"],
+    fallbacks: [
+      "Brush Script MT",
+      "Segoe Script",
+      "Bradley Hand",
+      "Lucida Handwriting",
+      "cursive",
     ],
   },
 ] satisfies Config;

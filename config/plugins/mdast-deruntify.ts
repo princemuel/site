@@ -1,13 +1,15 @@
 import type { MdastPluginDefinition } from "satteri";
 
-export function MdastDeruntify(): MdastPluginDefinition {
-  return {
-    name: "mdast-derutify",
-    text(node, ctx) {
-      const wordCount = node.value.split(" ").length;
-      if (wordCount < 5) {
-        ctx.setProperty(node, "value", node.value.replace(/ ([^ ]*)$/, "\u00A0$1"));
-      }
-    },
-  };
-}
+export const mdast_deruntify: MdastPluginDefinition = {
+  name: "mdast-derutify",
+  text(node, ctx) {
+    const wordCount = node.value.split(" ").length;
+    if (wordCount < 5) {
+      ctx.setProperty(
+        node,
+        "value",
+        node.value.replace(/ (?<lastWord>[^ ]*)$/u, "\u00A0$<lastWord>"),
+      );
+    }
+  },
+};

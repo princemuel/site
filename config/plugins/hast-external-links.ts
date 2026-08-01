@@ -8,7 +8,7 @@ interface ExternalLinkAttrs {
   "data-astro-prefetch"?: "true";
 }
 
-export const HastExternalLinks: HastPlugin = {
+export const hast_external_links: HastPlugin = {
   name: "hast-external-links",
   element: {
     filter: ["a"],

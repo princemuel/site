@@ -1,9 +1,9 @@
-import { satteriHeadingIdsPlugin as HastHeadingIds, satteri } from "@astrojs/markdown-satteri";
+import { satteriHeadingIdsPlugin as hast_heading_ids, satteri } from "@astrojs/markdown-satteri";
 
-import { HastExternalLinks } from "./plugins/hast-external-links";
-import { MdastDeruntify } from "./plugins/mdast-deruntify";
-import { MdastModifiedTime } from "./plugins/mdast-modified-time";
-import { MdastReadingTime } from "./plugins/mdast-reading-time";
+import { hast_external_links } from "./plugins/hast-external-links";
+import { mdast_deruntify } from "./plugins/mdast-deruntify";
+import { mdast_modified_time } from "./plugins/mdast-modified-time";
+import { mdast_reading_time } from "./plugins/mdast-reading-time";
 import type { Config } from "./plugins/types";
 
 export const markdown = {
@@ -11,7 +11,7 @@ export const markdown = {
   shikiConfig: { themes: { light: "vitesse-light", dark: "vitesse-dark" } },
   processor: satteri({
     features: { directive: true, smartPunctuation: true, superscript: true, subscript: true },
-    mdastPlugins: [MdastDeruntify(), MdastReadingTime(), MdastModifiedTime()],
-    hastPlugins: [HastExternalLinks, HastHeadingIds()],
+    mdastPlugins: [mdast_deruntify, mdast_reading_time, mdast_modified_time],
+    hastPlugins: [hast_external_links, hast_heading_ids()],
   }),
 } satisfies Config;
