@@ -1,12 +1,10 @@
-#:tombi schema.strict = false
-#:schema https://www.schemastore.org/fly.json
-# fly.toml app configuration file generated for princemuel on 2026-04-22T03:35:46+01:00
+# fly.toml app configuration file generated for princemuel on 2026-08-07T19:15:07Z
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
 app            = "princemuel"
-primary_region = "lhr"
+primary_region = 'lhr'
 
 [build]
 dockerfile = "Dockerfile"
@@ -35,6 +33,10 @@ port     = 443
 X-Process-Group = "app"
 
 [[vm]]
-cpu_kind = "shared"
-cpus     = 1
-memory   = "1gb"
+  cpu_kind = 'shared'
+  cpus = 1
+  memory = '1gb'
+
+[deploy]
+  release_command = 'yarn db:migrate'
+  strategy = 'rolling'
