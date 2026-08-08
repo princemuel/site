@@ -11,6 +11,7 @@ icon  = "lucide:user-round-pen"
 order = 2
 text  = "about me"
 
+
 [projects]
 href  = "/projects"
 icon  = "lucide:flask-conical"
@@ -23,17 +24,18 @@ icon  = "lucide:file-text"
 order = 4
 text  = "posts"
 
-[wiki]
-href  = "/wiki"
-icon  = "lucide:library"
-order = 5
-text  = "wiki"
 
 [journal]
 href  = "/journal"
 icon  = "lucide:files"
-order = 6
+order = 5
 text  = "journal"
+
+[wiki]
+href  = "/wiki"
+icon  = "lucide:library"
+order = 6
+text  = "wiki"
 
 [contact]
 href  = "/hello"

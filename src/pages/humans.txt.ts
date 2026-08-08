@@ -2,9 +2,9 @@ import type { APIRoute } from "astro";
 
 import { humans as buffer } from "@/assets/include";
 import { built } from "@/lib/build";
-import { toSeconds } from "@/utils/time";
+import { toSecs } from "@/utils/time";
 
-export const GET: APIRoute = async (ctx) => {
+export const GET: APIRoute = (ctx) => {
   const body = buffer
     .replaceAll("{{URL}}", new URL("hello", ctx.site).toString())
     .replaceAll("{{DATETIME}}", built.toPlainDate().toString())
@@ -14,7 +14,7 @@ export const GET: APIRoute = async (ctx) => {
     status: 200,
     headers: {
       "Content-Type": "text/plain; charset=UTF-8",
-      "Cache-Control": `public, max-age=${toSeconds({ days: 365 })}, immutable`,
+      "Cache-Control": `public, max-age=${toSecs({ days: 365 })}, immutable`,
     },
   });
 };

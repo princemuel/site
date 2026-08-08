@@ -1,19 +1,26 @@
 ---
 import Prose from "@/components/content/prose.astro";
 import Shell from "@/components/frames/shell.astro";
+import Icon from "@/components/shared/icon.astro";
+import Link from "@/components/shared/link.astro";
 import Pot from "@/components/widgets/pot.astro";
+import { getCollection, getEntry, render } from "astro:content";
+
 import { println$ } from "@/helpers/println";
+import { toRobotsObject } from "@/helpers/robots";
 import { ACTION_QUERY_PARAMS, actions, isInputError } from "astro:actions";
-import { getEntry, render } from "astro:content";
 
 export const prerender = false;
 
 const entry = await getEntry("documents", "hello");
 if (!entry) throw new Response(undefined, { status: 404 });
 
-const { Content } = await render(entry);
-
-const data = entry.data;
+const excluded = new Set(["website", "rss", "instagram", "mastodon", "keyoxide"]);
+const [{ Content }, socials] = await Promise.all([
+  render(entry),
+  getCollection("socials", (social) => !excluded.has(social.id)),
+]);
+socials.sort((a, b) => a.data.order - b.data.order);
 
 const result = Astro.getActionResult(actions.contact);
 
@@ -21,30 +28,56 @@ println$("[ERROR]", result?.error);
 
 const formErrors = isInputError(result?.error) ? result.error.fields : {};
 
-if (!result?.error && result?.data) {
-  // Successful form submission logic can go here
-  const link = Astro.url.searchParams;
-  link.delete(ACTION_QUERY_PARAMS.actionName);
-  link.delete(ACTION_QUERY_PARAMS.actionPayload);
-  return Astro.redirect(link, 303);
+if (!result?.error && result?.data?.message) {
+  const url = Astro.url.searchParams;
+  url.delete(ACTION_QUERY_PARAMS.actionName);
+  url.delete(ACTION_QUERY_PARAMS.actionPayload);
+  return Astro.redirect(url, 303);
 }
+
+const { title, description, headline, date, robots, updated, language, permalink } = entry.data;
 ---
 
-<Shell>
+<Shell
+  meta={{
+    title: [title],
+    description,
+    date,
+    updated,
+    robots: toRobotsObject(robots),
+    language,
+    canonical: permalink,
+  }}
+>
   <Prose as="header">
-    <h1 id="a11ty-headline" class="">{data.headline}</h1>
+    <h1 id="a11ty-headline" class="">{headline}</h1>
     <Content frontmatter={entry.data} />
   </Prose>
 
+  <address class="flex items-center gap-4 text-2xl">
+    {
+      socials.map((r) => (
+        <Link href={r.data.href} class:list={["transition", r.data.color ?? "text-current"]}>
+          <Icon name={r.data.icon} title={r.data.text} class="text-current" />
+        </Link>
+      ))
+    }
+  </address>
+
+  <hr class="text-gray-200 dark:text-gray-800" />
+
   <Prose as="section" class="space-y-5" aria-labelledby="contact-me">
-    <h2 id="contact-me">Contact Me</h2>
+    <h2 id="contact-me">Get in touch with moi</h2>
     <p>Let me know what's on your mind and I'll get back to you as soon as possible.</p>
 
     <form method="POST" action={actions.contact} class="flex flex-col gap-6 md:gap-8">
       <section class="grid grid-cols-6 gap-5">
         <Pot name="token" />
         <div class="group col-span-full flex flex-col gap-2 sm:col-span-3">
-          <label class="space-x-1 text-sm font-medium text-stone-600" for="fields.firstName.input">
+          <label
+            class="space-x-1 text-sm font-medium text-gray-600 dark:text-gray-100"
+            for="fields.firstName.input"
+          >
             <span>First Name</span><span class="text-red-400">*</span>
           </label>
 
@@ -53,7 +86,7 @@ if (!result?.error && result?.data) {
             id="fields.firstName.input"
             name="firstName"
             aria-autocomplete="both"
-            class="rounded border border-stone-500 bg-transparent px-4 py-3 text-stone-900"
+            class="rounded border border-gray-500 bg-transparent px-4 py-3 text-gray-900 dark:text-white"
             autocomplete="given-name"
             aria-invalid={Boolean(formErrors?.firstName)}
             aria-errormessage="fields.firstName.error"
@@ -72,7 +105,10 @@ if (!result?.error && result?.data) {
         </div>
 
         <div class="group col-span-full flex flex-col gap-2 sm:col-span-3">
-          <label for="fields.lastName.input" class="space-x-1 text-sm font-medium text-stone-600">
+          <label
+            for="fields.lastName.input"
+            class="space-x-1 text-sm font-medium text-gray-600 dark:text-gray-100"
+          >
             <span>Last Name</span><span class="text-red-400">*</span>
           </label>
           <input
@@ -80,7 +116,7 @@ if (!result?.error && result?.data) {
             id="fields.lastName.input"
             name="lastName"
             aria-autocomplete="both"
-            class="rounded border border-stone-500 bg-transparent px-4 py-3 text-stone-900"
+            class="rounded border border-gray-500 bg-transparent px-4 py-3 text-gray-900 dark:text-white"
             autocomplete="family-name"
             aria-invalid={Boolean(formErrors?.lastName)}
             aria-errormessage="fields.lastName.error"
@@ -98,7 +134,10 @@ if (!result?.error && result?.data) {
         </div>
 
         <div class="group col-span-full flex flex-col gap-2">
-          <label for="fields.email.input" class="space-x-1 text-sm font-medium text-stone-600">
+          <label
+            for="fields.email.input"
+            class="space-x-1 text-sm font-medium text-gray-600 dark:text-gray-100"
+          >
             <span>Email Address</span><span class="text-red-400">*</span>
           </label>
           <input
@@ -106,7 +145,7 @@ if (!result?.error && result?.data) {
             id="fields.email.input"
             name="email"
             aria-autocomplete="both"
-            class="rounded border border-stone-500 bg-transparent px-4 py-3 text-stone-900"
+            class="rounded border border-gray-500 bg-transparent px-4 py-3 text-gray-900 dark:text-white"
             autocomplete="email"
             aria-invalid={Boolean(formErrors?.email)}
             aria-errormessage="fields.email.error"
@@ -124,13 +163,13 @@ if (!result?.error && result?.data) {
         </div>
 
         <fieldset class="group col-span-full space-y-3">
-          <legend class="space-x-1 text-sm font-medium text-stone-600">
+          <legend class="space-x-1 text-sm font-medium text-gray-600 dark:text-gray-100">
             Query Type <span class="text-red-400">*</span>
           </legend>
 
           <section class="grid grid-cols-6 gap-5">
             <label
-              class="col-span-full flex items-center gap-2 rounded border border-stone-500 px-4 py-3 text-stone-900 sm:col-span-3"
+              class="col-span-full flex items-center gap-2 rounded border border-gray-500 px-4 py-3 text-gray-900 sm:col-span-3 dark:text-white"
             >
               <input
                 type="radio"
@@ -145,7 +184,7 @@ if (!result?.error && result?.data) {
             </label>
 
             <label
-              class="col-span-full flex items-center gap-2 rounded border border-stone-500 px-4 py-3 text-stone-900 sm:col-span-3"
+              class="col-span-full flex items-center gap-2 rounded border border-gray-500 px-4 py-3 text-gray-900 sm:col-span-3 dark:text-white"
             >
               <input
                 type="radio"
@@ -160,7 +199,7 @@ if (!result?.error && result?.data) {
             </label>
 
             <label
-              class="col-span-full flex items-center gap-2 rounded border border-stone-500 px-4 py-3 text-stone-900 sm:col-span-3"
+              class="col-span-full flex items-center gap-2 rounded border border-gray-500 px-4 py-3 text-gray-900 sm:col-span-3 dark:text-white"
             >
               <input
                 type="radio"
@@ -175,7 +214,7 @@ if (!result?.error && result?.data) {
             </label>
 
             <label
-              class="col-span-full flex items-center gap-2 rounded border border-stone-500 px-4 py-3 text-stone-900 sm:col-span-3"
+              class="col-span-full flex items-center gap-2 rounded border border-gray-500 px-4 py-3 text-gray-900 sm:col-span-3 dark:text-white"
             >
               <input
                 type="radio"
@@ -203,7 +242,10 @@ if (!result?.error && result?.data) {
         </fieldset>
 
         <div class="group col-span-full flex flex-col gap-2">
-          <label for="fields.message.input" class="space-x-1 text-sm font-medium text-stone-600">
+          <label
+            for="fields.message.input"
+            class="space-x-1 text-sm font-medium text-gray-600 dark:text-gray-100"
+          >
             <span>Message</span>
             <span class="text-red-400">*</span>
           </label>
@@ -211,7 +253,7 @@ if (!result?.error && result?.data) {
             name="message"
             id="fields.message.input"
             autocapitalize="on"
-            class="min-h-32 rounded border border-stone-500 bg-transparent px-4 py-3 text-stone-900"
+            class="min-h-32 rounded border border-gray-500 bg-transparent px-4 py-3 text-gray-900 dark:text-white"
             autocomplete="off"
             aria-invalid={Boolean(formErrors?.message)}
             aria-errormessage="fields.message.error"></textarea>
@@ -237,8 +279,11 @@ if (!result?.error && result?.data) {
               aria-invalid={Boolean(formErrors?.consent)}
               aria-errormessage="fields.email.error"
             />
-            <label class="space-x-1 text-sm font-medium text-stone-600" for="fields.consent.input">
-              <span>I consent to being contacted by Prince Muel</span>
+            <label
+              class="space-x-1 text-sm font-medium text-gray-600 dark:text-gray-100"
+              for="fields.consent.input"
+            >
+              <span>I consent to being contacted by Sam</span>
               <span class="text-red-400">*</span>
             </label>
           </div>
@@ -255,7 +300,10 @@ if (!result?.error && result?.data) {
           </span>
         </div>
 
-        <button type="submit" class="col-span-full rounded bg-blue-700 px-4 py-3 text-stone-50">
+        <button
+          type="submit"
+          class="col-span-full rounded bg-blue-600 px-4 py-3 font-medium text-white transition-colors hover:bg-blue-700"
+        >
           Submit
         </button>
       </section>

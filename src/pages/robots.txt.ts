@@ -1,7 +1,7 @@
 import type { APIRoute } from "astro";
 
 import { robots as buffer } from "@/assets/include";
-import { toSeconds } from "@/utils/time";
+import { toSecs } from "@/utils/time";
 
 export const GET: APIRoute = (ctx) => {
   const body = buffer
@@ -10,7 +10,7 @@ export const GET: APIRoute = (ctx) => {
   return new Response(body, {
     status: 200,
     headers: {
-      "Cache-Control": `public, max-age=${toSeconds({ days: 365 })}, immutable`,
+      "Cache-Control": `public, max-age=${toSecs({ days: 365 })}, immutable`,
       "Content-Type": "text/plain; charset=UTF-8",
     },
   });
