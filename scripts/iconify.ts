@@ -19,14 +19,14 @@ type SVGOOptions = Omit<NonNullable<Parameters<typeof runSVGO>[1]>, "keepShapes"
 
 const root = path.resolve(import.meta.dirname, "..");
 const iconsPath = "src/assets/media/icons";
-const iconsJson = path.resolve(root, `${iconsPath}/icons.json`);
 const iconsDir = path.resolve(root, iconsPath);
-const outfile = path.resolve(root, `${iconsPath}/index.ts`);
+const iconsManifest = path.resolve(root, `${iconsPath}/manifest.json`);
+const iconsOutfile = path.resolve(root, `${iconsPath}/index.ts`);
 
 type IconConfig = Record<string, string[]>;
 
 async function main() {
-  const raw = await readFile(iconsJson, "utf8");
+  const raw = await readFile(iconsManifest, "utf8");
   const iconConfig = JSON.parse(raw) as IconConfig;
 
   const [iconifyCollections, localCollection] = await Promise.all([
@@ -34,10 +34,15 @@ async function main() {
     loadLocalCollection(iconsDir),
   ]);
 
-  const all: Record<string, IconifyJSON> = {
-    ...iconifyCollections,
-    local: localCollection,
-  };
+  const all = Object.fromEntries(
+    Object.entries({
+      ...iconifyCollections,
+      local: localCollection,
+    } as Record<string, IconifyJSON>).map(([key, json]) => {
+      delete json.lastModified;
+      return [key, json];
+    }),
+  );
 
   const iconNames = buildIconNames(all);
 
@@ -50,8 +55,8 @@ export const iconNames = [${iconNames.map((name) => `"${name}"`).join(",")}
 export const icons: Record<string, IconifyJSON> = ${JSON.stringify(all)};
 `;
 
-  await mkdir(path.dirname(outfile), { recursive: true });
-  await writeFile(outfile, output, "utf8");
+  await mkdir(path.dirname(iconsOutfile), { recursive: true });
+  await writeFile(iconsOutfile, output, "utf8");
 
   console.log("[icons] icon collections generated successfully");
 }
