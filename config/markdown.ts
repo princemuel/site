@@ -10,8 +10,8 @@ export const markdown = {
   syntaxHighlight: "shiki",
   shikiConfig: { themes: { light: "vitesse-light", dark: "vitesse-dark" } },
   processor: satteri({
-    features: { directive: true, smartPunctuation: true, superscript: true, subscript: true },
-    mdastPlugins: [mdast_deruntify, mdast_reading_time, mdast_modified_time],
+    features: { math: true, directive: true, smartPunctuation: true, superscript: true, subscript: true },
+    mdastPlugins: [mdast_deruntify, mdast_reading_time(), mdast_modified_time],
     hastPlugins: [hast_external_links, hast_heading_ids()],
   }),
 } satisfies Config;

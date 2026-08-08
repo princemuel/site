@@ -1,3 +1,4 @@
+// oxlint-disable max-lines-per-function
 import { fileURLToPath } from "node:url";
 
 import Slugger from "github-slugger";
@@ -6,20 +7,20 @@ import type { HastPlugin } from "./types";
 
 const slugs = new Map<string, Slugger>();
 
-export const _HastAutolinkHeadings: HastPlugin = {
+export const HastAutolinkHeadings: HastPlugin = {
   name: "hast-autolink-headings",
   element: {
     filter: ["h1", "h2", "h3", "h4", "h5", "h6"],
     visit(node, ctx) {
-      const headingId = node.properties?.["id"];
-      let id: string;
+      const headingId = node.properties?.id;
+      let id = "";
       const title = ctx.textContent(node);
       const filename = fileURLToPath(ctx.fileURL!);
 
       if (headingId && typeof headingId === "string") {
         id = headingId;
       } else {
-        let slugger = slugs.getOrInsertComputed(filename, () => new Slugger());
+        const slugger = slugs.getOrInsertComputed(filename, () => new Slugger());
         id = slugger.slug(title);
         ctx.setProperty(node, "id", id);
       }
