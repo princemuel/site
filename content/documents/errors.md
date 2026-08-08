@@ -10,20 +10,23 @@ robots:
 permalink: /500
 ---
 
-Something broke on this end. Not yours...mine. The server ran into an unexpected problem and couldn't finish handling the request.
+Something broke on this end. Not yours...mine. The server
+ran into an unexpected problem and couldn't finish handling the request.
 
-This is usually temporary. It might be a issue with the current deployment, configuration, or something deeper that needs a look. Either way, it's being or will be sorted.
+This is usually temporary. It might be a issue with the current deployment,
+configuration, or something deeper that needs a look. Either way, it's being or will be sorted.
 
 ## What you can do
 
-- **Wait a moment and refresh** — transient errors often resolve on their own within seconds or minutes
-- **Head back to the [homepage](/)** — if a specific page is broken, the rest of the site should still be reachable
-- **[Report it](/contact)** if the problem persists — a reproduction URL and rough timestamp are helpful
+- Wait a moment and refresh. Transient errors often resolve on their own within seconds or minutes
+- Head back to the [homepage](/). If a specific page is broken,
+  the rest of the site should still be reachable
+- [Report it](/hello) if the problem persists. Including the offending URL
+  and rough timestamp would be helpful
 
 ## What this is not
 
-This is not your fault. You didn't do anything wrong. The request was valid; the server just messed up the response.
+This is not your fault. You didn't do anything wrong.
+The request was valid; the server just messed up the response.
 
----
-
-*Every system fails sometimes. The measure of a system is how quickly it recovers.* ⚙️
+_Every system fails sometimes. The measure of a system is how quickly it recovers._ ⚙️
