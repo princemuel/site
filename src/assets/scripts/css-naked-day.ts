@@ -1,11 +1,13 @@
 import { $ } from "@/helpers/dom";
 
-(() => {
+const isNotIgnored = (el: Element) =>
+  //@ts-expect-error TS(2339): Property 'dataset' does not exist on type 'Element'.
+  // oxlint-disable-next-line typescript/no-unsafe-member-access
+  el.dataset?.cssnakedday !== "ignore";
+
+document.addEventListener("DOMContentLoaded", () => {
   const today = Temporal.Now.plainDateISO();
   if (!(today.month === 4 && today.day === 9)) return;
-
-  const isNotIgnored = <E extends Element>(el: E) =>
-    el.getAttribute("data-cssnakedday") !== "ignore";
 
   // Remove all linked stylesheets and style blocks
   for (const element of [
@@ -29,10 +31,10 @@ import { $ } from "@/helpers/dom";
     href: "https://css-naked-day.org",
     textContent: "CSS Naked Day",
     target: "_blank",
-    rel: "noopener noreferrer jangled",
+    rel: "noopener noreferrer external",
   });
 
   p.append(a, "!");
   fragment.append(p, document.createElement("hr"));
   document.body.prepend(fragment);
-})();
+});

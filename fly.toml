@@ -11,18 +11,20 @@ primary_region = "lhr"
 [build]
 dockerfile = "Dockerfile"
 
+[deploy]
+release_command = "yarn db:migrate"
+strategy        = "rolling"
+
 [[services]]
-internal_port        = 8080
-force_https          = true
 auto_stop_machines   = "suspend"
-auto_start_machines  = true
+internal_port        = 8080
 min_machines_running = 1
 processes            = ["app"]
 
 [[services.ports]]
+force_https = true
 handlers    = ["http"]
 port        = 80
-force_https = true
 
 [services.ports.http_options.response.headers]
 X-Process-Group = "app"
@@ -35,6 +37,7 @@ port     = 443
 X-Process-Group = "app"
 
 [[vm]]
-cpu_kind = "shared"
-cpus     = 1
-memory   = "1gb"
+cpu_kind  = "shared"
+cpus      = 1
+memory    = "1gb"
+processes = ["app"]

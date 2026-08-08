@@ -4,7 +4,7 @@
 // see the documentation: https://zed.vercel.app/docs/configuring-zed#settings-files
 {
   "format_on_save": "on",
-  "prettier": { "allowed": false },
+  "prettier": { "allowed": true },
   "lsp": {
     "astro-language-server": { "settings": {} },
     "mdx-analyzer": { "initialization_options": { "typescript": { "enabled": true } } },
@@ -15,14 +15,9 @@
           "run": "onType",
           "disableNestedConfig": false,
           "fixKind": "safe_fix",
-          "unusedDisableDirectives": "deny"
-        }
-      }
-    },
-    "oxfmt": {
-      "initialization_options": {
-        "settings": { "fmt.configPath": "./oxfmt.config.mts", "run": "onSave" }
-      }
+          "unusedDisableDirectives": "deny",
+        },
+      },
     },
     "tailwindcss-language-server": {
       "settings": {
@@ -32,12 +27,12 @@
             "class=\"([^\"]*)\"",
             "class='([^']*)'",
             "class:list=\"{([^}]*)}\"",
-            "class:list='{([^}]*)}'"
-          ]
-        }
-      }
+            "class:list='{([^}]*)}'",
+          ],
+        },
+      },
     },
-    "typescript-ls": { "settings": { "package_version": "7.0.2" } }
+    "typescript-ls": { "settings": { "package_version": "7.0.2" } },
   },
   "languages": {
     "Astro": {
@@ -48,8 +43,8 @@
         "!vtsls",
         "!typescript-language-server",
         "!eslint",
-        "..."
-      ]
+        "...",
+      ],
     },
     "JavaScript": {
       "language_servers": [
@@ -58,12 +53,8 @@
         "!vtsls",
         "!typescript-language-server",
         "!eslint",
-        "..."
+        "...",
       ],
-      "formatter": [
-        { "language_server": { "name": "oxfmt" } },
-        { "code_action": "source.fixAll.oxc" }
-      ]
     },
     "TypeScript": {
       "language_servers": [
@@ -72,12 +63,8 @@
         "!vtsls",
         "!typescript-language-server",
         "!eslint",
-        "..."
+        "...",
       ],
-      "formatter": [
-        { "language_server": { "name": "oxfmt" } },
-        { "code_action": "source.fixAll.oxc" }
-      ]
     },
     "TSX": {
       "language_servers": [
@@ -86,26 +73,17 @@
         "!vtsls",
         "!typescript-language-server",
         "!eslint",
-        "..."
+        "...",
       ],
-      "formatter": [
-        { "language_server": { "name": "oxfmt" } },
-        { "code_action": "source.fixAll.oxc" }
-      ]
     },
     "CSS": {
-      "language_servers": [
-        "tailwindcss-intellisense-css",
-        "!vscode-css-language-server",
-        "..."
-      ],
-      "formatter": [{ "language_server": { "name": "oxfmt" } }]
+      "language_servers": ["tailwindcss-intellisense-css", "!vscode-css-language-server", "..."],
     },
-    "JSON": { "formatter": [{ "language_server": { "name": "oxfmt" } }] },
-    "JSONC": { "formatter": [{ "language_server": { "name": "oxfmt" } }] },
-    "Markdown": { "formatter": [{ "language_server": { "name": "oxfmt" } }] },
-    "Markdown-Inline": { "formatter": [{ "language_server": { "name": "oxfmt" } }] },
-    "MDX": { "formatter": [{ "language_server": { "name": "oxfmt" } }] },
-    "YAML": { "formatter": [{ "language_server": { "name": "oxfmt" } }] }
-  }
+    "JSON": {},
+    "JSONC": {},
+    "Markdown": {},
+    "Markdown-Inline": {},
+    "MDX": {},
+    "YAML": {},
+  },
 }

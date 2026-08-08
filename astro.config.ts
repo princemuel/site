@@ -1,5 +1,5 @@
 import { defineConfig } from "astro/config";
-
+import "temporal-polyfill/global";
 import {
   adapter,
   envSchema,

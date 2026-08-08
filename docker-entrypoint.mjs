@@ -1,0 +1,27 @@
+#!/usr/bin/env node
+import { spawn } from "node:child_process";
+
+const env = { ...process.env };
+
+// If running the web server then migrate existing database
+if (process.argv.slice(-3).join(" ") === "node ./dist/server/entry.mjs") {
+  // await exec("pnpx prisma migrate deploy");
+}
+
+// Launch application
+await exec(process.argv.slice(2).join(" "));
+
+/**
+ *
+ * @param {string} command
+ * @returns Promise<any>
+ */
+function exec(command) {
+  const child = spawn(command, { shell: true, stdio: "inherit", env });
+  const { promise, resolve, reject } = Promise.withResolvers();
+  child.on("exit", (code) => {
+    if (code === 0) resolve();
+    else reject(new Error(`${command} failed rc=${code}`));
+  });
+  return promise;
+}
