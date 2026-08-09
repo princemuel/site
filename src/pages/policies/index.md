@@ -13,27 +13,34 @@ site. Please read each one carefully.
 
 ## Accessibility
 
-Details the steps taken to ensure this site is accessible to all users,
+This page details the steps taken to ensure this site is accessible to all users,
 including those using assistive technologies.
 
 [Read the Accessibility Statement](/policies/accessibility)
 
+## AI Usage
+
+This page outlines the ai usage policy for this site and lists instances where LLMs
+have been utilized in creating content or data and where they have not been used.
+
+[Read the Ai Usage Policy](/policies/ai-usage)
+
 ## License
 
-Describes the terms under which the content and source code on this site
+This page describes the terms under which the content and source code on this site
 may be used or reproduced.
 
 [Read the License](/policies/license)
 
 ## Privacy
 
-Explains what data is collected when you visit this site, how it is used,
+This page explains what data is collected when you visit this site, how it is used,
 and your rights regarding that data.
 
 [Read the Privacy Policy](/policies/privacy)
 
 ## Terms of Service
 
-Outlines the rules and expectations for using this site.
+This page outlines the rules and expectations while using this site.
 
 [Read the Terms of Service](/policies/terms-of-service)

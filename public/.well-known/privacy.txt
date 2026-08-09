@@ -1,0 +1,3 @@
+Entity: PrinceMuel,NG
+Privacy-policy: https://princemuel.fly.dev/privacy
+Contact: mailto:vansomecsam.gmail.com
