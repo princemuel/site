@@ -62,7 +62,7 @@
   },
   "typescript.native-preview.tsdk": "node_modules/@typescript/native-preview",
   "[yaml]": {
-    "editor.defaultFormatter": "redhat.vscode-yaml"
+    "editor.defaultFormatter": "oxc.oxc-vscode"
   },
   "[typescript]": {
     "editor.defaultFormatter": "oxc.oxc-vscode"
@@ -70,5 +70,6 @@
   "[sql]": {
     "editor.defaultFormatter": "mtxr.sqltools"
   },
-  "python-envs.defaultEnvManager": "ms-python.python:venv"
+  "python-envs.defaultEnvManager": "ms-python.python:venv",
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

@@ -11,7 +11,7 @@ See the file [LICENSE-Apache-2.0][apache] for the complete license terms.
 
 ### Content
 
-All written content in this repository (blog posts, essays, images, notes etc)
+All written and media content in this repository (blog posts, essays, images, notes etc)
 is licensed under the Creative Commons Attribution 4.0 International License.
 
 See the file [LICENSE-CC-BY-4.0][creative-commons] for the full license text.
