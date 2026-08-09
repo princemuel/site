@@ -6,3 +6,4 @@ export { default as robots } from "./robots.txt?raw";
 export { default as excluded } from "./routes.json";
 export { default as search } from "./search.xml?raw";
 export { default as webfinger } from "./webfinger.json";
+export { default as yapping } from "./yapping.json";

@@ -1,11 +1,22 @@
 {
-  "subject": "acct:princemuel@mastodon.social",
-  "aliases": ["https://mastodon.social/@princemuel", "https://mastodon.social/users/princemuel"],
+  "subject": "acct:princemuel@princemuel.fly.dev",
+  "aliases": [
+    "me@princemuel.fly.dev",
+    "princemuel@princemuel.fly.dev",
+    "https://princemuel.fly.dev/@princemuel/",
+    "https://mastodon.social/@princemuel",
+    "https://mastodon.social/users/princemuel"
+  ],
   "links": [
     {
       "rel": "http://webfinger.net/rel/profile-page",
       "type": "text/html",
-      "href": "https://mastodon.social/@princemuel"
+      "href": "https://princemuel.fly.dev/@princemuel"
+    },
+    {
+      "rel": "http://webfinger.net/rel/avatar",
+      "type": "image/jpeg",
+      "href": "https://princemuel.fly.dev/assets/images/me.jpg"
     },
     {
       "rel": "self",

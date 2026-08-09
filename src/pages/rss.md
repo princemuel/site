@@ -8,15 +8,19 @@ date: "2026-04-24T12:29:32Z"
 permalink: /rss
 ---
 
-Hello there, friend! 🙂
+Hello there, friend! 🫡
 
-If you'd rather not rely on algorithms deciding what you see and when, **RSS is for you**.
-It's one of the oldest and most reliable ways to follow the web on your own terms.
+RSS is one of the oldest and most reliable ways to follow the web on your own terms.
+
+Since you're here, I can safely assume you're like me, and you'd rather not
+rely on the algorithm overlords deciding what you see and when.
+**This RSS page has been prepared specially for you!🤫**.
 
 ## Stay in the Loop
 
-Paste [this link][feed] into any RSS reader and you'll get new posts delivered
-straight to your feed as soon as they're published. No noise. No middleman. Just content.
+Paste [this link][feed] into any RSS reader and you'll get new posts and updates delivered
+straight to your feed as soon as they're published. No noise. No middleman. No newsletters.
+No email required. Just content.
 
 If you're not sure which reader to use, here are a few worth trying:
 
@@ -28,15 +32,17 @@ If you're not sure which reader to use, here are a few worth trying:
 
 ## What gets published?
 
-Anything I write ends up in the feed. Posts on software, systems thinking, the web,
-and whatever I happen to be turning over in my head. No newsletters, no email required.
+Anything I write ends up in the feed. Posts, notes, tips and tricks on software,
+systems thinking, the web, and whatever I happen to be turning over in my head.
+I also upload media I consume everyday to the content catalog.
 
-## Feed URL
+## Feed URLs
 
-[https://princemuel.fly.dev/rss.xml][feed]
+- [Master feed][feed]
+- [Journal feed](/journal/rss.xml)
+- [Content catalog feed](/wiki/catalog/rss.xml)
 
-[feed]: https://princemuel.fly.dev/rss.xml
+[feed]: /rss.xml
 
----
-
-RSS never died; it just quietly kept working. Glad you're using it. 🤝
+_RSS never died; it just quietly kept working. I'm really glad you're using it.
+Let's keep on keeping it alive together_ 🤝
