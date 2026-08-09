@@ -13,7 +13,7 @@ REQUIRED_SECRETS = [
     "OCTOKIT_TOKEN",
     "RESEND_TOKEN",
 ]
-APP_NAME = "site-silent-sunset-6214"
+APP_NAME = "princemuel"
 
 
 def run(*args: str) -> tuple[int, str]:
@@ -58,11 +58,11 @@ def main() -> None:
     else:
         print("  Docker is available")
 
-    print("\u2713 Checking pnpm...")
-    if not check_command("pnpm", "Install from https://pnpm.io"):
+    print("\u2713 Checking yarn...")
+    if not check_command("yarn", "Install via corepac"):
         sys.exit(1)
-    _, pnpm_version = run("pnpm", "--version")
-    print(f"  pnpm version: {pnpm_version}")
+    _, yarn_version = run("yarn", "--version")
+    print(f"  yarn version: {yarn_version}")
 
     print("\u2713 Checking Node.js...")
     _, node_version = run("node", "--version")
@@ -79,11 +79,11 @@ def main() -> None:
         print(f"    2) Create it manually: flyctl apps create {APP_NAME}")
 
     print("\u2713 Checking environment configuration...")
-    for filename in ("fly.toml", "Dockerfile", "pnpm-lock.yaml"):
+    for filename in ("fly.toml", "Dockerfile", "yarn.lock"):
         if Path(filename).is_file():
             print(f"  \u2713 {filename} found")
         else:
-            hint = "  Run: pnpm install" if filename == "pnpm-lock.yaml" else ""
+            hint = "  Run: yarn install" if filename == "yarn.lock" else ""
             print(f"\u2717 {filename} not found in current directory{('. ' + hint) if hint else ''}")
             failed = True
 

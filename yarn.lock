@@ -2155,12 +2155,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@iconify-json/lucide@npm:^1.2.121":
-  version: 1.2.121
-  resolution: "@iconify-json/lucide@npm:1.2.121"
+"@iconify-json/lucide@npm:^1.2.122":
+  version: 1.2.122
+  resolution: "@iconify-json/lucide@npm:1.2.122"
   dependencies:
     "@iconify/types": "npm:*"
-  checksum: 10c0/c021b53c58855b1caa805b524b5f652c48c2000239eac04ea04951e6c34e110f1b59cc860f83350eb489eef39ff2723a9c4bd74101411440998d086b719adf15
+  checksum: 10c0/8f0a9b6c19006a0233f2129483606aec4be4026525ca6904bbf92f54a161a13998628f3c336b756ec5efe5601c315b4d7ea49049c9a9d29cdd9cc349d0b1a20e
   languageName: node
   linkType: hard
 
@@ -4415,7 +4415,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^26.1.2":
+"@types/node@npm:*":
   version: 26.1.2
   resolution: "@types/node@npm:26.1.2"
   dependencies:
@@ -4430,6 +4430,15 @@ __metadata:
   dependencies:
     undici-types: "npm:~7.18.0"
   checksum: 10c0/a5bc08f49b9581dcdca90e02cd77197a3c799840807664942e5cd5161a553d4d2ae8064f7e3294410d748d7d098b5c1848be7fa50c06f29c4193ab16be4e59eb
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^26.2.0":
+  version: 26.2.0
+  resolution: "@types/node@npm:26.2.0"
+  dependencies:
+    undici-types: "npm:~8.3.0"
+  checksum: 10c0/f8566d88162241eb55a46f7e4ea097188eab0aaafefea7a58e63adab8c4144eb98c08b7911452c846104c339a0f82282f5e1ed4b26b578d60709614fe2843f4d
   languageName: node
   linkType: hard
 
@@ -9782,7 +9791,7 @@ __metadata:
     "@flydotio/dockerfile": "npm:^0.7.10"
     "@iconify-json/carbon": "npm:^1.2.25"
     "@iconify-json/devicon": "npm:^1.2.62"
-    "@iconify-json/lucide": "npm:^1.2.121"
+    "@iconify-json/lucide": "npm:^1.2.122"
     "@iconify-json/ri": "npm:^1.2.10"
     "@iconify-json/uil": "npm:^1.2.3"
     "@iconify/tools": "npm:^5.0.12"
@@ -9793,7 +9802,7 @@ __metadata:
     "@tailwindcss/vite": "npm:^4.3.3"
     "@total-typescript/ts-reset": "npm:^0.6.1"
     "@tursodatabase/sync": "npm:^0.7.2"
-    "@types/node": "npm:^26.1.2"
+    "@types/node": "npm:^26.2.0"
     "@typescript/native": "npm:typescript@^7.0.2"
     "@vite-pwa/assets-generator": "npm:^1.0.2"
     astro: "npm:7.2.0"

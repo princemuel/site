@@ -11,6 +11,9 @@ WORKDIR /app
 # Set production environment
 ENV NODE_ENV="production"
 
+# package.json needs to exist so corepack can read packageManager from it
+COPY package.json ./
+
 # Corepack was removed from Node core in v25+, so install it explicitly
 RUN npm install -g corepack@latest
 RUN corepack enable && corepack prepare --activate
@@ -25,18 +28,18 @@ RUN apt-get update -qq && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Install node modules
-COPY .npmrc package.json yarn.lock ./
-RUN yarn install --immutable
+COPY .yarnrc.yml yarn.lock ./
+RUN yarn install --immutable --check-cache
 
 # Copy application code
 COPY . .
 
 # Build application using all secrets from the build context
-RUN --mount=type=secret,id=SECRETS \
-    if [ ! -f /run/secrets/SECRETS ]; then \
+RUN --mount=type=secret,id=ALL_SECRETS \
+    if [ ! -f /run/secrets/ALL_SECRETS ]; then \
     echo "ERROR: SECRETS build secret is missing" && exit 1; \
     fi && \
-    eval "$(base64 -d /run/secrets/SECRETS)" && \
+    eval "$(base64 -d /run/secrets/ALL_SECRETS)" && \
     yarn build
 
 # Prune development dependencies for the final image
@@ -54,9 +57,9 @@ RUN apt-get update -qq && \
 COPY --from=build /app/dist ./dist
 COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/package.json ./package.json
-COPY docker-entrypoint.js ./docker-entrypoint.js
+COPY docker-entrypoint.mjs ./docker-entrypoint.mjs
 
-RUN chmod +x ./docker-entrypoint.js
+RUN chmod +x ./docker-entrypoint.mjs
 
 ENV HOST="0.0.0.0"
 ENV PORT="8080"

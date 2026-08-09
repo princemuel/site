@@ -2,7 +2,7 @@
 """Generate a grouped, conventional-commit changelog markdown file.
 
 Usage:
-    python changelog.py --output-dir DIR [--from REV] [--to REV]
+    python changelog.py --output-dir DIR [--from REVISION] [--to REVISION]
 
 Equivalent to changelog.ps1: groups commits between --from and --to (default
 HEAD) by their conventional-commit prefix (feat, fix, docs, ...), and writes
@@ -15,7 +15,6 @@ import subprocess
 from pathlib import Path
 
 # Order matters: this also controls section ordering in the output,
-# mirroring the [ordered] hashtable in the PowerShell original.
 SECTION_HEADERS = {
     "docs": "### \U0001f4d6 Documentation",
     "examples": "### \U0001f3c0 Examples",
@@ -35,7 +34,7 @@ SECTION_HEADERS = {
 CONVENTIONAL_PREFIX = re.compile(r"^(.+?): (.*)$")
 
 
-def run_git(*args: str) -> str:
+def git(*args: str) -> str:
     result = subprocess.run(
         ["git", *args], check=True, capture_output=True, text=True
     )
@@ -43,12 +42,12 @@ def run_git(*args: str) -> str:
 
 
 def get_base_url() -> str:
-    remote_url = run_git("remote", "get-url", "origin")
+    remote_url = git("remote", "get-url", "origin")
     return remote_url.replace(".github.io.git", "")
 
 
-def get_commits(from_rev: str | None, to_rev: str) -> list[dict[str, str]]:
-    range_spec = f"{from_rev}...{to_rev}" if from_rev else to_rev
+def get_commits(from_revision: str | None, to_revision: str) -> list[dict[str, str]]:
+    range_spec = f"{from_revision}...{to_revision}" if from_revision else to_revision
     log_output = subprocess.run(
         ["git", "--no-pager", "log", range_spec, "--pretty=format:%h\t%s"],
         check=True,
@@ -84,12 +83,12 @@ def group_commits(commits: list[dict[str, str]]) -> dict[str, list[dict[str, str
     return {group: items for group, items in grouped.items() if items}
 
 
-def write_changelog(
-    dest_file: Path,
+def changelog(
+    dest: Path,
     base_url: str,
     changelog_date: str,
-    from_rev: str | None,
-    to_rev: str,
+    from_revision: str | None,
+    to_revision: str,
     grouped: dict[str, list[dict[str, str]]],
 ) -> None:
     lines = [
@@ -98,7 +97,7 @@ def write_changelog(
         "versionName:",
         "---",
         "",
-        f"[compare changes]({base_url}/compare/{from_rev or ''}...{to_rev})",
+        f"[compare changes]({base_url}/compare/{from_revision or ''}...{to_revision})",
     ]
 
     for group, items in grouped.items():
@@ -108,26 +107,26 @@ def write_changelog(
         for item in items:
             lines.append(f"- {item['message']} ([{item['hash']}]({base_url}/commit/{item['hash']}))")
 
-    dest_file.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    dest.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Generate a grouped changelog.")
-    parser.add_argument("--from", dest="from_rev", default=None)
-    parser.add_argument("--to", dest="to_rev", default="HEAD")
+    parser.add_argument("--from", dest="from_revision", default=None)
+    parser.add_argument("--to", dest="to_revision", default="HEAD")
     parser.add_argument("--output-dir", required=True, type=Path)
     args = parser.parse_args()
 
     args.output_dir.mkdir(parents=True, exist_ok=True)
-    dest_file = args.output_dir / f"{args.to_rev}.md"
+    dest = args.output_dir / f"{args.to_revision}.md"
 
     base_url = get_base_url()
-    changelog_date = run_git("log", "-1", "--format=%cI", args.to_rev)
-    commits = get_commits(args.from_rev, args.to_rev)
+    changelog_date = git("log", "-1", "--format=%cI", args.to_revision)
+    commits = get_commits(args.from_revision, args.to_revision)
     grouped = group_commits(commits)
 
-    write_changelog(dest_file, base_url, changelog_date, args.from_rev, args.to_rev, grouped)
-    print(f"Wrote changelog to {dest_file}")
+    changelog(dest, base_url, changelog_date, args.from_revision, args.to_revision, grouped)
+    print(f"Wrote changelog to {dest}")
 
 
 if __name__ == "__main__":

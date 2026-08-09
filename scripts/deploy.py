@@ -26,7 +26,7 @@ def main() -> None:
         sys.exit(1)
 
     values = dotenv_values(ENV_FILE)
-    secrets = {k: v for k, v in values.items() if v}  # drop None/empty, like the original
+    secrets = {k: v for k, v in values.items() if v}
 
     build_args: list[str] = []
     secrets_lines: list[str] = []

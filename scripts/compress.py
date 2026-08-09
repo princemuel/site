@@ -58,7 +58,7 @@ def main() -> None:
         content = input_path.read_text(encoding="utf-8")
         data = json.loads(content)
         compress_json(data, output_path)
-    except Exception as error:  # noqa: BLE001 - mirrors the original's catch-all
+    except Exception as error:  # noqa: BLE001 catch-all
         print(f"\u274c Error: {error}", file=sys.stderr)
         sys.exit(1)
 
