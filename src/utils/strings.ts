@@ -9,8 +9,8 @@ export const capitalize = <S extends string>(str: S, locale?: Intl.LocalesArgume
 export const normalize = (str: string) =>
   str
     .normalize("NFD")
-    .replaceAll(/[\u0300-\u036f]/g, "")
-    .replaceAll(/[^\w]/g, "-");
+    .replaceAll(/[\u0300-\u036F]/gu, "")
+    .replaceAll(/[^\w]/gu, "-");
 
 export const truncate = (str: string, length: number, locales?: Intl.LocalesArgument) => {
   if (!str || str.length <= length) return str;
@@ -36,11 +36,12 @@ export const truncate = (str: string, length: number, locales?: Intl.LocalesArgu
   return truncated.length === str.length ? str : `${truncated}...`;
 };
 
+// oxlint-disable-next-line max-params
 export const pluralize = <C extends number, N extends string, P extends string = `${N}s`>(
   count: C,
   noun: N,
   plural?: P,
-  locales?: Intl.LocalesArgument
+  locales?: Intl.LocalesArgument,
 ): C extends 1 ? N : P => {
   // Use Intl.PluralRules to determine singular/plural
   const pr = new Intl.PluralRules(locales);
@@ -51,12 +52,11 @@ export const pluralize = <C extends number, N extends string, P extends string =
 
 export const endsWith = <W extends string, S extends string>(
   str: W,
-  suffix: S
+  suffix: S,
 ): str is EndsWith<W, S> => str.endsWith(suffix);
 
-export const getFlagEmoji = (code?: string) => {
-  return typeof code === "string"
+export const getFlagEmoji = (code?: string) =>
+  typeof code === "string"
     ? // oxlint-disable-next-line no-misused-spread
       String.fromCodePoint(...[...code.toUpperCase()].map((ch) => ch.codePointAt(0) ?? 0 + 127_397))
     : "🏳️";
-};

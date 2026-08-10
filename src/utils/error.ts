@@ -72,6 +72,7 @@ invariant.as = (ErrorClass, condition, message, ...positionals): asserts conditi
     error = (ErrorClass as CustomErrorFactory)(msg);
   }
 
+  // oxlint-disable-next-line no-throw-literal
   throw error;
 };
 
@@ -152,7 +153,10 @@ export class PrettyError extends Error {
   constructor(message: string) {
     super(message);
     this.name = this.constructor.name;
-    if (typeof Error.captureStackTrace === "function") Error.captureStackTrace(this, this.constructor);
-    else this.stack = new Error(message).stack;
+    if (typeof Error.captureStackTrace === "function") {
+      Error.captureStackTrace(this, this.constructor);
+    } else {
+      this.stack = new Error(message).stack;
+    }
   }
 }

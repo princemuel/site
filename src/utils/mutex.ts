@@ -1,5 +1,3 @@
-// oxlint-disable max-statements
-// oxlint-disable typescript/no-unsafe-type-assertion
 // oxlint-disable max-params
 /**
  * Async, non-reentrant mutex protecting a shared object.
@@ -19,12 +17,14 @@
  * ❌ Unsafe:
  *   - `acquire()` without guaranteed release
  */
+// oxlint-disable-next-line typescript/method-signature-style
 type Acquired<Type extends object> = Type & { release(): void };
 
 export class Mutex<T extends object> {
   #locked = false;
   readonly #queue: PromiseWithResolvers<Acquired<T>>[] = [];
 
+  // oxlint-disable-next-line typescript/parameter-properties
   constructor(private readonly resource: T) {}
 
   /**
@@ -125,7 +125,7 @@ export class Mutex<T extends object> {
    * Intended for shutdown / teardown paths only.
    */
   destroy(): void {
-    while (this.#queue.length) {
+    while (this.#queue.length > 0) {
       this.#queue.shift()?.reject(new Error("Mutex destroyed"));
     }
     this.#locked = false;

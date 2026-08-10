@@ -16,7 +16,7 @@ var __UUID_NAMESPACE__: string;
 interface RateLimitResult {
   limit: number;
   remaining: number;
-  reset: Temporal.Instant;
+  reset: number;
   throttle: boolean;
 }
 

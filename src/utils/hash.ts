@@ -1,3 +1,4 @@
+// oxlint-disable unicorn/number-literal-case unicorn/prefer-code-point
 /**
  * Hashes a value using MurmurHash3
  * @param {string} value - The value to hash
@@ -18,8 +19,8 @@ export function hash(value: string, length = 6, radix = 16) {
  */
 function murmur3(str: string, seed = 0) {
   let h1 = seed;
-  const c1 = 0xcc9e2d51;
-  const c2 = 0x1b873593;
+  const c1 = 0xcc_9e_2d_51;
+  const c2 = 0x1b_87_35_93;
 
   // Process string in 4-byte chunks
   let i = 0;
@@ -38,7 +39,7 @@ function murmur3(str: string, seed = 0) {
 
     h1 ^= k1;
     h1 = ((h1 << 13) | (h1 >>> 19)) >>> 0;
-    h1 = (h1 * 5 + 0xe6546b64) >>> 0;
+    h1 = (h1 * 5 + 0xe6_54_6b_64) >>> 0;
   }
 
   // Handle remaining bytes
@@ -60,20 +61,20 @@ function murmur3(str: string, seed = 0) {
 
   // fmix32
   h1 ^= h1 >>> 16;
-  h1 = (h1 * 0x85ebca6b) >>> 0;
+  h1 = (h1 * 0x85_eb_ca_6b) >>> 0;
   h1 ^= h1 >>> 13;
-  h1 = (h1 * 0xc2b2ae35) >>> 0;
+  h1 = (h1 * 0xc2_b2_ae_35) >>> 0;
   h1 ^= h1 >>> 16;
 
-  return h1 >>> 0; // Ensure unsigned 32-bit
+  return h1 >>> 0;
 }
 
 /**
  * Convert a 32-bit integer to a fixed-length hex or base36 string
- * @param {number} hash - The hash value
+ * @param {number} value - The hash value
  * @param {number} length - Desired output length
  * @param radix - Base to use (16 for hex, 36 for alphanumeric)
  */
-function format(hash: number, length: number, radix = 16) {
-  return hash.toString(radix).padStart(length, "0").slice(0, length);
+function format(value: number, length: number, radix = 16) {
+  return value.toString(radix).padStart(length, "0").slice(0, length);
 }
