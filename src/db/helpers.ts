@@ -1,6 +1,6 @@
 import { customType } from "drizzle-orm/sqlite-core";
 
-export const temporalInstant = customType<{ data: Temporal.Instant; driverData: string }>({
+export const timestamptz = customType<{ data: Temporal.Instant; driverData: string }>({
   dataType() {
     return "text";
   },
