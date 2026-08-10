@@ -1,0 +1,65 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"time"> {
+  datetime: string;
+  format?: Intl.DateTimeFormatOptions;
+}
+
+const { datetime, format, ...attrs } = Astro.props;
+
+const instant = Temporal.Instant.from(datetime);
+const fallback = new Intl.DateTimeFormat(undefined, {
+  dateStyle: "medium",
+  timeStyle: "short",
+}).format(instant);
+---
+
+<local-time
+  role="time"
+  aria-roledescription="The local-time element represents its contents, along with a machine-readable form of those contents in the datetime attribute."
+  datetime={datetime}
+  data-format={format ? JSON.stringify(format) : undefined}
+  {...attrs}
+>
+  {fallback}
+</local-time>
+
+<script>
+  import { createElement } from "@/helpers/dom";
+
+  createElement(
+    "local-time",
+    class LocalTimeElement extends HTMLElement implements CustomElement {
+      static observedAttributes = ["datetime", "format"];
+
+      connectedCallback() {
+        this.#render();
+      }
+
+      attributeChangedCallback() {
+        this.#render();
+      }
+
+      get dateTime(): string {
+        return this.getAttribute("datetime") ?? "";
+      }
+
+      set dateTime(value: string) {
+        this.setAttribute("datetime", value);
+      }
+
+      #render() {
+        if (!this.dateTime) return;
+
+        const instant = Temporal.Instant.from(this.dateTime);
+        const options: Intl.DateTimeFormatOptions = this.dataset.format
+          ? (JSON.parse(this.dataset.format) as Intl.DateTimeFormatOptions)
+          : { dateStyle: "medium", timeStyle: "short" };
+
+        options.timeZone = Temporal.Now.timeZoneId();
+        this.textContent = new Intl.DateTimeFormat(navigator.language, options).format(instant);
+      }
+    },
+  );
+</script>
