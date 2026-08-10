@@ -12,12 +12,13 @@
  * Usage:
  *   <Icon name="lucide:house" />
  *   <Icon name="arrow-right" />
- *   <Icon name="ion:logo-github" size={20} class="text-stone-400" />
+ *   <Icon name="ion:logo-github" size={20} class="text-gray-400" />
  *   <Icon name="lucide:cloud-moon" aria-hidden="true" />
  */
 
 import { icons, type iconNames } from "@/assets/media/icons";
 import { cache } from "@/lib/cache";
+import { invariant } from "@/utils/error";
 import { getIconData, iconToSVG } from "@iconify/utils";
 import type { HTMLAttributes } from "astro/types";
 
@@ -50,16 +51,17 @@ const parts = (name as string).split(":", 2);
 const [iconSet, iconName] = parts.length === 1 ? ["local", parts[0]] : parts;
 
 const collection = icons[iconSet];
-if (!collection) {
-  throw new Error(`[Icon] Unknown icon set "${iconSet}". Did you run the generate script?`);
-}
-
-if (!iconName) throw new Error(`[Icon] "invalid value ${iconName}" for icon name`);
+invariant(
+  collection,
+  `[Icon] Unknown icon set "${iconSet}". Did you run the bootstrap:icons script?`,
+);
+invariant(iconName, "[Icon] invalid value `%s` for icon name", typeof iconName);
 
 const iconData = getIconData(collection, iconName);
-if (!iconData) {
-  throw new Error(`[Icon] "${iconName}" not found in "${iconSet}". Is it listed in icons.json?`);
-}
+invariant(
+  iconData,
+  `[Icon] "${iconName}" not found in "${iconSet}". Is it listed in icons/manifest.json?`,
+);
 
 // In SSR mode, each unique icon is rendered as a <symbol> once per request.
 // Every subsequent use emits only a <use href="#id"> avoiding repeating

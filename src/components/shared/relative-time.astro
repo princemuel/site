@@ -1,0 +1,95 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"time"> {
+  datetime: string;
+  format?: Intl.RelativeTimeFormatOptions;
+  /** Re-render periodically while mounted. Default true. */
+  live?: Booleanish;
+}
+
+const { datetime, format, live = true, ...attrs } = Astro.props;
+
+const instant = Temporal.Instant.from(datetime);
+const fallback = new Intl.DateTimeFormat(undefined, {
+  dateStyle: "short",
+  timeStyle: "short",
+}).format(instant);
+---
+
+<time datetime=""></time>
+<relative-time
+  role="time"
+  aria-roledescription="The relative-time element represents its contents, along with a machine-readable form of those contents in the datetime attribute."
+  datetime={datetime}
+  data-format={format ? JSON.stringify(format) : undefined}
+  data-live={live}
+  {...attrs}
+>
+  {fallback}
+</relative-time>
+
+<script>
+  import { createElement } from "@/helpers/dom";
+
+  const UNITS: [Intl.RelativeTimeFormatUnit, number][] = [
+    ["year", 60 * 60 * 24 * 365],
+    ["month", 60 * 60 * 24 * 30],
+    ["week", 60 * 60 * 24 * 7],
+    ["day", 60 * 60 * 24],
+    ["hour", 60 * 60],
+    ["minute", 60],
+    ["second", 1],
+  ];
+
+  createElement(
+    "relative-time",
+    class RelativeTimeElement extends HTMLElement implements CustomElement {
+      static observedAttributes = ["datetime"];
+      #timer?: ReturnType<typeof setTimeout>;
+
+      connectedCallback() {
+        this.#render();
+      }
+
+      disconnectedCallback() {
+        clearTimeout(this.#timer);
+      }
+
+      attributeChangedCallback() {
+        this.#render();
+      }
+
+      get dateTime(): string {
+        return this.getAttribute("datetime") ?? "";
+      }
+
+      set dateTime(value: string) {
+        this.setAttribute("datetime", value);
+      }
+
+      #render() {
+        clearTimeout(this.#timer);
+
+        if (!this.dateTime) return;
+
+        const target = Temporal.Instant.from(this.dateTime);
+        const seconds = Temporal.Now.instant().since(target).total("seconds");
+        const [unit, unitSeconds] = UNITS.find((u) => Math.abs(seconds) >= u[1]) ?? UNITS.at(-1)!;
+
+        const options: Intl.RelativeTimeFormatOptions = this.dataset.format
+          ? (JSON.parse(this.dataset.format) as Intl.RelativeTimeFormatOptions)
+          : { numeric: "auto" };
+
+        const rtf = new Intl.RelativeTimeFormat(navigator.language, options);
+        this.textContent = rtf.format(Math.round(-seconds / unitSeconds), unit);
+
+        if (this.dataset.live === "true") {
+          // Re-render roughly once the displayed unit is due to tick over.
+          const next = Math.min(Math.max(unitSeconds, 1), 3600) * 1000;
+          this.#timer = setTimeout(() => this.#render(), next);
+        }
+      }
+    },
+  );
+</script>
