@@ -52,3 +52,16 @@ export const sharers = defineCollection({
     order: z.uint32().default(0),
   }),
 });
+
+export const experiences = defineCollection({
+  loader: file(`content/sandbox/experiences.yaml`),
+  schema: z.object({
+    role: z.string(),
+    company: z.string().min(2),
+    location: z.string().min(2),
+    date: z.object({
+      started: z.iso.datetime(),
+      stopped: z.iso.datetime().optional(),
+    }),
+  }),
+});

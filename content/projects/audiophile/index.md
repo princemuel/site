@@ -3,7 +3,7 @@ title: Audiophile E-Commerce Platform
 description: A full-stack e-commerce application for premium audio products, demonstrating production-ready architecture, real-time calculations, and comprehensive form validation with server-side security.
 headline: Building a production-scale e-commerce platform from design to deployment
 summary: Transformed a Frontend Mentor design into a full-stack e-commerce application. Built layered validation architecture, implemented financial calculations with decimal precision, and deployed on Vercel. Demonstrates type-safe data flow from React components through Prisma ORM to SQLite database.
-published: release
+published: released
 category: app
 image: ./image.png
 tags:

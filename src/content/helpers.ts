@@ -26,7 +26,7 @@ export const baseSchema = z.object({
   tags: z.array(z.string()).default([]),
   date: z.iso.datetime(),
   updated: z.iso.datetime().optional(),
-  published: z.enum(["planned", "draft", "release"]).default("planned"),
+  published: z.enum(["never", "planned", "draft", "released"]).default("planned"),
   revisions: z.array(revision).default([]),
   duration: z.uint32().default(0),
   words: z.uint32().lte(65_535).default(0),
@@ -35,7 +35,7 @@ export const baseSchema = z.object({
   robots: z.array(robots).default([]),
 });
 
-export const Keys = z.union([z.string(), z.number(), z.symbol()]);
+export const ObjectKeys = z.union([z.string(), z.number(), z.symbol()]);
 
 export const IconEnum = z.enum(iconNames);
 
@@ -109,5 +109,7 @@ export const img = (image: ImageFunction) =>
 //   }
 // }
 
-export const published = (value: string, strict = false) =>
-  import.meta.env.PROD || strict ? value !== "planned" && value !== "draft" : value !== "planned";
+export const isPublished = (value: unknown, strict = false) =>
+  import.meta.env.PROD || strict
+    ? value !== "never" && value !== "planned" && value !== "draft"
+    : value !== "planned";
