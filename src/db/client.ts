@@ -1,11 +1,4 @@
 import { DATABASE_TOKEN, DATABASE_URL } from "astro:env/server";
-import { drizzle } from "drizzle-orm/tursodatabase-sync";
+import { drizzle } from "drizzle-orm/libsql";
 
-export const db = drizzle({
-  connection: {
-    path: "local.db",
-    url: DATABASE_URL,
-    authToken: DATABASE_TOKEN,
-    clientName: "shaharah",
-  },
-});
+export const db = drizzle({ connection: { url: DATABASE_URL, authToken: DATABASE_TOKEN } });
