@@ -169,11 +169,14 @@ local
 *.pem
 styled-system
 prisma.rs
-
+*.db*
 # Local Netlify folder
 .netlify
+
+.venv*
 
 # Astro generated
 .astro/*
 
 /generated/prisma
+typings

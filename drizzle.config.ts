@@ -6,11 +6,8 @@ const mode = process.env.NODE_ENV ?? "production";
 const envVars = loadEnv(mode, process.cwd(), "");
 
 export default defineConfig({
-  schema: "./src/db/schema",
-  out: "./migrations",
-  dialect: "turso",
-  dbCredentials: {
-    url: envVars.DATABASE_URL!,
-    authToken: envVars.DATABASE_TOKEN,
-  },
+  schema: "./src/db/schema.ts",
+  out: "./src/db/migrations",
+  dialect: "sqlite",
+  dbCredentials: { url: envVars.DATABASE_URL! },
 });

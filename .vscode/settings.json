@@ -21,7 +21,7 @@
   "prettier.documentSelectors": ["**/*.astro"],
   "editor.defaultFormatter": "oxc.oxc-vscode",
   "[astro]": {
-    "editor.defaultFormatter": "astro-build.astro-vscode"
+    "editor.defaultFormatter": "astro-build.astro-vscode",
   },
   "workbench.editor.customLabels.patterns": { "**/mod.rs": "${dirname}.rs" },
   // "files.associations": {
@@ -30,14 +30,14 @@
   //   "*.prompt.md": "prompt"
   // },
   "[shellscript]": {
-    "editor.defaultFormatter": "mads-hartmann.bash-ide-vscode"
+    "editor.defaultFormatter": "mads-hartmann.bash-ide-vscode",
   },
   "yaml.schemas": {
     "./.schemas/collection.schema.json": "*.collection.yml",
-    "https://json.schemastore.org/github-issue-config.json": "file:///home/nyx/Lab/Projects/Repos/website/.github/ISSUE_TEMPLATE/config.yml"
+    "https://json.schemastore.org/github-issue-config.json": "file:///home/nyx/Lab/Projects/Repos/website/.github/ISSUE_TEMPLATE/config.yml",
   },
   "[toml]": {
-    "editor.defaultFormatter": "tombi-toml.tombi"
+    "editor.defaultFormatter": "tombi-toml.tombi",
   },
   "template-string-converter.enabled": true,
   "template-string-converter.convertWithinTemplateString": true,
@@ -46,10 +46,10 @@
   "template-string-converter.addBracketsToProps": true,
   "markdown.validate.enabled": true,
   "[powershell]": {
-    "editor.defaultFormatter": "ms-vscode.powershell"
+    "editor.defaultFormatter": "ms-vscode.powershell",
   },
   "[tailwindcss]": {
-    "editor.defaultFormatter": "oxc.oxc-vscode"
+    "editor.defaultFormatter": "oxc.oxc-vscode",
   },
   "astro.content-intellisense": true,
   "tailwindCSS.classAttributes": ["class", "className", "ngClass", "class:list", "tw"],
@@ -57,19 +57,19 @@
   "tailwindCSS.emmetCompletions": true,
   "jsts-chat-features.skills.enabled": true,
   "js/ts.preferences.preferTypeOnlyAutoImports": true,
-  "markdown.validate.ignoredLinks": ["/policies/*"],
+  "markdown.validate.ignoredLinks": ["/policies/*", "/journal", "/hello"],
   "[dockerfile]": {
-    "editor.defaultFormatter": "ms-azuretools.vscode-containers"
+    "editor.defaultFormatter": "ms-azuretools.vscode-containers",
   },
 
   "[yaml]": {
-    "editor.defaultFormatter": "oxc.oxc-vscode"
+    "editor.defaultFormatter": "oxc.oxc-vscode",
   },
   "[typescript]": {
-    "editor.defaultFormatter": "oxc.oxc-vscode"
+    "editor.defaultFormatter": "oxc.oxc-vscode",
   },
   "[sql]": {
-    "editor.defaultFormatter": "mtxr.sqltools"
+    "editor.defaultFormatter": "mtxr.sqltools",
   },
   "python-envs.defaultEnvManager": "ms-python.python:venv",
   "files.associations": {
@@ -78,6 +78,6 @@
     "*.scm": "scheme",
     "*.sch": "scheme",
     "*.sls": "scheme",
-    "*.sld": "scheme"
-  }
+    "*.sld": "scheme",
+  },
 }

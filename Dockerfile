@@ -35,8 +35,8 @@ RUN yarn install --immutable --check-cache
 COPY . .
 
 # Build application using all secrets from the build context
-RUN --mount=type=secret,id=ALL_SECRETS \
-    if [ ! -f /run/secrets/ALL_SECRETS ]; then \
+RUN --mount=type=secret,id=SECRETS \
+    if [ ! -f /run/secrets/SECRETS ]; then \
     echo "ERROR: SECRETS build secret is missing" && exit 1; \
     fi && \
     eval "$(base64 -d /run/secrets/ALL_SECRETS)" && \

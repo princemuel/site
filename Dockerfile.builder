@@ -56,10 +56,10 @@ def main() -> None:
         )
         sys.exit(1)
 
-    all_secrets_blob = base64.b64encode(
+    secrets_blob = base64.b64encode(
         "\n".join(secrets_lines).encode("utf-8")
     ).decode("ascii")
-    build_args += ["--build-secret", f"ALL_SECRETS={all_secrets_blob}"]
+    build_args += ["--build-secret", f"SECRETS={secrets_blob}"]
 
     subprocess.run(["flyctl", "deploy", *build_args], check=True)
 

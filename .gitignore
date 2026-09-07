@@ -179,3 +179,4 @@ prisma.rs
 .astro/*
 
 /generated/prisma
+typings

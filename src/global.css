@@ -14,45 +14,45 @@
 
   /*dark*/
   /*dark*/
-  --color-paper: #14120e;
+  /*--color-paper: #14120e;
   --color-surface: #1e1b14;
   --color-border: #3a342a;
   --color-tertiary: #8c8270;
   --color-secondary: #b5ab95;
   --color-body: #d8d0be;
-  --color-ink: #f2ead3;
+  --color-ink: #f2ead3;*/
   /*light*/
-  --color-paper: #f7f2e8;
+  /*--color-paper: #f7f2e8;
   --color-surface: #ede6d6;
   --color-border: #c9bfa8;
   --color-tertiary: #6c6456;
   --color-secondary: #5c5446;
   --color-body: #2a2620;
-  --color-ink: #14110c;
+  --color-ink: #14110c;*/
 
-  /*--color-stone-50: #f8f4ec;
-  --color-stone-100: #f2ead9;
-  --color-stone-200: #e4d4b4;
-  --color-stone-300: #d7bf8e;
-  --color-stone-400: #caa968;
-  --color-stone-500: #bd9442;
-  --color-stone-600: #977635;
-  --color-stone-700: #715928;
-  --color-stone-800: #4b3b1b;
-  --color-stone-900: #261e0d;
-  --color-stone-950: #1a1509;*/
+  /*--color-gray-50: #f8f4ec;
+  --color-gray-100: #f2ead9;
+  --color-gray-200: #e4d4b4;
+  --color-gray-300: #d7bf8e;
+  --color-gray-400: #caa968;
+  --color-gray-500: #bd9442;
+  --color-gray-600: #977635;
+  --color-gray-700: #715928;
+  --color-gray-800: #4b3b1b;
+  --color-gray-900: #261e0d;
+  --color-gray-950: #1a1509;*/
 
-  /* --color-stone-50: oklch(96.8% 0.011 84.58);
-  --color-stone-100: oklch(93.88% 0.024 85.79);
-  --color-stone-200: oklch(87.47% 0.046 84.55);
-  --color-stone-300: oklch(81.32% 0.07 84.77);
-  --color-stone-400: oklch(74.99% 0.092 83.39);
-  --color-stone-500: oklch(68.92% 0.111 82.29);
-  --color-stone-600: oklch(58.48% 0.092 82.08);
-  --color-stone-700: oklch(47.78% 0.073 83.14);
-  --color-stone-800: oklch(36.19% 0.052 83.05);
-  --color-stone-900: oklch(23.97% 0.031 84.87);
-  --color-stone-950: oklch(19.81% 0.023 87.71); */
+  /* --color-gray-50: oklch(96.8% 0.011 84.58);
+  --color-gray-100: oklch(93.88% 0.024 85.79);
+  --color-gray-200: oklch(87.47% 0.046 84.55);
+  --color-gray-300: oklch(81.32% 0.07 84.77);
+  --color-gray-400: oklch(74.99% 0.092 83.39);
+  --color-gray-500: oklch(68.92% 0.111 82.29);
+  --color-gray-600: oklch(58.48% 0.092 82.08);
+  --color-gray-700: oklch(47.78% 0.073 83.14);
+  --color-gray-800: oklch(36.19% 0.052 83.05);
+  --color-gray-900: oklch(23.97% 0.031 84.87);
+  --color-gray-950: oklch(19.81% 0.023 87.71); */
 
   --breakpoint-3xs: 24em; /*  (min-width: 384px) */
   --breakpoint-2xs: 30em; /*  (min-width: 480px) */
