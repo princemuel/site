@@ -1,19 +1,14 @@
 import getReadingTime from "reading-time";
-import type { MdastPluginDefinition } from "satteri";
 
-export const mdast_reading_time = (): MdastPluginDefinition => {
-  let text = "";
+import type { MdastPluginDefinition } from "./types.ts";
 
-  return {
-    name: "mdast-reading-time",
-    text(node, ctx) {
-      const frontmatter = ctx.data.astro?.frontmatter;
-      if (!frontmatter) return;
-
-      text += `${node.value} `;
-      const { words, minutes } = getReadingTime(text);
-      frontmatter.words = words;
-      frontmatter.duration = minutes;
-    },
-  };
+export const mdast_reading_time: MdastPluginDefinition = {
+  name: "mdast-reading-time",
+  after(root, ctx) {
+    if (!ctx.data.astro) return;
+    const textOnPage = ctx.textContent(root);
+    const { words, minutes } = getReadingTime(textOnPage);
+    ctx.data.astro.frontmatter.words = words;
+    ctx.data.astro.frontmatter.duration = minutes;
+  },
 };

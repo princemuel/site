@@ -1,5 +1,5 @@
-import { envVars } from "../dotenv";
-import type { HastPlugin } from "./types";
+import { envVars } from "../dotenv.ts";
+import type { HastPluginDefinition } from "./types.ts";
 
 interface ExternalLinkAttrs {
   href: string;
@@ -8,7 +8,7 @@ interface ExternalLinkAttrs {
   "data-astro-prefetch"?: "true";
 }
 
-export const hast_external_links: HastPlugin = {
+export const hast_external_links: HastPluginDefinition = {
   name: "hast-external-links",
   element: {
     filter: ["a"],
@@ -22,7 +22,9 @@ export const hast_external_links: HastPlugin = {
               "data-astro-prefetch": "true",
             }
           : { href, target: "_blank", rel: "noopener noreferrer external" };
-        for (const [key, value] of Object.entries(attrs)) ctx.setProperty(node, key, value);
+        for (const [key, value] of Object.entries(attrs)) {
+          ctx.setProperty(node, key, value);
+        }
       }
     },
   },

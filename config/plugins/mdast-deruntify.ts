@@ -1,4 +1,4 @@
-import type { MdastPluginDefinition } from "satteri";
+import type { MdastPluginDefinition } from "./types.ts";
 
 export const mdast_deruntify: MdastPluginDefinition = {
   name: "mdast-derutify",

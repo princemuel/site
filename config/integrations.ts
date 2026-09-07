@@ -4,7 +4,7 @@ import type { AstroUserConfig } from "astro";
 import code from "astro-expressive-code";
 
 import manifest from "./manifest.json" with { type: "json" };
-import pwa, { type PwaOptions } from "./plugins/vite-pwa-plugin";
+import pwa, { type PwaOptions } from "./plugins/vite-pwa-plugin.ts";
 
 type Config = NonNullable<AstroUserConfig["integrations"]>;
 

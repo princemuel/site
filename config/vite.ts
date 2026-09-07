@@ -7,6 +7,7 @@ import { getGitCommit } from "./helpers";
 type Config = NonNullable<AstroUserConfig["vite"]>;
 
 export const pluginsVite = {
+  assetsInclude: ["./src/db/migrations/*.sql"],
   plugins: [tailwindcss()],
   define: {
     __BUILD_TIME__: JSON.stringify(Temporal.Now.instant()),

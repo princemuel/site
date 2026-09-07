@@ -14,7 +14,7 @@ export const getGitCommit = (fallback = "unknown"): string => {
 
 export const getFileModifiedTime = (
   path: string,
-  options?: { format?: "author" | "commit"; datetime: Temporal.Instant },
+  options?: { format?: "author" | "commit"; datetime?: Temporal.Instant },
 ): Temporal.Instant => {
   const { format = "author", datetime = Temporal.Now.instant() } = options ?? {};
   if (!path || typeof path !== "string") return datetime;
@@ -35,7 +35,7 @@ export const getFileModifiedTime = (
   } catch {
     try {
       // Fallback to FS mtime (ensure it's converted to strict ISO for Temporal)
-      return statSync(path).mtime.toTemporalInstant();
+      return statSync(path).mtimeInstant;
     } catch {
       return datetime;
     }

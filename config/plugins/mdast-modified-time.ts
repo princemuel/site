@@ -1,29 +1,26 @@
-// oxlint-disable typescript/no-unsafe-argument typescript/no-unsafe-call typescript/no-unsafe-member-access
 import { fileURLToPath } from "node:url";
 
-import type { MdastPluginDefinition } from "satteri";
-
-import { getFileModifiedTime } from "../helpers";
+import { getFileModifiedTime } from "../helpers.ts";
+import type { MdastPluginDefinition } from "./types.ts";
 
 export const mdast_modified_time: MdastPluginDefinition = {
   name: "mdast-modified-time",
-  text(_node, ctx) {
-    if (!ctx.fileURL || !ctx.data.astro?.frontmatter) return;
+  before(_root, ctx) {
+    if (!ctx.fileURL || !ctx.data.astro) return;
 
     const { frontmatter } = ctx.data.astro;
     const filename = fileURLToPath(ctx.fileURL);
     // Skip files without date
-    if (!frontmatter.date || filename) return;
+    if (!frontmatter.date || !filename) return;
     try {
       const time_modified = getFileModifiedTime(filename);
       const published = Temporal.Instant.from(frontmatter.date);
       const days_since_pub = time_modified.since(published).total("days");
 
       // Get the latest revision date if revisions exist
-      const latest_revision =
-        frontmatter.revisions?.length > 0
-          ? Temporal.Instant.from(frontmatter.revisions.at(-1).date)
-          : undefined;
+      const latest_revision = frontmatter.revisions
+        ? Temporal.Instant.from(frontmatter.revisions.at(-1)?.date ?? "")
+        : undefined;
 
       // Only auto-set updated if:
       // 1. No manual updated already set
@@ -34,9 +31,9 @@ export const mdast_modified_time: MdastPluginDefinition = {
         Math.abs(days_since_pub) > 1 &&
         (!latest_revision || Temporal.Instant.compare(time_modified, latest_revision) > 0);
 
-      if (updated) frontmatter.updated = time_modified.toString();
+      if (updated) ctx.data.astro.frontmatter.updated = time_modified.toString();
     } catch (error) {
-      console.warn(`[MdastModifiedTime] skipped "${__filename}":`, error);
+      console.warn(`[MdastModifiedTime] skipped "${filename}":`, error);
     }
   },
 };

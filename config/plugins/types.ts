@@ -3,5 +3,17 @@ import type { AstroUserConfig } from "astro";
 
 export type Config = NonNullable<AstroUserConfig["markdown"]>;
 export type MarkdownOptions = SatteriProcessorOptions;
-export type MdastPlugin = NonNullable<MarkdownOptions["mdastPlugins"]>[number];
-export type HastPlugin = NonNullable<MarkdownOptions["hastPlugins"]>[number];
+export type MdastPluginDefinition = NonNullable<MarkdownOptions["mdastPlugins"]>[number];
+export type HastPluginDefinition = NonNullable<MarkdownOptions["hastPlugins"]>[number];
+
+declare module "satteri" {
+  interface SatteriAstroData {
+    frontmatter: {
+      date: Temporal.InstantLike;
+      updated?: Temporal.InstantLike;
+      words?: number;
+      duration?: number;
+      revisions?: { date: Temporal.InstantLike; note: string }[];
+    };
+  }
+}

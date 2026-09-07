@@ -12,7 +12,7 @@ const fonts = Object.fromEntries(
 );
 
 export default defineEcConfig({
-  themes: ["vitesse-dark", "vitesse-light"],
+  themes: ["github-dark-default", "github-light-default"],
   plugins: [pluginLineNumbers(), pluginCollapsibleSections()],
   cascadeLayer: "shiki",
   emitExternalStylesheet: true,
