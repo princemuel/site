@@ -124,7 +124,7 @@ protection rights. Every user is entitled to the following:
 ## Changes to This Privacy Policy
 
 This Privacy Policy may be revised periodically, and this will be
-reflected by a &apos;Last modified&apos; date below. Thus, we advise you
+reflected by a &apos;Last updated&apos; date below. Thus, we advise you
 to review this page periodically for any changes. We will notify you of
 any changes by posting the new Privacy Policy on this page. These
 changes are effective immediately, after they are posted on this page.
