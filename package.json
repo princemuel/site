@@ -38,7 +38,7 @@
     "isbot": "^5.1.37",
     "outvariant": "^1.4.3",
     "resend": "^6.10.0",
-    "satori": "^0.26.0",
+    "satori": "^0.33.5",
     "satori-html": "^0.3.2",
     "tailwind-variants": "^3.2.2",
     "temporal-polyfill": "^0.3.2"
